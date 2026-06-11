@@ -1,23 +1,75 @@
 # Agent Reference Architecture
 
-## Overview
-An AI Agent goes beyond text generation; it is a system that can perceive its environment, reason, formulate a plan, and take actions using tools to achieve a goal.
+## Problem Statement
+Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 07.06 Agent Architecture.
 
-## Core Architecture Layers
+## Business Use Cases
+- **Use Case 1**: Description of how this is applied in a business scenario.
+- **Use Case 2**: Description of how this is applied in a business scenario.
 
-### 1. The Brain (LLM)
-The core reasoning engine. It processes input, maintains the conversational loop, and decides which tools to call.
+## Architecture Pattern
+Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
 
-### 2. Memory System
-- **Working Memory (Context Window)**: Immediate conversation history.
-- **Short-Term Memory**: In-session state management.
-- **Long-Term Memory (Vector DB)**: Persistent knowledge across sessions (e.g., past user interactions, learned preferences).
+## Technology Options
+List the available open-source and commercial technology options for implementing this architecture.
 
-### 3. Tool & Action Registry
-- The APIs and functions the agent is authorized to execute.
-- Examples: Search Web, Query SQL Database, Call Salesforce API.
-- Implemented via standards like Model Context Protocol (MCP) or OpenAPI specs.
+## Cloud Native Options
+Specific AWS, Azure, and Google Cloud native services that align with this architecture.
 
-### 4. Planning & Orchestration
-- Frameworks (e.g., LangChain, AutoGen, CrewAI) that manage the Agent's reasoning loop (e.g., ReAct - Reason, Act, Observe).
-- Handles error recovery if a tool fails.
+## Top 10 Vendor Options
+1. Vendor A
+2. Vendor B
+3. Vendor C
+4. Vendor D
+5. Vendor E
+6. Vendor F
+7. Vendor G
+8. Vendor H
+9. Vendor I
+10. Vendor J
+
+## Comparison Matrix
+| Feature / Vendor | Option A | Option B | Option C |
+| --- | --- | --- | --- |
+| Feature 1 | | | |
+| Feature 2 | | | |
+
+## Benchmark Results
+Summarize any performance, latency, or throughput benchmarks available for the options.
+
+## POC Results
+Document findings from internal Proof of Concepts, including successful patterns and limitations.
+
+## Cost Comparison
+Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+
+## Security Comparison
+Analyze compliance, encryption, IAM, and other security capabilities.
+
+## Scalability Comparison
+Compare how each option handles data volume, user concurrency, and geographic distribution.
+
+## Operational Complexity
+Assess the Day 2 operations, maintenance overhead, and managed service availability.
+
+## Implementation Effort
+Estimate the time, skill requirements, and resources needed to deploy.
+
+## Enterprise Readiness
+Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+
+## AI Readiness
+How well does this support or integrate with AI/ML workloads and data pipelines?
+
+## Agentic Readiness
+Does this support autonomous agents, tool calling, and dynamic orchestration?
+
+## Recommendation
+State the primary recommended approach or technology stack based on the above evaluations.
+
+## Best Option by Scenario
+- **Scenario A**: Option 1 (e.g., High throughput, low latency)
+- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+
+## ADR Reference
+Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.

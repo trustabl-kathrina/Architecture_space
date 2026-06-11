@@ -1,56 +1,75 @@
 # Enterprise Capability Map
 
-## Overview
-The Enterprise Capability Map is a hierarchical representation of what the business does (its capabilities), independent of how it is done (processes, people, or technology). It is the foundational artifact for aligning IT and Business.
+## Problem Statement
+Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 01.01 Overview.
 
-## Level 1 Capabilities (Core Value Stream)
+## Business Use Cases
+- **Use Case 1**: Description of how this is applied in a business scenario.
+- **Use Case 2**: Description of how this is applied in a business scenario.
 
-### 1. Customer Management
-- Customer Acquisition
-- Customer Experience
-- Customer Support & Service
+## Architecture Pattern
+Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
 
-### 2. Product/Service Management
-- Product Design & Development
-- Product Lifecycle Management
-- Pricing & Packaging
+## Technology Options
+List the available open-source and commercial technology options for implementing this architecture.
 
-### 3. Sales & Marketing
-- Campaign Management
-- Channel Management
-- Order Capture
+## Cloud Native Options
+Specific AWS, Azure, and Google Cloud native services that align with this architecture.
 
-### 4. Operations & Fulfillment
-- Supply Chain Management
-- Inventory Management
-- Service Delivery
+## Top 10 Vendor Options
+1. Vendor A
+2. Vendor B
+3. Vendor C
+4. Vendor D
+5. Vendor E
+6. Vendor F
+7. Vendor G
+8. Vendor H
+9. Vendor I
+10. Vendor J
 
-## Level 1 Capabilities (Supporting Functions)
+## Comparison Matrix
+| Feature / Vendor | Option A | Option B | Option C |
+| --- | --- | --- | --- |
+| Feature 1 | | | |
+| Feature 2 | | | |
 
-### 5. Finance & Accounting
-- Financial Planning & Analysis
-- Treasury Management
-- Revenue & Billing
+## Benchmark Results
+Summarize any performance, latency, or throughput benchmarks available for the options.
 
-### 6. Human Resources
-- Talent Acquisition
-- Employee Experience
-- Workforce Planning
+## POC Results
+Document findings from internal Proof of Concepts, including successful patterns and limitations.
 
-### 7. Enterprise IT & Data
-- Enterprise Architecture
-- Data Platform Management
-- Cybersecurity
-- AI Operations
+## Cost Comparison
+Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
 
-### 8. Legal, Risk & Compliance
-- Regulatory Reporting
-- Enterprise Risk Management
-- Audit Management
+## Security Comparison
+Analyze compliance, encryption, IAM, and other security capabilities.
 
-## Mapping to Technology
-Each capability in this map must be linked to:
-- The **Applications** that enable it.
-- The **Data Products** it consumes and produces.
-- The **AI Agents/Models** that optimize it.
-- The **Business KPIs** that measure its performance.
+## Scalability Comparison
+Compare how each option handles data volume, user concurrency, and geographic distribution.
+
+## Operational Complexity
+Assess the Day 2 operations, maintenance overhead, and managed service availability.
+
+## Implementation Effort
+Estimate the time, skill requirements, and resources needed to deploy.
+
+## Enterprise Readiness
+Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+
+## AI Readiness
+How well does this support or integrate with AI/ML workloads and data pipelines?
+
+## Agentic Readiness
+Does this support autonomous agents, tool calling, and dynamic orchestration?
+
+## Recommendation
+State the primary recommended approach or technology stack based on the above evaluations.
+
+## Best Option by Scenario
+- **Scenario A**: Option 1 (e.g., High throughput, low latency)
+- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+
+## ADR Reference
+Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.

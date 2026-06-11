@@ -1,22 +1,75 @@
-# Centralized Operating Model
+# Centralized Model
 
-## Overview
-A traditional model where a single, central IT or Data/AI team is responsible for all development, engineering, governance, and platform management.
+## Problem Statement
+Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 01.06 Operating Model.
 
-## Characteristics
-- Highly standardized.
-- Strong central governance.
-- Single source of truth.
+## Business Use Cases
+- **Use Case 1**: Description of how this is applied in a business scenario.
+- **Use Case 2**: Description of how this is applied in a business scenario.
 
-## Pros
-- Easier to enforce security and compliance.
-- Economies of scale for infrastructure and tools.
-- Consolidation of scarce talent (e.g., Data Scientists).
+## Architecture Pattern
+Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
 
-## Cons
-- Creates an IT bottleneck; the central team becomes a blocker.
-- Lack of business domain context leading to irrelevant or poor-quality solutions.
-- Slow time-to-market.
+## Technology Options
+List the available open-source and commercial technology options for implementing this architecture.
 
-## Conclusion
-Increasingly obsolete for large-scale digital/data transformations, though still applicable for highly regulated, small-scale environments.
+## Cloud Native Options
+Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+
+## Top 10 Vendor Options
+1. Vendor A
+2. Vendor B
+3. Vendor C
+4. Vendor D
+5. Vendor E
+6. Vendor F
+7. Vendor G
+8. Vendor H
+9. Vendor I
+10. Vendor J
+
+## Comparison Matrix
+| Feature / Vendor | Option A | Option B | Option C |
+| --- | --- | --- | --- |
+| Feature 1 | | | |
+| Feature 2 | | | |
+
+## Benchmark Results
+Summarize any performance, latency, or throughput benchmarks available for the options.
+
+## POC Results
+Document findings from internal Proof of Concepts, including successful patterns and limitations.
+
+## Cost Comparison
+Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+
+## Security Comparison
+Analyze compliance, encryption, IAM, and other security capabilities.
+
+## Scalability Comparison
+Compare how each option handles data volume, user concurrency, and geographic distribution.
+
+## Operational Complexity
+Assess the Day 2 operations, maintenance overhead, and managed service availability.
+
+## Implementation Effort
+Estimate the time, skill requirements, and resources needed to deploy.
+
+## Enterprise Readiness
+Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+
+## AI Readiness
+How well does this support or integrate with AI/ML workloads and data pipelines?
+
+## Agentic Readiness
+Does this support autonomous agents, tool calling, and dynamic orchestration?
+
+## Recommendation
+State the primary recommended approach or technology stack based on the above evaluations.
+
+## Best Option by Scenario
+- **Scenario A**: Option 1 (e.g., High throughput, low latency)
+- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+
+## ADR Reference
+Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.

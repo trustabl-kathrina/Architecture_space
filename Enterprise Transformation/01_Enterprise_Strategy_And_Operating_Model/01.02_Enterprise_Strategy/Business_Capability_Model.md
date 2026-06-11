@@ -1,32 +1,75 @@
 # Business Capability Model
 
-## Definition
-A Business Capability Model (BCM) represents "what" the business does, defining the organization's capacity to execute its business model.
+## Problem Statement
+Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 01.02 Enterprise Strategy.
 
-## Core Capabilities (Level 1 & Level 2 Examples)
+## Business Use Cases
+- **Use Case 1**: Description of how this is applied in a business scenario.
+- **Use Case 2**: Description of how this is applied in a business scenario.
 
-### 1.0 Customer Management
-- 1.1 Customer Acquisition
-- 1.2 Customer Relationship Management
-- 1.3 Customer Analytics
+## Architecture Pattern
+Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
 
-### 2.0 Product Management
-- 2.1 Product Development
-- 2.2 Product Lifecycle Management
-- 2.3 Pricing Strategy
+## Technology Options
+List the available open-source and commercial technology options for implementing this architecture.
 
-### 3.0 Supply Chain & Logistics
-- 3.1 Procurement
-- 3.2 Inventory Management
-- 3.3 Fulfillment & Delivery
+## Cloud Native Options
+Specific AWS, Azure, and Google Cloud native services that align with this architecture.
 
-### 4.0 Finance Management
-- 4.1 Financial Planning & Analysis
-- 4.2 Accounts Payable/Receivable
-- 4.3 Tax & Treasury
+## Top 10 Vendor Options
+1. Vendor A
+2. Vendor B
+3. Vendor C
+4. Vendor D
+5. Vendor E
+6. Vendor F
+7. Vendor G
+8. Vendor H
+9. Vendor I
+10. Vendor J
 
-## Architectural Usage
-The BCM is used to:
-- Map applications and data to specific business functions.
-- Identify duplicate systems supporting the same capability (rationalization).
-- Define boundaries for Domain-Driven Design and Data Mesh implementations.
+## Comparison Matrix
+| Feature / Vendor | Option A | Option B | Option C |
+| --- | --- | --- | --- |
+| Feature 1 | | | |
+| Feature 2 | | | |
+
+## Benchmark Results
+Summarize any performance, latency, or throughput benchmarks available for the options.
+
+## POC Results
+Document findings from internal Proof of Concepts, including successful patterns and limitations.
+
+## Cost Comparison
+Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+
+## Security Comparison
+Analyze compliance, encryption, IAM, and other security capabilities.
+
+## Scalability Comparison
+Compare how each option handles data volume, user concurrency, and geographic distribution.
+
+## Operational Complexity
+Assess the Day 2 operations, maintenance overhead, and managed service availability.
+
+## Implementation Effort
+Estimate the time, skill requirements, and resources needed to deploy.
+
+## Enterprise Readiness
+Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+
+## AI Readiness
+How well does this support or integrate with AI/ML workloads and data pipelines?
+
+## Agentic Readiness
+Does this support autonomous agents, tool calling, and dynamic orchestration?
+
+## Recommendation
+State the primary recommended approach or technology stack based on the above evaluations.
+
+## Best Option by Scenario
+- **Scenario A**: Option 1 (e.g., High throughput, low latency)
+- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+
+## ADR Reference
+Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
