@@ -16,6 +16,13 @@ List the available open-source and commercial technology options for implementin
 ## Cloud Native Options
 Specific AWS, Azure, and Google Cloud native services that align with this architecture.
 
+## Cloud Native Matrix
+| Feature / Cloud | AWS | Azure | GCP |
+| --- | --- | --- | --- |
+| Managed Service | | | |
+| Scalability | | | |
+| Integration | | | |
+
 ## Top 10 Vendor Options
 1. Vendor A
 2. Vendor B
