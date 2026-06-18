@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# MkDocs build output
+code/site/
+
+# Python
+__pycache__/
+.venv/
+venv/
+.env
