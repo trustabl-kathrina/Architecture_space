@@ -1,6 +1,6 @@
 ---
 title: What Is Data Mesh
-section: "01"
+section: "01.01"
 status: complete
 template: overview
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: []
 canonical: true
 ---
-
 # What Is Data Mesh
 
 ## Definition

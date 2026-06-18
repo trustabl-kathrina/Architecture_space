@@ -93,9 +93,9 @@ function Has-LegacySegmentNot04([string]$RelPath) {
 
 # Canonical paths (docs-relative, forward slashes)
 $CanonicalTopics = @{
-    "Governance_Maturity.md"           = "07_Data_Governance_And_Metadata/07.10_Governance_Operating_Model/Governance_Maturity.md"
-    "Governance_Operating_Model.md"  = "07_Data_Governance_And_Metadata/07.10_Governance_Operating_Model/Governance_Operating_Model.md"
-    "Compliance_Framework.md"          = "07_Data_Governance_And_Metadata/07.09_Data_Compliance/Compliance_Framework.md"
+    "Governance_Maturity.md"           = "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.10_Governance_Operating_Model/Governance_Maturity.md"
+    "Governance_Operating_Model.md"  = "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.10_Governance_Operating_Model/Governance_Operating_Model.md"
+    "Compliance_Framework.md"          = "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.09_Data_Compliance/Compliance_Framework.md"
     "Showback_Model.md"                = "04_Cloud_Data_Platforms/04.06_FinOps/Showback_Model.md"
     "Chargeback_Model.md"              = "04_Cloud_Data_Platforms/04.06_FinOps/Chargeback_Model.md"
 }
@@ -120,12 +120,12 @@ $HighDupTopics = @(
 )
 
 Write-Host "Phase 0: establish canonical documents"
-$govSource = Join-Path $DocsRoot "07_Data_Governance_And_Metadata\07.01_Metadata_Management\08.02_Governance_Strategy\Governance_Maturity.md"
-$govDest = Join-Path $DocsRoot "07_Data_Governance_And_Metadata\07.10_Governance_Operating_Model\Governance_Maturity.md"
+$govSource = Join-Path $DocsRoot "00_Architecture_Governance\00.10_Data_Governance_And_Metadata\00.10.01_Metadata_Management\08.02_Governance_Strategy\Governance_Maturity.md"
+$govDest = Join-Path $DocsRoot "00_Architecture_Governance\00.10_Data_Governance_And_Metadata\00.10.10_Governance_Operating_Model\Governance_Maturity.md"
 if (Test-Path $govSource) {
     Ensure-Dir (Split-Path $govDest -Parent)
     if (-not $DryRun) { Copy-Item -LiteralPath $govSource -Destination $govDest -Force }
-    $CanonicalTopics["Governance_Maturity.md"] = "07_Data_Governance_And_Metadata/07.10_Governance_Operating_Model/Governance_Maturity.md"
+    $CanonicalTopics["Governance_Maturity.md"] = "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.10_Governance_Operating_Model/Governance_Maturity.md"
 }
 
 $showbackSource = Join-Path $DocsRoot "04_Cloud_Data_Platforms\04.06_FinOps\18.12_Cost_Allocation_And_Chargeback\Showback_Model.md"

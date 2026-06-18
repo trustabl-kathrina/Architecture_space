@@ -1,6 +1,6 @@
 ---
 title: FinOps Hub
-section: "04"
+section: "00"
 status: complete
 template: hub
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [finops, hub]
 canonical: true
 ---
-
 # FinOps Hub
 
 Canonical navigation hub for cloud data platform FinOps, showback, chargeback, AI FinOps, and cost optimization.

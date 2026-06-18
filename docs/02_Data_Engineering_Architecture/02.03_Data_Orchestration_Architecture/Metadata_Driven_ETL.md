@@ -1,6 +1,6 @@
 ---
 title: Metadata Driven ETL
-section: "02"
+section: "02.03"
 status: stub
 template: evaluation
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: []
 canonical: true
 ---
-
 # Metadata Driven ETL
 
 ## Problem Statement

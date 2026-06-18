@@ -1,6 +1,6 @@
 ---
 title: ADR 011 Platform FinOps Model
-section: "00"
+section: "00.03"
 status: draft
 template: adr
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [adr]
 canonical: true
 ---
-
 # ADR 011 Platform FinOps Model
 
 ## Status

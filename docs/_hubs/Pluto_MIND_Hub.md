@@ -1,6 +1,6 @@
 ---
 title: Pluto MIND Hub
-section: "20"
+section: "00"
 status: complete
 template: hub
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [pluto-mind, hub]
 canonical: true
 ---
-
 # Pluto MIND Hub
 
 Canonical navigation hub for Pluto MIND product architecture.

@@ -1,6 +1,6 @@
 ---
 title: Self Service Platform
-section: "02"
+section: "02.03"
 status: stub
 template: evaluation
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: []
 canonical: true
 ---
-
 # Self Service Platform
 
 ## Problem Statement

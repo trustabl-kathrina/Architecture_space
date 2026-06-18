@@ -24,9 +24,10 @@ Thank you for contributing to the architecture documentation. This guide explain
 ## Naming conventions
 
 - **Content root:** `docs/`
-- **Sections:** `NN_Topic_Name/` (e.g. `11_AI_Data_Architecture/`)
-- **Subsections:** `NN.SS_Topic_Name/` (e.g. `11.03_RAG/`)
-- **Files:** `Topic_Name.md` in Pascal_Snake_Case
+- **Parent sections:** `NN_Topic_Name/` (e.g. `02_Data_Engineering_Architecture/`)
+- **Nested domains:** `NN.MM_Topic_Name/` under a parent (e.g. `02.01_Data_Ingestion_Architecture/02.01.02_Streaming/`)
+- **Subsections:** `NN.MM_Topic_Name/` or `NN.MM.SS_Topic_Name/` for topic groups
+- **Files:** sequenced prefixes where applicable (`02.01.02.01.01.01_Topic.md`) or `Topic_Name.md` in Pascal_Snake_Case
 - **Hubs:** `_hubs/Topic_Hub.md`
 - **Metadata:** `_meta/taxonomy.yaml`, `_meta/migration_map.yaml`, `_meta/poc_index.md`
 
@@ -34,12 +35,14 @@ Thank you for contributing to the architecture documentation. This guide explain
 
 | Range | Sections |
 | --- | --- |
-| Foundations | `00_Architecture_Governance`, `01_Data_Architecture` |
-| Data Platform | `02_Data_Engineering_Architecture` through `07_Data_Governance_And_Metadata` |
-| Analytics and AI | `08_Analytics_Architecture` through `13_MLOps_Architecture` |
+| Foundations | `00_Architecture_Governance` (incl. `00.10` governance), `01_Data_Architecture` |
+| Data Platform | `02_Data_Engineering_Architecture` (incl. `02.06` storage, `02.01.02` streaming under `02.01`), `04`–`06` |
+| Analytics and AI | `08_Analytics_Architecture` (incl. `08.10` real-time), `11_AI_Data_Architecture` (incl. `11.12` agentic), `13_MLOps_Architecture` |
 | Assurance and Industry | `14_Security_And_Privacy_Architecture`, `15_Industry_Reference_Architectures` |
 | Practitioner | `16_Architecture_Interview_Preparation` through `19_Templates_And_Frameworks` |
 | Product | `20_Pluto_MIND` |
+
+Use hierarchical IDs **02.06**, **00.10**, **02.01.02** (streaming under data ingestion), **08.10**, and **11.12** at every level.
 
 POCs and benchmarks live in the relevant technology section (see [POC Index](_meta/poc_index.md)).
 

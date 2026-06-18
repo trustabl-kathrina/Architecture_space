@@ -5,9 +5,9 @@ param(
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $DocsRoot = Join-Path $RepoRoot "docs"
-$SecRoot = Join-Path $DocsRoot "09_Event_And_Streaming_Architecture"
-$MapFile = Join-Path $DocsRoot "_meta\section_09_migration_map.yaml"
-$SecPrefix = "09_Event_And_Streaming_Architecture/"
+$SecRoot = Join-Path $DocsRoot "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
+$MapFile = Join-Path $DocsRoot "_meta\section_02.01.02_migration_map.yaml"
+$SecPrefix = "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/"
 
 function Get-BaseName([string]$FileName) {
     $base = [IO.Path]::GetFileNameWithoutExtension($FileName)
@@ -109,7 +109,7 @@ Get-ChildItem $DocsRoot -Recurse -Filter *.md | ForEach-Object {
         $text = $text.Replace($p.Key.Replace('/', '\'), $p.Value.Replace('/', '\'))
         $text = $text.Replace($p.Key, $p.Value)
     }
-    # Relative links within section 09 only (skip if target already numbered)
+    # Relative links within 02.07 only (skip if target already numbered)
     if ($_.FullName.StartsWith($SecRoot)) {
         foreach ($r in $Renames) {
             $text = $text.Replace("($($r.OldName))", "($($r.NewName))")

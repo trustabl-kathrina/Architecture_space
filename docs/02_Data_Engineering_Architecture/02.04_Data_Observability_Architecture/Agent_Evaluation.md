@@ -1,6 +1,6 @@
 ---
 title: Agent Evaluation
-section: "02"
+section: "02.04"
 status: stub
 template: evaluation
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [vendor-evaluation]
 canonical: true
 ---
-
 # Agent Evaluation
 
 ## Problem Statement

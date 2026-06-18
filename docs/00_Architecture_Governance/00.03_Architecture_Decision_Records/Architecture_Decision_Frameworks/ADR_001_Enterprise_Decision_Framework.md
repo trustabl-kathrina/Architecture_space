@@ -1,6 +1,6 @@
 ---
 title: ADR 001 Enterprise Architecture Decision Framework
-section: "00"
+section: "00.03"
 status: complete
 template: adr
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [adr]
 canonical: true
 ---
-
 # ADR-001: Enterprise Architecture Decision Framework
 
 ## Status

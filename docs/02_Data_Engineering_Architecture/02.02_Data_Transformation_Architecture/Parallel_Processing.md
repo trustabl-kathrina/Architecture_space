@@ -1,6 +1,6 @@
 ---
 title: Parallel Processing
-section: "02"
+section: "02.02"
 status: stub
 template: evaluation
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: []
 canonical: true
 ---
-
 # Parallel Processing
 
 ## Problem Statement

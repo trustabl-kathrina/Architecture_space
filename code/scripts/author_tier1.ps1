@@ -11,8 +11,8 @@ function Write-Doc($RelativePath, $Meta, $Body) {
 }
 
 $files = @{
-    "03_Data_Architecture/03.01_Overview/What_Is_Data_Architecture.md" = @{
-        title = "What Is Data Architecture"; section = "03.01"
+    "03_Data_Architecture/02.06.01_Overview/What_Is_Data_Architecture.md" = @{
+        title = "What Is Data Architecture"; section = "02.06.01"
         body = @'
 # What Is Data Architecture
 
@@ -26,7 +26,7 @@ Data architecture defines how enterprise data is structured, integrated, governe
 In scope: data models, domains, integration patterns, metadata. Out of scope: application UI design, network infrastructure.
 
 ## Related
-- [Data Architecture Framework](../03.02_Data_Architecture_Framework/Data_Architecture_Framework.md)
+- [Data Architecture Framework](../02.06.02_Data_Architecture_Framework/Data_Architecture_Framework.md)
 - [Data Mesh Hub](../../hubs/Data_Mesh_Hub.md)
 '@
     }
@@ -46,8 +46,8 @@ In scope: ML/GenAI platforms, model lifecycle, AI governance. Out of scope: rese
 - [Agentic AI Hub](../../hubs/Agentic_AI_Hub.md)
 '@
     }
-    "07_Agentic_AI_Architecture/07.01_Overview/What_Is_Agentic_AI.md" = @{
-        title = "What Is Agentic AI"; section = "07.01"
+    "07_Agentic_AI_Architecture/00.10.01_Overview/What_Is_Agentic_AI.md" = @{
+        title = "What Is Agentic AI"; section = "00.10.01"
         body = @'
 # What Is Agentic AI
 
@@ -55,12 +55,12 @@ In scope: ML/GenAI platforms, model lifecycle, AI governance. Out of scope: rese
 Agentic AI refers to autonomous software agents that plan, reason, use tools, and collaborate to accomplish goals with human oversight.
 
 ## Related
-- [Agentic AI Framework](../07.03_Agentic_AI_Framework/Agentic_AI_Framework.md)
+- [Agentic AI Framework](../00.10.03_Agentic_AI_Framework/Agentic_AI_Framework.md)
 - [Agentic AI Hub](../../hubs/Agentic_AI_Hub.md)
 '@
     }
-    "09_Data_Mesh_And_Domain_Architecture/09.01_Overview/What_Is_Data_Mesh.md" = @{
-        title = "What Is Data Mesh"; section = "09.01"
+    "09_Data_Mesh_And_Domain_Architecture/02.01.02.01_Overview/What_Is_Data_Mesh.md" = @{
+        title = "What Is Data Mesh"; section = "02.01.02.01"
         body = @'
 # What Is Data Mesh
 
@@ -69,7 +69,7 @@ Data mesh is a decentralized approach where domain teams own and share data as p
 
 ## Related
 - [Data Mesh Hub](../../hubs/Data_Mesh_Hub.md)
-- [Data Mesh Framework](../09.03_Data_Mesh_Framework/Data_Mesh_Framework.md)
+- [Data Mesh Framework](../02.01.02.03_Data_Mesh_Framework/Data_Mesh_Framework.md)
 '@
     }
     "02_Enterprise_Architecture/02.01_Overview/What_Is_Enterprise_Architecture.md" = @{
@@ -126,8 +126,8 @@ Data governance establishes policies, ownership, and controls ensuring data is t
 Metadata is data about data describing structure, lineage, quality, ownership, and usage for discovery and automation.
 '@
     }
-    "10_Lakehouse_And_Modern_Data_Platforms/10.01_Overview/What_Is_A_Lakehouse.md" = @{
-        title = "What Is A Lakehouse"; section = "10.01"
+    "10_Lakehouse_And_Modern_Data_Platforms/08.10.01_Overview/What_Is_A_Lakehouse.md" = @{
+        title = "What Is A Lakehouse"; section = "08.10.01"
         body = @'
 # What Is A Lakehouse
 
@@ -144,8 +144,8 @@ A lakehouse combines data lake flexibility with warehouse governance using open 
 Integration architecture connects applications, data, and events through APIs, messaging, and pipelines.
 '@
     }
-    "12_Real_Time_And_Event_Driven_Architecture/12.01_Overview/What_Is_Event_Driven_Architecture.md" = @{
-        title = "What Is Event Driven Architecture"; section = "12.01"
+    "12_Real_Time_And_Event_Driven_Architecture/11.12.01_Overview/What_Is_Event_Driven_Architecture.md" = @{
+        title = "What Is Event Driven Architecture"; section = "11.12.01"
         body = @'
 # What Is Event Driven Architecture
 
@@ -156,8 +156,8 @@ Event-driven architecture uses events as the primary mechanism for communicating
 - [Event Driven Architecture](Event_Driven_Architecture.md)
 '@
     }
-    "12_Real_Time_And_Event_Driven_Architecture/12.01_Overview/What_Is_Real_Time_Architecture.md" = @{
-        title = "What Is Real Time Architecture"; section = "12.01"
+    "12_Real_Time_And_Event_Driven_Architecture/11.12.01_Overview/What_Is_Real_Time_Architecture.md" = @{
+        title = "What Is Real Time Architecture"; section = "11.12.01"
         body = @'
 # What Is Real Time Architecture
 

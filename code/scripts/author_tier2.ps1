@@ -295,7 +295,7 @@ Data mesh transformation shifts from centralized data ownership to domain-orient
 ## Related
 
 - [Data Mesh Hub](../../hubs/Data_Mesh_Hub.md)
-- [Mesh Implementation Roadmap](../../09_Data_Mesh_And_Domain_Architecture/09.23_Mesh_Implementation_Roadmap/Mesh_Implementation_Roadmap.md)
+- [Mesh Implementation Roadmap](../../09_Data_Mesh_And_Domain_Architecture/02.01.02.23_Mesh_Implementation_Roadmap/Mesh_Implementation_Roadmap.md)
 "@
     "23_Transformation_Roadmaps/23.10_AI_Transformation_Roadmaps/Enterprise_AI_Transformation.md" = @"
 # Enterprise AI Transformation
@@ -356,7 +356,7 @@ Adr-Doc "06_AI_Architecture/06.27_ADR/ADR_013_Azure_AI_Search_Retrieval.md" "013
     "### Positive`n- Deep Azure ecosystem integration`n- Managed hybrid search`n`n### Negative`n- Vendor alignment risk for multi-cloud" `
     "| Alternative | Why not chosen |`n| Pinecone | Less Azure-native integration |`n| Self-hosted OpenSearch | Higher ops burden |"
 
-Adr-Doc "03_Data_Architecture/03.24_ADR/ADR_012_pgvector_Standardization.md" "012" "PostgreSQL pgvector for Low-Volume Embeddings" "03.24" "Accepted" `
+Adr-Doc "03_Data_Architecture/02.06.24_ADR/ADR_012_pgvector_Standardization.md" "012" "PostgreSQL pgvector for Low-Volume Embeddings" "02.06.24" "Accepted" `
     "Many use cases embed fewer than 1M vectors and already run PostgreSQL. A separate vector database adds unnecessary cost." `
     "Standardize on PostgreSQL with pgvector extension for embeddings under 1M vectors co-located with operational or analytical relational data." `
     "### Positive`n- Reduced platform sprawl`n- Familiar ops model`n`n### Negative`n- Scale ceiling vs purpose-built vector DBs" `

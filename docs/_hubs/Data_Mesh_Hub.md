@@ -1,6 +1,6 @@
 ---
 title: Data Mesh Hub
-section: "01"
+section: "00"
 status: complete
 template: hub
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [data-mesh, hub]
 canonical: true
 ---
-
 # Data Mesh Hub
 
 Canonical navigation hub for data mesh fundamentals, data products, federated governance, and domain-driven data architecture.
@@ -17,4 +16,4 @@ Canonical navigation hub for data mesh fundamentals, data products, federated go
 
 - [Data Architecture](../01_Data_Architecture/README.md)
 - [Data Product Architecture](../06_Data_Product_Architecture/README.md)
-- [Data Governance And Metadata](../07_Data_Governance_And_Metadata/README.md)
+- [Data Governance And Metadata](../00_Architecture_Governance/00.10_Data_Governance_And_Metadata/README.md)

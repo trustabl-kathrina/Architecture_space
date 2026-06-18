@@ -20,16 +20,16 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | 00 | Architecture Governance | Cross-cutting EA, ADRs, standards | 45 | 1,542 | **Purge** nested legacy 01–25 trees |
 | 01 | Data Architecture | Enterprise data design concepts | 35 | 328 | Consolidate; remove engineering detail |
 | 02 | Data Engineering | Pipelines, orchestration, reliability | 55 | 290 | Reorganize into 02.01–02.05 |
-| 03 | Data Storage | Lake, WH, lakehouse, marts | 30 | 36 | Expand storage patterns |
+| 02.06 | Data Storage | Lake, WH, lakehouse, marts | 30 | 36 | Expand storage patterns |
 | 04 | Cloud Data Platforms | GCP/AWS/Azure + FinOps | 80 | 962 | **Purge** non-cloud duplicates |
 | 05 | Data Modeling | Conceptual → physical models | 40 | 38 | Align to subsection model |
-| 06 | Data Products | Product lifecycle & contracts | 35 | 49 | Keep; link governance to 07 |
-| 07 | Data Governance & Metadata | Policy, catalog, DQ, MDM | 60 | 738 | **Canonical** for governance frameworks |
-| 08 | Analytics | BI, semantic layer, self-service | 40 | 214 | Remove real-time (→ 10) |
-| 09 | Event & Streaming | Events, stream processing, CDC | 50 | 287 | **Canonical** for streaming |
-| 10 | Real-Time Analytics | OLAP engines (Pinot, Druid, CH) | 25 | 9 | Expand; absorb 08.03 |
-| 11 | AI Data Architecture | AI-ready data, RAG, features | 45 | 231 | Remove MCP/A2A (→ 12) |
-| 12 | Agentic AI | Agents, MCP, A2A, AgentOps | 50 | 529 | **Canonical** for agent protocols |
+| 06 | Data Products | Product lifecycle & contracts | 35 | 49 | Keep; link governance to 00.10 |
+| 00.10 | Data Governance & Metadata | Policy, catalog, DQ, MDM | 60 | 738 | **Canonical** for governance frameworks |
+| 08 | Analytics | BI, semantic layer, self-service | 40 | 214 | Remove real-time (→ 08.10) |
+| 02.01.02 | Event & Streaming | Events, stream processing, CDC | 50 | 287 | **Canonical** for streaming |
+| 08.10 | Real-Time Analytics | OLAP engines (Pinot, Druid, CH) | 25 | 9 | Expand; absorb 08.03 |
+| 11 | AI Data Architecture | AI-ready data, RAG, features | 45 | 231 | Remove MCP/A2A (→ 11.12) |
+| 11.12 | Agentic AI | Agents, MCP, A2A, AgentOps | 50 | 529 | **Canonical** for agent protocols |
 | 13 | MLOps | ML lifecycle & model governance | 35 | 47 | Keep; boundary with 11.02 |
 | 14 | Security & Privacy | IAM, encryption, zero trust | 45 | 264 | **Canonical** for security patterns |
 | 15 | Industry Reference | Vertical architectures | 40 | 338 | **Canonical** for industry cases |
@@ -104,25 +104,25 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | DE governance (coding standards, pipeline review) | 02.05 |
 
 **Remove:** `Governance_Maturity`, `Compliance_Framework`, `Showback_Model` (→ 04.06 / 07).  
-**Remove:** Streaming fundamentals (→ 09), enterprise DQ framework (→ 07.04).  
+**Remove:** Streaming fundamentals (→ 09), enterprise DQ framework (→ 00.10.04).  
 **Migrate:** Legacy `04.xx` folders from 02.01 into 02.01–02.05.
 
 ---
 
-## 03 — Data Storage Architecture
+## 02.06 — Data Storage Architecture
 
 **Owns:** Where and how data is persisted analytically.
 
 | Capability | Subsection |
 | --- | --- |
-| Data lake architecture | 03.01 |
-| Data warehouse architecture | 03.02 |
-| Lakehouse storage model | 03.03 |
-| Data marts & ODS | 03.04–03.05 |
-| Analytical stores (columnar, OLAP serving) | 03.06 |
-| Partitioning, clustering, lifecycle | 03.07 |
-| Open table formats (Delta, Iceberg, Hudi) | 03.03 |
-| Storage tiering & archival | 03.07 |
+| Data lake architecture | 02.06.01 |
+| Data warehouse architecture | 02.06.02 |
+| Lakehouse storage model | 02.06.03 |
+| Data marts & ODS | 02.06.04–02.06.05 |
+| Analytical stores (columnar, OLAP serving) | 02.06.06 |
+| Partitioning, clustering, lifecycle | 02.06.07 |
+| Open table formats (Delta, Iceberg, Hudi) | 02.06.03 |
+| Storage tiering & archival | 02.06.07 |
 
 **Remove:** Cloud-specific service docs (→ 04), real-time engines (→ 10).
 
@@ -182,24 +182,24 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 
 ---
 
-## 07 — Data Governance & Metadata
+## 00.10 — Data Governance & Metadata
 
 **Owns:** **Canonical home for enterprise governance, metadata, quality, MDM.**
 
 | Capability | Subsection |
 | --- | --- |
-| Metadata management strategy | 07.01 |
-| Data catalog architecture | 07.02 |
-| Data lineage architecture | 07.03 |
-| Data quality framework & rules | 07.04 |
-| Master data management | 07.05 |
-| Reference data management | 07.06 |
-| Data privacy (policy) | 07.07 |
-| Data security (policy) | 07.08 |
-| Regulatory compliance framework | 07.09 |
-| **Governance operating model & maturity** | 07.10 |
-| Stewardship & ownership model | 07.10 |
-| Policy management & exceptions | 07.10 |
+| Metadata management strategy | 00.10.01 |
+| Data catalog architecture | 00.10.02 |
+| Data lineage architecture | 00.10.03 |
+| Data quality framework & rules | 00.10.04 |
+| Master data management | 00.10.05 |
+| Reference data management | 00.10.06 |
+| Data privacy (policy) | 00.10.07 |
+| Data security (policy) | 00.10.08 |
+| Regulatory compliance framework | 00.10.09 |
+| **Governance operating model & maturity** | 00.10.10 |
+| Stewardship & ownership model | 00.10.10 |
+| Policy management & exceptions | 00.10.10 |
 
 **Remove:** 15× `Governance_Maturity.md` copies in other sections — **keep one here**.  
 **Boundary:** Implementation security controls → 14; privacy engineering → 14.09.
@@ -218,42 +218,42 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | Dashboard architecture | 08.05 |
 | Tool architectures (Tableau, Power BI, Looker, Metabase) | 08.06–08.09 |
 
-**Remove:** `08.03_Real_Time_Analytics` — merge into section 10.  
+**Remove:** `08.03_Real_Time_Analytics` — merge into 08.10.  
 **Remove:** Duplicate KPI/scorecard frameworks (→ 17 or 07).
 
 ---
 
-## 09 — Event & Streaming Architecture
+## 02.07 — Event & Streaming Architecture
 
 **Owns:** **Canonical for event-driven and stream processing.**
 
 | Capability | Subsection |
 | --- | --- |
-| Event-driven architecture fundamentals | 09.01 |
-| Stream processing patterns | 09.04 |
-| CDC architecture (streaming path) | 09.01 |
-| Cloud streaming (Pub/Sub, Kinesis, Event Hubs) | 09.02 |
-| Open source (Kafka, Flink, Spark Streaming) | 09.03 |
-| Streaming benchmarks & POCs | 09.05 |
-| Technology comparisons (streaming) | 09.06 |
-| Integration patterns (event API, saga) | 09.08 |
+| Event-driven architecture fundamentals | 02.01.02.01 |
+| Stream processing patterns | 02.01.02.04 |
+| CDC architecture (streaming path) | 02.01.02.01 |
+| Cloud streaming (Pub/Sub, Kinesis, Event Hubs) | 02.01.02.02 |
+| Open source (Kafka, Flink, Spark Streaming) | 02.01.02.03 |
+| Streaming benchmarks & POCs | 02.01.02.05 |
+| Technology comparisons (streaming) | 02.01.02.06 |
+| Integration patterns (event API, saga) | 02.01.02.08 |
 
 **Remove:** Duplicate streaming topics in 02, 04, 00.
 
 ---
 
-## 10 — Real-Time Analytics Architecture
+## 08.10 — Real-Time Analytics Architecture
 
 **Owns:** Low-latency analytical **serving** engines.
 
 | Capability | Subsection |
 | --- | --- |
-| Real-time analytics architecture overview | 10.05 |
-| ClickHouse architecture | 10.01 |
-| Apache Pinot architecture | 10.02 |
-| Apache Druid architecture | 10.03 |
-| Elasticsearch as analytics store | 10.04 |
-| Streaming analytics serving patterns | 10.05 |
+| Real-time analytics architecture overview | 08.10.05 |
+| ClickHouse architecture | 08.10.01 |
+| Apache Pinot architecture | 08.10.02 |
+| Apache Druid architecture | 08.10.03 |
+| Elasticsearch as analytics store | 08.10.04 |
+| Streaming analytics serving patterns | 08.10.05 |
 
 **Absorb:** Content from `08.03_Real_Time_Analytics`.
 
@@ -275,26 +275,26 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | AI observability (data/LLM pipelines) | 11.10 |
 | AI FinOps (token/compute cost) | 11.11 |
 
-**Remove:** `11.05_MCP`, `11.06_A2A` — **canonical in section 12**.  
+**Remove:** `11.05_MCP`, `11.06_A2A` — **canonical in 11.12**.  
 **Boundary:** Model training/deployment → 13; agent orchestration → 12.
 
 ---
 
-## 12 — Agentic AI Architecture
+## 11.12 — Agentic AI Architecture
 
 **Owns:** **Canonical for agents, MCP, A2A, multi-agent systems.**
 
 | Capability | Subsection |
 | --- | --- |
-| Agentic AI fundamentals | 12.01 |
-| Agent architecture & runtime | 12.02 |
-| Agent design patterns | 12.03 |
-| **MCP protocol & tool integration** | 12.04 |
-| **A2A protocol & inter-agent comms** | 12.05 |
-| Agent orchestration | 12.06 |
-| AgentOps (deploy, monitor, evaluate agents) | 12.07 |
-| Multi-agent systems | 12.08 |
-| Digital workforce architecture | 12.09 |
+| Agentic AI fundamentals | 11.12.01 |
+| Agent architecture & runtime | 11.12.02 |
+| Agent design patterns | 11.12.03 |
+| **MCP protocol & tool integration** | 11.12.04 |
+| **A2A protocol & inter-agent comms** | 11.12.05 |
+| Agent orchestration | 11.12.06 |
+| AgentOps (deploy, monitor, evaluate agents) | 11.12.07 |
+| Multi-agent systems | 11.12.08 |
+| Digital workforce architecture | 11.12.09 |
 
 **Remove:** Duplicate MCP/A2A/agent topics from 00, 11.  
 **Remove:** Generic `Governance_Maturity` copies — use `Agentic_AI_Maturity` domain doc only.
@@ -334,7 +334,7 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | AI security & guardrails | 14.08 |
 | Privacy engineering | 14.09 |
 
-**Remove:** `Governance_Maturity` security copies — use `Security_Maturity` one-pager linking to 07.10.
+**Remove:** `Governance_Maturity` security copies — use `Security_Maturity` one-pager linking to 00.10.10.
 
 ---
 
@@ -434,15 +434,15 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 
 | Topic | Keep in | Delete elsewhere |
 | --- | --- | --- |
-| Governance maturity | 07.10 | 00, 01, 04, 09, 12, 14 |
+| Governance maturity | 00.10.10 | 00, 01, 04, 09, 12, 14 |
 | FinOps / showback / chargeback | 04.06 | 00, 02 |
-| Compliance framework | 07.09 | 00, 02, 04, 12 |
-| MCP / A2A | 12.04–12.05 | 11, 00 |
-| RAG / vectors | 11.03, 11.07 | 12 |
-| Streaming / events | 09 | 02, 04, 00 |
-| Real-time OLAP | 10 | 08 |
+| Compliance framework | 00.10.09 | 00, 02, 04, 12 |
+| MCP / A2A | 11.12.04–11.12.05 | 11, 00 |
+| RAG / vectors | 11.03, 11.07 | 11.12 |
+| Streaming / events | 02.01.02 | 02, 04, 00 |
+| Real-time OLAP | 08.10 | 08 |
 | ADRs | 00.03 | all sections |
 | Vendor comparisons | 17 | all sections |
 | Industry cases | 15 | per-section case folders |
-| Data quality (enterprise) | 07.04 | 02 (keep pipeline validation only) |
-| Security controls | 14 | 07.08 (policy only in 07) |
+| Data quality (enterprise) | 00.10.04 | 02 (keep pipeline validation only) |
+| Security controls | 14 | 00.10.08 (policy only in 07) |

@@ -1,6 +1,6 @@
 ---
 title: Domain Storage Architecture
-section: "01"
+section: "01.01"
 status: stub
 template: evaluation
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [rag, genai]
 canonical: true
 ---
-
 # Domain Storage Architecture
 
 ## Problem Statement

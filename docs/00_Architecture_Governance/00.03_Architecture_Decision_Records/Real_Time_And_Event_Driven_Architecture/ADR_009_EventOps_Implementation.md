@@ -1,6 +1,6 @@
 ---
 title: ADR 009 EventOps Implementation
-section: "00"
+section: "00.03"
 status: draft
 template: adr
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: [streaming, events, adr]
 canonical: true
 ---
-
 # ADR 009 EventOps Implementation
 
 ## Status

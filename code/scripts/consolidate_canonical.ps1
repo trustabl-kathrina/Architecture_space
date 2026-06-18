@@ -66,7 +66,7 @@ Showback allocates cloud and platform costs to consuming teams without actual fi
 $showbackDeltas = @{
     "01_Enterprise_Strategy_And_Operating_Model/01.09_Funding_Model/Showback_Model.md" = "01 Funding Model"
     "04_Data_Engineering/04.20_Cost_Optimization/Showback_Model.md" = "04 Data Engineering"
-    "10_Lakehouse_And_Modern_Data_Platforms/10.24_Platform_Cost_Optimization/Showback_Model.md" = "10 Lakehouse Platform"
+    "10_Lakehouse_And_Modern_Data_Platforms/08.10.24_Platform_Cost_Optimization/Showback_Model.md" = "10 Lakehouse Platform"
     "16_Cloud_Architecture/16.19_Cloud_FinOps/Showback_Model.md" = "16 Cloud Architecture"
     "17_Platform_Engineering/17.22_Platform_FinOps/Showback_Model.md" = "17 Platform Engineering"
 }

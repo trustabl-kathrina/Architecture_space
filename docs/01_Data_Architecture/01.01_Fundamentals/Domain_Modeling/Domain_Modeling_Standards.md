@@ -1,6 +1,6 @@
 ---
 title: Domain Modeling Standards
-section: "01"
+section: "01.01"
 status: stub
 template: evaluation
 last_reviewed: 2026-06-18
@@ -8,7 +8,6 @@ owner: architecture-team
 tags: []
 canonical: true
 ---
-
 # Domain Modeling Standards
 
 ## Problem Statement

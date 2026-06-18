@@ -5,9 +5,9 @@ param(
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $DocsRoot = Join-Path $RepoRoot "docs"
-$SecRoot = Join-Path $DocsRoot "09_Event_And_Streaming_Architecture"
+$SecRoot = Join-Path $DocsRoot "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
 $MetaDir = Join-Path $DocsRoot "_meta"
-$MapFile = Join-Path $MetaDir "section_09_migration_map.yaml"
+$MapFile = Join-Path $MetaDir "section_02.01.02_migration_map.yaml"
 $Today = Get-Date -Format "yyyy-MM-dd"
 
 $Stats = @{
@@ -100,7 +100,7 @@ canonical: true
 
 # $Title
 
-> Status: stub — content planned as part of section 09 consolidation.
+> Status: stub — content planned as part of 02.01.02 streaming consolidation.
 
 ## Context
 
@@ -108,7 +108,7 @@ Enterprise reference for event and streaming architecture.
 
 ## Related
 
-- [Section 09 README](../../README.md)
+- [02.07 README](../../README.md)
 "@
   if (-not $DryRun) {
     Ensure-Dir (Split-Path $Path -Parent)
@@ -201,7 +201,7 @@ foreach ($rel in $canonicalTargets) {
     $full = Join-Path $SecRoot ($rel -replace '/', '\')
     Ensure-Dir (Split-Path $full -Parent)
 }
-foreach ($sub in @("09.01_Fundamentals","09.02_Cloud_Services","09.03_Open_Source","09.04_Architecture_Patterns","09.05_Benchmarks","09.06_Comparisons","09.07_Interview_Questions","09.08_Integration_Patterns")) {
+foreach ($sub in @("02.01.02.01_Fundamentals","02.01.02.02_Cloud_Services","02.01.02.03_Open_Source","02.01.02.04_Architecture_Patterns","02.01.02.05_Benchmarks","02.01.02.06_Comparisons","02.01.02.07_Interview_Questions","02.01.02.08_Integration_Patterns")) {
     $readme = Join-Path $SecRoot "$sub\README.md"
     if (-not (Test-Path $readme)) {
         $sid = if ($sub -match '^(\d{2}\.\d{2})') { $Matches[1] } else { "09" }
@@ -220,7 +220,7 @@ canonical: true
 
 # $title
 
-Subsection index for section 09 Event and Streaming Architecture.
+Subsection index for 02.01.02 Streaming and Streaming Architecture.
 "@
         if (-not $DryRun) {
             [IO.File]::WriteAllText($readme, $body.TrimEnd() + "`n", [Text.UTF8Encoding]::new($false))
@@ -247,13 +247,13 @@ foreach ($rel in $canonicalTargets) {
 }
 
 # Special merges for CDC patterns
-$cdcOverview = Join-Path $SecRoot "09.01_Fundamentals\CDC_Architecture\CDC_Overview.md"
-$cdcPatterns = Join-Path $SecRoot "09.01_Fundamentals\CDC_Architecture\Change_Data_Capture_Patterns.md"
+$cdcOverview = Join-Path $SecRoot "02.01.02.01_Fundamentals\CDC_Architecture\CDC_Overview.md"
+$cdcPatterns = Join-Path $SecRoot "02.01.02.01_Fundamentals\CDC_Architecture\Change_Data_Capture_Patterns.md"
 if (-not (Test-Path $cdcPatterns)) {
-    Write-StubDoc $cdcPatterns "Change Data Capture Patterns" "09.01" "concept"
+    Write-StubDoc $cdcPatterns "Change Data Capture Patterns" "02.01.02.01" "concept"
 }
-$outbox = Join-Path $SecRoot "09.01_Fundamentals\CDC_Architecture\Outbox_Pattern.md"
-if (-not (Test-Path $outbox)) { Write-StubDoc $outbox "Outbox Pattern" "09.01" "concept" }
+$outbox = Join-Path $SecRoot "02.01.02.01_Fundamentals\CDC_Architecture\Outbox_Pattern.md"
+if (-not (Test-Path $outbox)) { Write-StubDoc $outbox "Outbox Pattern" "02.01.02.01" "concept" }
 
 Write-Host "Phase 3: delete non-canonical files (redirects not retained)"
 $canonicalSet = @{}
@@ -281,7 +281,7 @@ function Resolve-CanonicalForFile([string]$RelFromSec, [string]$FileName) {
             return Join-Path $SecRoot ($c -replace '/', '\')
         }
     }
-    return Join-Path $SecRoot "09.01_Fundamentals\Overview\What_Is_Event_Driven_Architecture.md"
+    return Join-Path $SecRoot "02.01.02.01_Fundamentals\Overview\What_Is_Event_Driven_Architecture.md"
 }
 
 Get-ChildItem $SecRoot -Recurse -Filter *.md | Where-Object {
@@ -353,7 +353,7 @@ $complete = (Get-ChildItem $SecRoot -Recurse -Filter *.md | Where-Object {
 }).Count
 
 $report = @(
-    "# Section 09 Consolidation Report",
+    "# 02.01.02 streaming consolidation Report",
     "",
     "Generated on $Today.",
     "",
@@ -374,7 +374,7 @@ $report = @(
 )
 
 if (-not $DryRun) {
-    [IO.File]::WriteAllText((Join-Path $MetaDir "section_09_consolidation_report.md"), ($report -join "`n"), [Text.UTF8Encoding]::new($false))
+    [IO.File]::WriteAllText((Join-Path $MetaDir "section_02.01.02_consolidation_report.md"), ($report -join "`n"), [Text.UTF8Encoding]::new($false))
 }
 
 Write-Host "Done. Topics=$topics Redirects=$redirects Complete=$complete"

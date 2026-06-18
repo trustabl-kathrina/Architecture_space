@@ -31,6 +31,7 @@ Architecture principles, reference architectures, ADRs, patterns, review checkli
 | --- | --- | ---: | --- | --- |
 | 00.01 | Architecture Principles | 8 | [AI Principles](00.01_Architecture_Principles/AI_Principles.md) | stub |
 | 00.03 | Architecture Decision Records | 280 | [ADR 001 Agent Platform Selection](00.03_Architecture_Decision_Records/Agentic_AI_Architecture/ADR_001_Agent_Platform_Selection.md) | draft |
+| 00.10 | Data Governance And Metadata | — | [README](00.10_Data_Governance_And_Metadata/README.md) | stub |
 
 ## Related
 

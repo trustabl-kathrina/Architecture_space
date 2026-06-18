@@ -12,16 +12,16 @@ $Today = Get-Date -Format "yyyy-MM-dd"
 
 $Sections = @(
     @{ id = "00"; name = "00_Architecture_Governance"; description = "Architecture principles, reference architectures, ADRs, patterns, review checklists, NFRs, blueprints, standards, and strategy alignment."; subs = @(
-        "00.01_Architecture_Principles","00.02_Reference_Architectures","00.03_Architecture_Decision_Records","00.04_Architecture_Patterns","00.05_Architecture_Review_Checklists","00.06_Non_Functional_Requirements","00.07_Solution_Blueprints","00.08_Standards_And_Guidelines","00.09_Enterprise_Strategy_And_Operating_Model"
+        "00.01_Architecture_Principles","00.02_Reference_Architectures","00.03_Architecture_Decision_Records","00.04_Architecture_Patterns","00.05_Architecture_Review_Checklists","00.06_Non_Functional_Requirements","00.07_Solution_Blueprints","00.08_Standards_And_Guidelines","00.09_Enterprise_Strategy_And_Operating_Model","00.10_Data_Governance_And_Metadata"
     ) },
     @{ id = "01"; name = "01_Data_Architecture"; description = "Data architecture fundamentals, enterprise data architecture, mesh, fabric, lakehouse concepts, data products, metadata-driven architecture, and domain-driven design."; subs = @(
         "01.01_Fundamentals","01.02_Data_Architecture_Patterns","01.03_Reference_Architectures","01.04_Architecture_Case_Studies"
     ) },
-    @{ id = "02"; name = "02_Data_Engineering_Architecture"; description = "Data ingestion, transformation, orchestration, observability, and reliability architecture."; subs = @(
-        "02.01_Data_Ingestion_Architecture","02.02_Data_Transformation_Architecture","02.03_Data_Orchestration_Architecture","02.04_Data_Observability_Architecture","02.05_Data_Reliability_Architecture"
+    @{ id = "02"; name = "02_Data_Engineering_Architecture"; description = "Data ingestion, transformation, orchestration, observability, reliability, storage, and event streaming architecture."; subs = @(
+        "02.01_Data_Ingestion_Architecture","02.02_Data_Transformation_Architecture","02.03_Data_Orchestration_Architecture","02.04_Data_Observability_Architecture","02.05_Data_Reliability_Architecture","02.06_Data_Storage_Architecture","02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
     ) },
-    @{ id = "03"; name = "03_Data_Storage_Architecture"; description = "Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns."; subs = @(
-        "03.01_Data_Lake","03.02_Data_Warehouse","03.03_Lakehouse","03.04_Data_Marts","03.05_Operational_Data_Store","03.06_Analytical_Stores","03.07_Storage_Patterns"
+    @{ id = "02.06"; name = "02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture"; description = "Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns."; subs = @(
+        "02.06.01_Data_Lake","02.06.02_Data_Warehouse","02.06.03_Lakehouse","02.06.04_Data_Marts","02.06.05_Operational_Data_Store","02.06.06_Analytical_Stores","02.06.07_Storage_Patterns"
     ) },
     @{ id = "04"; name = "04_Cloud_Data_Platforms"; description = "Cloud data platform services and reference implementations across GCP, AWS, and Azure."; subs = @(
         "04.01_GCP","04.02_AWS","04.03_Azure","04.04_Platform_Engineering","04.05_Lakehouse_Platforms","04.06_FinOps"
@@ -32,23 +32,23 @@ $Sections = @(
     @{ id = "06"; name = "06_Data_Product_Architecture"; description = "Data product lifecycle, design, SDP/ADP/CDP, marketplace, data contracts, and product governance."; subs = @(
         "06.01_Fundamentals","06.02_Data_Product_Lifecycle","06.03_Data_Product_Design","06.04_SDP","06.05_ADP","06.06_CDP","06.07_Marketplace","06.08_Data_Contracts","06.09_Product_Governance"
     ) },
-    @{ id = "07"; name = "07_Data_Governance_And_Metadata"; description = "Metadata management, catalog, lineage, quality, MDM, reference data, privacy, security, compliance, and governance operating model."; subs = @(
-        "07.01_Metadata_Management","07.02_Data_Catalog","07.03_Data_Lineage","07.04_Data_Quality","07.05_Master_Data_Management","07.06_Reference_Data","07.07_Data_Privacy","07.08_Data_Security","07.09_Data_Compliance","07.10_Governance_Operating_Model"
+    @{ id = "00.10"; name = "00_Architecture_Governance/00.10_Data_Governance_And_Metadata"; description = "Metadata management, catalog, lineage, quality, MDM, reference data, privacy, security, compliance, and governance operating model."; subs = @(
+        "00.10.01_Metadata_Management","00.10.02_Data_Catalog","00.10.03_Data_Lineage","00.10.04_Data_Quality","00.10.05_Master_Data_Management","00.10.06_Reference_Data","00.10.07_Data_Privacy","00.10.08_Data_Security","00.10.09_Data_Compliance","00.10.10_Governance_Operating_Model"
     ) },
-    @{ id = "08"; name = "08_Analytics_Architecture"; description = "BI, semantic layer, self-service analytics, dashboards, and analytics tools. Real-time OLAP engines live in section 10."; subs = @(
-        "08.01_BI_Architecture","08.02_Semantic_Layer","08.04_Self_Service_Analytics","08.05_Dashboard_Architecture","08.06_Tableau","08.07_PowerBI","08.08_Looker","08.09_Metabase"
+    @{ id = "08"; name = "08_Analytics_Architecture"; description = "BI, semantic layer, self-service analytics, dashboards, analytics tools, and real-time OLAP engines (08.10)."; subs = @(
+        "08.01_BI_Architecture","08.02_Semantic_Layer","08.04_Self_Service_Analytics","08.05_Dashboard_Architecture","08.06_Tableau","08.07_PowerBI","08.08_Looker","08.09_Metabase","08.10_Real_Time_Analytics_Architecture"
     ) },
-    @{ id = "09"; name = "09_Event_And_Streaming_Architecture"; description = "Event-driven architecture, stream processing, CDC, cloud streaming services, open source engines, patterns, benchmarks, comparisons, and interview questions."; subs = @(
-        "09.01_Fundamentals","09.02_Cloud_Services","09.03_Open_Source","09.04_Architecture_Patterns","09.05_Benchmarks","09.06_Comparisons","09.07_Interview_Questions","09.08_Integration_Patterns"
+    @{ id = "02.07"; name = "02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming"; description = "Event-driven architecture, stream processing, CDC, cloud streaming services, open source engines, patterns, benchmarks, comparisons, and interview questions."; subs = @(
+        "02.01.02.01_Fundamentals","02.01.02.02_Cloud_Services","02.01.02.03_Open_Source","02.01.02.04_Architecture_Patterns","02.01.02.05_Benchmarks","02.01.02.06_Comparisons","02.01.02.07_Interview_Questions","02.01.02.08_Integration_Patterns"
     ) },
-    @{ id = "10"; name = "10_Real_Time_Analytics_Architecture"; description = "Real-time analytics engines, streaming analytics stores, serving patterns, and low-latency analytical workloads."; subs = @(
-        "10.01_ClickHouse","10.02_Pinot","10.03_Druid","10.04_Elasticsearch","10.05_Streaming_Analytics"
+    @{ id = "08.10"; name = "08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture"; description = "Real-time analytics engines, streaming analytics stores, serving patterns, and low-latency analytical workloads."; subs = @(
+        "08.10.01_ClickHouse","08.10.02_Pinot","08.10.03_Druid","08.10.04_Elasticsearch","08.10.05_Streaming_Analytics"
     ) },
-    @{ id = "11"; name = "11_AI_Data_Architecture"; description = "AI-ready data platforms, feature stores, RAG, vector databases, prompt engineering, AI governance, AI observability, and AI FinOps. MCP and A2A are canonical in section 12."; subs = @(
-        "11.01_AI_Ready_Data_Platform","11.02_Feature_Store","11.03_RAG","11.04_Agentic_AI_Data","11.07_Vector_Databases","11.08_Prompt_Engineering","11.09_AI_Governance","11.10_AI_Observability","11.11_AI_FinOps"
+    @{ id = "11"; name = "11_AI_Data_Architecture"; description = "AI-ready data platforms, feature stores, RAG, vector databases, prompt engineering, AI governance, AI observability, AI FinOps, and agentic AI (11.12)."; subs = @(
+        "11.01_AI_Ready_Data_Platform","11.02_Feature_Store","11.03_RAG","11.04_Agentic_AI_Data","11.07_Vector_Databases","11.08_Prompt_Engineering","11.09_AI_Governance","11.10_AI_Observability","11.11_AI_FinOps","11.12_Agentic_AI_Architecture"
     ) },
-    @{ id = "12"; name = "12_Agentic_AI_Architecture"; description = "Agentic AI strategy, agent architecture, MCP/A2A, tool use, orchestration, AgentOps, multi-agent systems, and digital workforce architecture."; subs = @(
-        "12.01_Fundamentals","12.02_Agent_Architecture","12.03_Agent_Design_Patterns","12.04_MCP","12.05_A2A","12.06_Agent_Orchestration","12.07_AgentOps","12.08_Multi_Agent_Systems","12.09_Digital_Workforce"
+    @{ id = "11.12"; name = "11_AI_Data_Architecture/11.12_Agentic_AI_Architecture"; description = "Agentic AI strategy, agent architecture, MCP/A2A, tool use, orchestration, AgentOps, multi-agent systems, and digital workforce architecture."; subs = @(
+        "11.12.01_Fundamentals","11.12.02_Agent_Architecture","11.12.03_Agent_Design_Patterns","11.12.04_MCP","11.12.05_A2A","11.12.06_Agent_Orchestration","11.12.07_AgentOps","11.12.08_Multi_Agent_Systems","11.12.09_Digital_Workforce"
     ) },
     @{ id = "13"; name = "13_MLOps_Architecture"; description = "ML lifecycle, feature engineering, training, deployment, monitoring, and model governance."; subs = @(
         "13.01_ML_Lifecycle","13.02_Feature_Engineering","13.03_Training","13.04_Deployment","13.05_Monitoring","13.06_Model_Governance"
@@ -215,12 +215,12 @@ function Get-TargetForPath([string]$RelPath, [string]$Status) {
         '^03_' {
             if ($sub -match '03\.03|03\.05|03\.10|03\.11') { return "05_Data_Modeling_Architecture/05.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '03\.06') { return "06_Data_Product_Architecture/06.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
-            if ($sub -match '03\.09|03\.18|03\.21') { return "07_Data_Governance_And_Metadata/07.01_Metadata_Management/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '03\.09|03\.18|03\.21') { return "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.01_Metadata_Management/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '03\.15') { return "11_AI_Data_Architecture/11.01_AI_Ready_Data_Platform/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "01_Data_Architecture/01.01_Fundamentals/" + $rest
         }
         '^04_' {
-            if ($sub -match '04\.07') { return "09_Event_And_Streaming_Architecture/09.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '04\.07') { return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '04\.16') { return "06_Data_Product_Architecture/06.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '04\.14|04\.15') { return "02_Data_Engineering_Architecture/02.04_Data_Observability_Architecture/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/" + $rest
@@ -228,48 +228,48 @@ function Get-TargetForPath([string]$RelPath, [string]$Status) {
         '^05_' { return "08_Analytics_Architecture/08.01_BI_Architecture/" + $rest }
         '^06_' {
             if ($sub -match '06\.08|06\.09|06\.10|06\.11|06\.12') { return "13_MLOps_Architecture/13.01_ML_Lifecycle/" + ($parts[2..($parts.Count-1)] -join '/') }
-            if ($sub -match '06\.14') { return "12_Agentic_AI_Architecture/12.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '06\.14') { return "11_AI_Data_Architecture\11.11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/11.12.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '06\.18') { return "14_Security_And_Privacy_Architecture/14.08_AI_Security/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '06\.13') { return "11_AI_Data_Architecture/11.03_RAG/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "11_AI_Data_Architecture/11.01_AI_Ready_Data_Platform/" + $rest
         }
-        '^07_' { return "12_Agentic_AI_Architecture/12.01_Fundamentals/" + $rest }
-        '^08_' { return "07_Data_Governance_And_Metadata/07.01_Metadata_Management/" + $rest }
+        '^07_' { return "11_AI_Data_Architecture\11.11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/11.12.01_Fundamentals/" + $rest }
+        '^08_' { return "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.01_Metadata_Management/" + $rest }
         '^09_' {
             if ($sub -match '09\.09|09\.10|09\.11') { return "06_Data_Product_Architecture/06.01_Fundamentals/" + ($parts[2..($parts.Count-1)] -join '/') }
-            if ($sub -match '09\.12|09\.21') { return "07_Data_Governance_And_Metadata/07.10_Governance_Operating_Model/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '09\.12|09\.21') { return "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.10_Governance_Operating_Model/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "01_Data_Architecture/01.01_Fundamentals/" + $rest
         }
         '^10_' {
-            if ($sub -match '10\.06|10\.07|10\.08|10\.09') { return "03_Data_Storage_Architecture/03.03_Lakehouse/" + ($parts[2..($parts.Count-1)] -join '/') }
-            if ($sub -match '10\.16|10\.17') { return "09_Event_And_Streaming_Architecture/09.02_Cloud_Services/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '10\.06|10\.07|10\.08|10\.09') { return "02_Data_Engineering_Architecture\02.06_Data_Storage_Architecture/02.06.03_Lakehouse/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '10\.16|10\.17') { return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.02_Cloud_Services/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "04_Cloud_Data_Platforms/04.05_Lakehouse_Platforms/" + $rest
         }
         '^11_' {
-            if ($sub -match '11\.07|11\.13') { return "09_Event_And_Streaming_Architecture/09.08_Integration_Patterns/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '11\.07|11\.13') { return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.08_Integration_Patterns/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '11\.12') { return "02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "00_Architecture_Governance/00.04_Architecture_Patterns/" + $rest
         }
         '^12_' {
-            if ($sub -match '12\.13') { return "10_Real_Time_Analytics_Architecture/10.05_Streaming_Analytics/" + ($parts[2..($parts.Count-1)] -join '/') }
-            return "09_Event_And_Streaming_Architecture/09.01_Fundamentals/" + $rest
+            if ($sub -match '12\.13') { return "08_Analytics_Architecture\08.08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture/08.10.05_Streaming_Analytics/" + ($parts[2..($parts.Count-1)] -join '/') }
+            return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/" + $rest
         }
-        '^13_' { return "07_Data_Governance_And_Metadata/07.05_Master_Data_Management/" + $rest }
+        '^13_' { return "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.05_Master_Data_Management/" + $rest }
         '^14_' { return "14_Security_And_Privacy_Architecture/14.01_IAM/" + $rest }
         '^15_' {
             if ($sub -match '15\.10|15\.11|15\.12|15\.13|15\.14|15\.15') { return "02_Data_Engineering_Architecture/02.04_Data_Observability_Architecture/" + ($parts[2..($parts.Count-1)] -join '/') }
-            return "07_Data_Governance_And_Metadata/07.04_Data_Quality/" + $rest
+            return "00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.04_Data_Quality/" + $rest
         }
         '^16_' { return "04_Cloud_Data_Platforms/04.01_GCP/" + $rest }
         '^17_' { return "04_Cloud_Data_Platforms/04.04_Platform_Engineering/" + $rest }
         '^18_' { return "04_Cloud_Data_Platforms/04.06_FinOps/" + $rest }
-        '^19_' { return "12_Agentic_AI_Architecture/12.09_Digital_Workforce/" + $rest }
+        '^19_' { return "11_AI_Data_Architecture\11.11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/11.12.09_Digital_Workforce/" + $rest }
         '^20_' { return "15_Industry_Reference_Architectures/15.08_Case_Studies/" + $rest }
         '^21_' { return "00_Architecture_Governance/00.04_Architecture_Patterns/" + $rest }
         '^22_' {
-            if ($sub -match '22\.04|22\.21|Streaming') { return "09_Event_And_Streaming_Architecture/09.05_Benchmarks/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '22\.04|22\.21|Streaming') { return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '22\.06|GenAI|RAG') { return "11_AI_Data_Architecture/11.03_RAG/" + ($parts[2..($parts.Count-1)] -join '/') }
-            return "09_Event_And_Streaming_Architecture/09.05_Benchmarks/" + $rest
+            return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/" + $rest
         }
         '^23_' { return "00_Architecture_Governance/00.07_Solution_Blueprints/" + $rest }
         '^24_' { return "17_Technology_Comparisons/17.08_Vendor_Evaluations/" + $rest }
@@ -420,7 +420,7 @@ Canonical navigation hub for data mesh fundamentals, data products, federated go
 
 - [Data Architecture](../01_Data_Architecture/README.md)
 - [Data Product Architecture](../06_Data_Product_Architecture/README.md)
-- [Data Governance And Metadata](../07_Data_Governance_And_Metadata/README.md)
+- [Data Governance And Metadata](../00_Architecture_Governance/00.10_Data_Governance_And_Metadata/README.md)
 "@
 Write-Text (Join-Path $NewRoot "_hubs\Data_Mesh_Hub.md") ($hubDataMesh + "`n")
 
@@ -450,7 +450,7 @@ Write-Text (Join-Path $NewRoot "_hubs\FinOps_Hub.md") ($hubFinOps + "`n")
 $hubAgentic = @"
 ---
 title: Agentic AI Hub
-section: "12"
+section: "11.12"
 status: complete
 template: hub
 last_reviewed: $Today
@@ -464,7 +464,7 @@ Canonical navigation hub for agent design, MCP, A2A, orchestration, AgentOps, an
 
 ## Canonical Sections
 
-- [Agentic AI Architecture](../12_Agentic_AI_Architecture/README.md)
+- [Agentic AI Architecture](../11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/README.md)
 - [AI Data Architecture](../11_AI_Data_Architecture/README.md)
 - [MLOps Architecture](../13_MLOps_Architecture/README.md)
 "@

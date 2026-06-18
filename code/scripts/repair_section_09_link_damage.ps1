@@ -2,7 +2,7 @@ param([switch]$DryRun)
 
 $ErrorActionPreference = "Stop"
 $DocsRoot = Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) "docs"
-$Sec09 = "09_Event_And_Streaming_Architecture"
+$Sec09 = "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
 
 $Stats = @{ collapsed = 0; reverted = 0 }
 
@@ -23,11 +23,11 @@ for ($i = 0; $i -lt 5; $i++) {
 
 Write-Host "  Rounds fixed: $($Stats.collapsed)"
 
-Write-Host "Phase 2: revert stray replacements outside section 09"
+Write-Host "Phase 2: revert stray replacements outside 02.07"
 $cloudRevert = @{
-    "09.02.03_AWS" = "AWS"
-    "09.02.04_Azure" = "Azure"
-    "09.02.02_GCP" = "GCP"
+    "02.01.02.02.03_AWS" = "AWS"
+    "02.01.02.02.04_Azure" = "Azure"
+    "02.01.02.02.02_GCP" = "GCP"
 }
 
 Get-ChildItem $DocsRoot -Recurse -Filter *.md | Where-Object {
@@ -49,7 +49,7 @@ Get-ChildItem $DocsRoot -Recurse -Filter *.md | Where-Object {
     }
 }
 
-Write-Host "Phase 3: fix front matter in section 09 only"
+Write-Host "Phase 3: fix front matter in 02.07 only"
 $SecRoot = Join-Path $DocsRoot $Sec09
 Get-ChildItem $SecRoot -Recurse -Filter *.md | ForEach-Object {
     $rel = $_.FullName.Substring($SecRoot.Length + 1).Replace('\', '/')
@@ -70,22 +70,22 @@ Get-ChildItem $SecRoot -Recurse -Filter *.md | ForEach-Object {
     }
 }
 
-Write-Host "Phase 4: fix internal links in section 09 only"
+Write-Host "Phase 4: fix internal links in 02.07 only"
 $pathMap = @{}
 foreach ($group in @(
-    @{ P = "09.01_Fundamentals"; M = @{
-        "Overview"="09.01.01_Overview"; "Strategy"="09.01.02_Strategy"; "Core_Concepts"="09.01.03_Core_Concepts"
-        "CDC_Architecture"="09.01.04_CDC_Architecture"; "EventOps"="09.01.05_EventOps" }}
-    @{ P = "09.02_Cloud_Services"; M = @{
-        "Overview"="09.02.01_Overview"; "GCP"="09.02.02_GCP"; "AWS"="09.02.03_AWS"
-        "Azure"="09.02.04_Azure"; "Cross_Cloud"="09.02.05_Cross_Cloud" }}
-    @{ P = "09.03_Open_Source"; M = @{
-        "Overview"="09.03.01_Overview"; "Apache_Kafka"="09.03.02_Apache_Kafka"; "Apache_Pulsar"="09.03.03_Apache_Pulsar"
-        "Apache_Flink"="09.03.04_Apache_Flink"; "Spark_Structured_Streaming"="09.03.05_Spark_Structured_Streaming"; "Beam"="09.03.06_Beam" }}
-    @{ P = "09.04_Architecture_Patterns"; M = @{
-        "Event_Driven_Patterns"="09.04.01_Event_Driven_Patterns"; "Stream_Processing_Patterns"="09.04.02_Stream_Processing_Patterns"
-        "Integration_Patterns"="09.04.03_Integration_Patterns"; "CQRS_and_Event_Sourcing"="09.04.04_CQRS_and_Event_Sourcing"
-        "Reference_Architectures"="09.04.05_Reference_Architectures" }}
+    @{ P = "02.01.02.01_Fundamentals"; M = @{
+        "Overview"="02.01.02.01.01_Overview"; "Strategy"="02.01.02.01.02_Strategy"; "Core_Concepts"="02.01.02.01.03_Core_Concepts"
+        "CDC_Architecture"="02.01.02.01.04_CDC_Architecture"; "EventOps"="02.01.02.01.05_EventOps" }}
+    @{ P = "02.01.02.02_Cloud_Services"; M = @{
+        "Overview"="02.01.02.02.01_Overview"; "GCP"="02.01.02.02.02_GCP"; "AWS"="02.01.02.02.03_AWS"
+        "Azure"="02.01.02.02.04_Azure"; "Cross_Cloud"="02.01.02.02.05_Cross_Cloud" }}
+    @{ P = "02.01.02.03_Open_Source"; M = @{
+        "Overview"="02.01.02.02.06.01_Overview"; "Apache_Kafka"="02.01.02.02.06.02_Apache_Kafka"; "Apache_Pulsar"="02.01.02.02.06.03_Apache_Pulsar"
+        "Apache_Flink"="02.01.02.02.06.04_Apache_Flink"; "Spark_Structured_Streaming"="02.01.02.02.06.05_Spark_Structured_Streaming"; "Beam"="02.01.02.02.06.06_Beam" }}
+    @{ P = "02.01.02.04_Architecture_Patterns"; M = @{
+        "Event_Driven_Patterns"="02.01.02.04.01_Event_Driven_Patterns"; "Stream_Processing_Patterns"="02.01.02.04.02_Stream_Processing_Patterns"
+        "Integration_Patterns"="02.01.02.04.03_Integration_Patterns"; "CQRS_and_Event_Sourcing"="02.01.02.04.04_CQRS_and_Event_Sourcing"
+        "Reference_Architectures"="02.01.02.04.05_Reference_Architectures" }}
 )) {
     foreach ($e in $group.M.GetEnumerator()) {
         $pathMap["$($group.P)/$($e.Key)"] = "$($group.P)/$($e.Value)"
@@ -108,7 +108,7 @@ Get-ChildItem $SecRoot -Recurse -Filter *.md | ForEach-Object {
 $deLink = Join-Path $DocsRoot "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture\Overview\What_Is_Data_Engineering.md"
 if (Test-Path $deLink) {
     $t = [IO.File]::ReadAllText($deLink)
-    $n = $t -replace '09\.01_Fundamentals/Strategy/', '09.01_Fundamentals/09.01.02_Strategy/'
+    $n = $t -replace '09\.01_Fundamentals/Strategy/', '02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/'
     if ($n -ne $t -and -not $DryRun) { [IO.File]::WriteAllText($deLink, $n, [Text.UTF8Encoding]::new($false)) }
 }
 

@@ -13,7 +13,7 @@ $MetaDir = Join-Path $NewRoot "_meta"
 
 # Known canonical locations (repo-relative, forward slashes)
 $CanonicalByFilename = @{
-    "Governance_Maturity.md" = "docs/07_Data_Governance_And_Metadata/07.01_Metadata_Management/08.02_Governance_Strategy/Governance_Maturity.md"
+    "Governance_Maturity.md" = "docs/00_Architecture_Governance/00.10_Data_Governance_And_Metadata/00.10.01_Metadata_Management/08.02_Governance_Strategy/Governance_Maturity.md"
     "Showback_Model.md"      = "docs/04_Cloud_Data_Platforms/04.06_FinOps/18.12_Cost_Allocation_And_Chargeback/Showback_Model.md"
 }
 

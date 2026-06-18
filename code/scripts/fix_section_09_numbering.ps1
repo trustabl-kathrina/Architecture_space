@@ -5,38 +5,38 @@ param(
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $DocsRoot = Join-Path $RepoRoot "docs"
-$SecRoot = Join-Path $DocsRoot "09_Event_And_Streaming_Architecture"
+$SecRoot = Join-Path $DocsRoot "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
 $Today = Get-Date -Format "yyyy-MM-dd"
 
 $Renames = @(
-    @{ Parent = "09.01_Fundamentals"; Map = @{
-        "Overview" = "09.01.01_Overview"
-        "Strategy" = "09.01.02_Strategy"
-        "Core_Concepts" = "09.01.03_Core_Concepts"
-        "CDC_Architecture" = "09.01.04_CDC_Architecture"
-        "EventOps" = "09.01.05_EventOps"
+    @{ Parent = "02.01.02.01_Fundamentals"; Map = @{
+        "Overview" = "02.01.02.01.01_Overview"
+        "Strategy" = "02.01.02.01.02_Strategy"
+        "Core_Concepts" = "02.01.02.01.03_Core_Concepts"
+        "CDC_Architecture" = "02.01.02.01.04_CDC_Architecture"
+        "EventOps" = "02.01.02.01.05_EventOps"
     }}
-    @{ Parent = "09.02_Cloud_Services"; Map = @{
-        "Overview" = "09.02.01_Overview"
-        "GCP" = "09.02.02_GCP"
-        "AWS" = "09.02.03_AWS"
-        "Azure" = "09.02.04_Azure"
-        "Cross_Cloud" = "09.02.05_Cross_Cloud"
+    @{ Parent = "02.01.02.02_Cloud_Services"; Map = @{
+        "Overview" = "02.01.02.02.01_Overview"
+        "GCP" = "02.01.02.02.02_GCP"
+        "AWS" = "02.01.02.02.03_AWS"
+        "Azure" = "02.01.02.02.04_Azure"
+        "Cross_Cloud" = "02.01.02.02.05_Cross_Cloud"
     }}
-    @{ Parent = "09.03_Open_Source"; Map = @{
-        "Overview" = "09.03.01_Overview"
-        "Apache_Kafka" = "09.03.02_Apache_Kafka"
-        "Apache_Pulsar" = "09.03.03_Apache_Pulsar"
-        "Apache_Flink" = "09.03.04_Apache_Flink"
-        "Spark_Structured_Streaming" = "09.03.05_Spark_Structured_Streaming"
-        "Beam" = "09.03.06_Beam"
+    @{ Parent = "02.01.02.03_Open_Source"; Map = @{
+        "Overview" = "02.01.02.02.06.01_Overview"
+        "Apache_Kafka" = "02.01.02.02.06.02_Apache_Kafka"
+        "Apache_Pulsar" = "02.01.02.02.06.03_Apache_Pulsar"
+        "Apache_Flink" = "02.01.02.02.06.04_Apache_Flink"
+        "Spark_Structured_Streaming" = "02.01.02.02.06.05_Spark_Structured_Streaming"
+        "Beam" = "02.01.02.02.06.06_Beam"
     }}
-    @{ Parent = "09.04_Architecture_Patterns"; Map = @{
-        "Event_Driven_Patterns" = "09.04.01_Event_Driven_Patterns"
-        "Stream_Processing_Patterns" = "09.04.02_Stream_Processing_Patterns"
-        "Integration_Patterns" = "09.04.03_Integration_Patterns"
-        "CQRS_and_Event_Sourcing" = "09.04.04_CQRS_and_Event_Sourcing"
-        "Reference_Architectures" = "09.04.05_Reference_Architectures"
+    @{ Parent = "02.01.02.04_Architecture_Patterns"; Map = @{
+        "Event_Driven_Patterns" = "02.01.02.04.01_Event_Driven_Patterns"
+        "Stream_Processing_Patterns" = "02.01.02.04.02_Stream_Processing_Patterns"
+        "Integration_Patterns" = "02.01.02.04.03_Integration_Patterns"
+        "CQRS_and_Event_Sourcing" = "02.01.02.04.04_CQRS_and_Event_Sourcing"
+        "Reference_Architectures" = "02.01.02.04.05_Reference_Architectures"
     }}
 )
 

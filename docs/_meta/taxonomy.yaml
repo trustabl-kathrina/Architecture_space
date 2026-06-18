@@ -16,6 +16,7 @@ sections:
       - 00.07_Solution_Blueprints
       - 00.08_Standards_And_Guidelines
       - 00.09_Enterprise_Strategy_And_Operating_Model
+      - 00.10_Data_Governance_And_Metadata
   - id: "01"
     path: 01_Data_Architecture
     title: "Data Architecture"
@@ -35,18 +36,75 @@ sections:
       - 02.03_Data_Orchestration_Architecture
       - 02.04_Data_Observability_Architecture
       - 02.05_Data_Reliability_Architecture
-  - id: "03"
-    path: 03_Data_Storage_Architecture
+      - 02.06_Data_Storage_Architecture
+  - id: "02.01"
+    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture
+    parent: "02"
+    title: "Data Ingestion Architecture"
+    description: "Batch, streaming, and near-real-time data ingestion."
+    subsections:
+      - 02.01.01_Batch_Ingestion
+      - 02.01.02_Streaming
+      - 02.01.03_Near_Real_Time_Ingestion
+      - 02.01.04_Shared_Foundations
+  - id: "02.01.01"
+    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.01_Batch_Ingestion
+    parent: "02.01"
+    domain_id: "02.01.01"
+    title: "Batch Ingestion"
+    description: "Scheduled bulk loads, file landing zones, ETL/ELT batch connectors, and batch cloud services."
+    subsections:
+      - 02.01.01.01_Fundamentals
+      - 02.01.01.02_Cloud_Services
+      - 02.01.01.03_Open_Source
+      - 02.01.01.04_Architecture_Patterns
+      - 02.01.01.05_Benchmarks
+      - 02.01.01.06_Comparisons
+      - 02.01.01.07_Interview_Questions
+      - 02.01.01.08_Integration_Patterns
+      - 02.01.01.09_Reference_Architectures
+  - id: "02.01.03"
+    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.03_Near_Real_Time_Ingestion
+    parent: "02.01"
+    domain_id: "02.01.03"
+    title: "Near Real Time Ingestion"
+    description: "Micro-batch and low-latency ingestion between batch and streaming."
+    subsections:
+      - 02.01.03.01_Fundamentals
+      - 02.01.03.02_Cloud_Services
+      - 02.01.03.04_Architecture_Patterns
+      - 02.01.03.05_Benchmarks
+      - 02.01.03.06_Comparisons
+      - 02.01.03.07_Interview_Questions
+      - 02.01.03.08_Integration_Patterns
+      - 02.01.03.09_Reference_Architectures
+  - id: "02.01.04"
+    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.04_Shared_Foundations
+    parent: "02.01"
+    domain_id: "02.01.04"
+    title: "Shared Foundations"
+    description: "Cross-mode data engineering vision, strategy, pipeline architecture, enterprise frameworks, and reference platforms."
+    subsections:
+      - 02.01.04.01_Overview
+      - 02.01.04.02_Data_Engineering_Strategy
+      - 02.01.04.03_Data_Pipeline_Architecture
+      - 02.01.04.04_Enterprise_Data_Frameworks
+      - 02.01.04.05_Reference_Architectures
+      - 02.01.04.06_Cross_Mode_Ingestion
+  - id: "02.06"
+    path: 02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture
+    parent: "02"
+    domain_id: "02.06"
     title: "Data Storage Architecture"
     description: "Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns."
     subsections:
-      - 03.01_Data_Lake
-      - 03.02_Data_Warehouse
-      - 03.03_Lakehouse
-      - 03.04_Data_Marts
-      - 03.05_Operational_Data_Store
-      - 03.06_Analytical_Stores
-      - 03.07_Storage_Patterns
+      - 02.06.01_Data_Lake
+      - 02.06.02_Data_Warehouse
+      - 02.06.03_Lakehouse
+      - 02.06.04_Data_Marts
+      - 02.06.05_Operational_Data_Store
+      - 02.06.06_Analytical_Stores
+      - 02.06.07_Storage_Patterns
   - id: "04"
     path: 04_Cloud_Data_Platforms
     title: "Cloud Data Platforms"
@@ -87,25 +145,27 @@ sections:
       - 06.07_Marketplace
       - 06.08_Data_Contracts
       - 06.09_Product_Governance
-  - id: "07"
-    path: 07_Data_Governance_And_Metadata
+  - id: "00.10"
+    path: 00_Architecture_Governance/00.10_Data_Governance_And_Metadata
+    parent: "00"
+    domain_id: "00.10"
     title: "Data Governance And Metadata"
     description: "Metadata management, catalog, lineage, quality, MDM, reference data, privacy, security, compliance, and governance operating model."
     subsections:
-      - 07.01_Metadata_Management
-      - 07.02_Data_Catalog
-      - 07.03_Data_Lineage
-      - 07.04_Data_Quality
-      - 07.05_Master_Data_Management
-      - 07.06_Reference_Data
-      - 07.07_Data_Privacy
-      - 07.08_Data_Security
-      - 07.09_Data_Compliance
-      - 07.10_Governance_Operating_Model
+      - 00.10.01_Metadata_Management
+      - 00.10.02_Data_Catalog
+      - 00.10.03_Data_Lineage
+      - 00.10.04_Data_Quality
+      - 00.10.05_Master_Data_Management
+      - 00.10.06_Reference_Data
+      - 00.10.07_Data_Privacy
+      - 00.10.08_Data_Security
+      - 00.10.09_Data_Compliance
+      - 00.10.10_Governance_Operating_Model
   - id: "08"
     path: 08_Analytics_Architecture
     title: "Analytics Architecture"
-    description: "BI, semantic layer, self-service analytics, dashboards, and analytics tools. Real-time OLAP engines live in section 10."
+    description: "BI, semantic layer, self-service analytics, dashboards, and analytics tools. Real-time OLAP engines live in 08.10."
     subsections:
       - 08.01_BI_Architecture
       - 08.02_Semantic_Layer
@@ -115,29 +175,35 @@ sections:
       - 08.07_PowerBI
       - 08.08_Looker
       - 08.09_Metabase
-  - id: "09"
-    path: 09_Event_And_Streaming_Architecture
-    title: "Event And Streaming Architecture"
+      - 08.10_Real_Time_Analytics_Architecture
+  - id: "02.01.02"
+    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming
+    parent: "02.01"
+    domain_id: "02.01.02"
+    title: "Streaming"
     description: "Event-driven architecture, stream processing, CDC, cloud streaming services, open source engines, patterns, benchmarks, comparisons, and interview questions."
     subsections:
-      - 09.01_Fundamentals
-      - 09.02_Cloud_Services
-      - 09.03_Open_Source
-      - 09.04_Architecture_Patterns
-      - 09.05_Benchmarks
-      - 09.06_Comparisons
-      - 09.07_Interview_Questions
-      - 09.08_Integration_Patterns
-  - id: "10"
-    path: 10_Real_Time_Analytics_Architecture
+      - 02.01.02.01_Fundamentals
+      - 02.01.02.02_Cloud_Services
+      - 02.01.02.03_Open_Source
+      - 02.01.02.04_Architecture_Patterns
+      - 02.01.02.05_Benchmarks
+      - 02.01.02.06_Comparisons
+      - 02.01.02.07_Interview_Questions
+      - 02.01.02.08_Integration_Patterns
+      - 02.01.02.09_Reference_Architectures
+  - id: "08.10"
+    path: 08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture
+    parent: "08"
+    domain_id: "08.10"
     title: "Real Time Analytics Architecture"
     description: "Real-time analytics engines, streaming analytics stores, serving patterns, and low-latency analytical workloads."
     subsections:
-      - 10.01_ClickHouse
-      - 10.02_Pinot
-      - 10.03_Druid
-      - 10.04_Elasticsearch
-      - 10.05_Streaming_Analytics
+      - 08.10.01_ClickHouse
+      - 08.10.02_Pinot
+      - 08.10.03_Druid
+      - 08.10.04_Elasticsearch
+      - 08.10.05_Streaming_Analytics
   - id: "11"
     path: 11_AI_Data_Architecture
     title: "AI Data Architecture"
@@ -152,20 +218,23 @@ sections:
       - 11.09_AI_Governance
       - 11.10_AI_Observability
       - 11.11_AI_FinOps
-  - id: "12"
-    path: 12_Agentic_AI_Architecture
+      - 11.12_Agentic_AI_Architecture
+  - id: "11.12"
+    path: 11_AI_Data_Architecture/11.12_Agentic_AI_Architecture
+    parent: "11"
+    domain_id: "11.12"
     title: "Agentic AI Architecture"
     description: "Agentic AI strategy, agent architecture, MCP/A2A, tool use, orchestration, AgentOps, multi-agent systems, and digital workforce architecture."
     subsections:
-      - 12.01_Fundamentals
-      - 12.02_Agent_Architecture
-      - 12.03_Agent_Design_Patterns
-      - 12.04_MCP
-      - 12.05_A2A
-      - 12.06_Agent_Orchestration
-      - 12.07_AgentOps
-      - 12.08_Multi_Agent_Systems
-      - 12.09_Digital_Workforce
+      - 11.12.01_Fundamentals
+      - 11.12.02_Agent_Architecture
+      - 11.12.03_Agent_Design_Patterns
+      - 11.12.04_MCP
+      - 11.12.05_A2A
+      - 11.12.06_Agent_Orchestration
+      - 11.12.07_AgentOps
+      - 11.12.08_Multi_Agent_Systems
+      - 11.12.09_Digital_Workforce
   - id: "13"
     path: 13_MLOps_Architecture
     title: "MLOps Architecture"

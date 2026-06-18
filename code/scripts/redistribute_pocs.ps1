@@ -77,31 +77,31 @@ function Relocate-IfExists([string]$SourceRel, [string]$DestRel, [string]$Sectio
 
 Write-Host "Phase 1: distribute POCs from section 18 to technology sections"
 
-# Streaming benchmarks -> 09.05_Benchmarks
+# Streaming benchmarks -> 02.01.02.05_Benchmarks
 $streamingBenchmarks = @(
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/04_Watermarks/Watermarks.md", "09_Event_And_Streaming_Architecture/09.05_Benchmarks/Watermarks.md", "09.05", "concept"),
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/05_Windowing/Windowing.md", "09_Event_And_Streaming_Architecture/09.05_Benchmarks/Windowing.md", "09.05", "concept"),
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/07_Streaming_Design_Patterns/Streaming_Design_Patterns.md", "09_Event_And_Streaming_Architecture/09.05_Benchmarks/Streaming_Design_Patterns.md", "09.05", "concept")
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/04_Watermarks/Watermarks.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Watermarks.md", "02.01.02.05", "concept"),
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/05_Windowing/Windowing.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Windowing.md", "02.01.02.05", "concept"),
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/07_Streaming_Design_Patterns/Streaming_Design_Patterns.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Streaming_Design_Patterns.md", "02.01.02.05", "concept")
 )
 foreach ($m in $streamingBenchmarks) { Move-PocFile $m[0] $m[1] $m[2] $m[3] }
 
-# Relocate copies already sitting in 09.01 fundamentals into benchmarks
-Relocate-IfExists "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Watermarks.md" "09_Event_And_Streaming_Architecture/09.05_Benchmarks/Watermarks.md" "09.05"
-Relocate-IfExists "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Windowing.md" "09_Event_And_Streaming_Architecture/09.05_Benchmarks/Windowing.md" "09.05"
-Relocate-IfExists "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Streaming_Design_Patterns.md" "09_Event_And_Streaming_Architecture/09.05_Benchmarks/Streaming_Design_Patterns.md" "09.05"
+# Relocate copies already sitting in 02.01.02.01 fundamentals into benchmarks
+Relocate-IfExists "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Watermarks.md" "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Watermarks.md" "02.01.02.05"
+Relocate-IfExists "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Windowing.md" "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Windowing.md" "02.01.02.05"
+Relocate-IfExists "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Streaming_Design_Patterns.md" "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Streaming_Design_Patterns.md" "02.01.02.05"
 
-# Streaming fundamentals (stubs + concepts) -> 09.01
+# Streaming fundamentals (stubs + concepts) -> 02.01.02.01
 $streamingFundamentals = @(
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/01_Event_Driven_Architecture/Event_Driven_Architecture.md", "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Event_Driven_Architecture.md", "09.01"),
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/02_Streaming_vs_Batch/Streaming_vs_Batch.md", "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Streaming_vs_Batch.md", "09.01"),
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/03_Event_Time_vs_Processing_Time/Event_Time_vs_Processing_Time.md", "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Event_Time_vs_Processing_Time.md", "09.01"),
-    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/06_Exactly_Once_Semantics/Exactly_Once_Semantics.md", "09_Event_And_Streaming_Architecture/09.01_Fundamentals/Exactly_Once_Semantics.md", "09.01")
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/01_Event_Driven_Architecture/Event_Driven_Architecture.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Event_Driven_Architecture.md", "02.01.02.01"),
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/02_Streaming_vs_Batch/Streaming_vs_Batch.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Streaming_vs_Batch.md", "02.01.02.01"),
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/03_Event_Time_vs_Processing_Time/Event_Time_vs_Processing_Time.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Event_Time_vs_Processing_Time.md", "02.01.02.01"),
+    @("18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.01_Fundamentals/06_Exactly_Once_Semantics/Exactly_Once_Semantics.md", "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.01_Fundamentals/Exactly_Once_Semantics.md", "02.01.02.01")
 )
 foreach ($m in $streamingFundamentals) { Move-PocFile $m[0] $m[1] $m[2] }
 
 # GCP Pub/Sub POC -> cloud streaming services
 Move-PocFile "18.01_Streaming/22.04_Data_Engineering/22.04.21_Streaming_Architecture/22.04.21.02_Streaming_Platforms/01_Event_Streaming/01_Cloud_Native/01_GCP/PubSub/PubSub.md" `
-    "09_Event_And_Streaming_Architecture/09.02_Cloud_Services/GCP_PubSub_POC.md" "09.02" "evaluation"
+    "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.02_Cloud_Services/GCP_PubSub_POC.md" "02.01.02.02" "evaluation"
 
 # RAG / GenAI POC evaluations -> 11.03_RAG
 $ragPocs = @(
@@ -123,7 +123,7 @@ $genaiDistribution = @(
     @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/01_Overview/01_GenAI_Architecture_Overview.md", "11_AI_Data_Architecture/11.01_AI_Ready_Data_Platform/GenAI_Architecture_Overview.md", "11.01"),
     @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/02_Foundation_Model_Strategy/02_Foundation_Model_Strategy.md", "11_AI_Data_Architecture/11.01_AI_Ready_Data_Platform/Foundation_Model_Strategy.md", "11.01"),
     @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/04_GenAI_Data_Architecture/04_GenAI_Data_Architecture.md", "11_AI_Data_Architecture/11.01_AI_Ready_Data_Platform/GenAI_Data_Architecture.md", "11.01"),
-    @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/05_Orchestration_And_Application_Layer/05_Orchestration_And_Application_Layer.md", "12_Agentic_AI_Architecture/12.06_Agent_Orchestration/GenAI_Orchestration_And_Application_Layer.md", "12.06"),
+    @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/05_Orchestration_And_Application_Layer/05_Orchestration_And_Application_Layer.md", "11_AI_Data_Architecture\11.11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/11.12.06_Agent_Orchestration/GenAI_Orchestration_And_Application_Layer.md", "11.12.06"),
     @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/06_GenAI_Security_And_Guardrails/06_GenAI_Security_And_Guardrails.md", "14_Security_And_Privacy_Architecture/14.08_AI_Security/GenAI_Security_And_Guardrails.md", "14.08"),
     @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/07_GenAI_Infrastructure_And_FinOps/07_GenAI_Infrastructure_And_FinOps.md", "11_AI_Data_Architecture/11.11_AI_FinOps/GenAI_Infrastructure_And_FinOps.md", "11.11"),
     @("18.01_Streaming/22.06_AI_Architecture/22.06.14_Generative_AI_Architecture/08_GenAI_Evaluation_And_Observability/08_GenAI_Evaluation_And_Observability.md", "11_AI_Data_Architecture/11.10_AI_Observability/GenAI_Evaluation_And_Observability.md", "11.10"),
@@ -165,9 +165,9 @@ POCs and benchmarks are distributed by technology domain — not centralized in 
 
 ## Streaming and event processing
 
-- [09 Event and Streaming Architecture](../09_Event_And_Streaming_Architecture/README.md)
-  - [Benchmarks](../09_Event_And_Streaming_Architecture/09.05_Benchmarks/Watermarks.md) — Watermarks, Windowing, design patterns
-  - [Cloud services](../09_Event_And_Streaming_Architecture/09.02_Cloud_Services/GCP_PubSub_POC.md) — GCP Pub/Sub POC
+- [09 Event and Streaming Architecture](../02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming/README.md)
+  - [Benchmarks](../02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/Watermarks.md) — Watermarks, Windowing, design patterns
+  - [Cloud services](../02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.02_Cloud_Services/GCP_PubSub_POC.md) — GCP Pub/Sub POC
 
 ## AI, RAG, and GenAI
 
@@ -178,7 +178,7 @@ POCs and benchmarks are distributed by technology domain — not centralized in 
 
 ## Agentic AI and security
 
-- [12 Agentic AI Architecture](../12_Agentic_AI_Architecture/12.06_Agent_Orchestration/GenAI_Orchestration_And_Application_Layer.md)
+- [12 Agentic AI Architecture](../11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/11.12.06_Agent_Orchestration/GenAI_Orchestration_And_Application_Layer.md)
 - [14 Security and Privacy](../14_Security_And_Privacy_Architecture/14.08_AI_Security/GenAI_Security_And_Guardrails.md)
 
 ## Technology comparisons
@@ -190,7 +190,7 @@ Write-Doc (Join-Path $DocsRoot "_meta/poc_index.md") $pocIndex
 $benchReadme = @"
 ---
 title: Streaming Benchmarks
-section: "09.05"
+section: "02.01.02.05"
 status: complete
 template: overview
 last_reviewed: $Today
@@ -214,7 +214,7 @@ Hands-on streaming architecture evaluations and benchmark notes for event-driven
 - [Event and Streaming Architecture](../README.md)
 - [POC Index](../../_meta/poc_index.md)
 "@
-Write-Doc (Join-Path $DocsRoot "09_Event_And_Streaming_Architecture/09.05_Benchmarks/README.md") $benchReadme
+Write-Doc (Join-Path $DocsRoot "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.05_Benchmarks/README.md") $benchReadme
 
 Write-Host "Phase 4: remove central POC section"
 if (Test-Path $PocSection) {
