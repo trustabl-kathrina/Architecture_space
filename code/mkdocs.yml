@@ -67,7 +67,7 @@ nav:
       - "02.01.04 Shared Foundations": 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.04_Shared_Foundations/README.md
       - "02.06 Data Storage": 02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/README.md
       - "04 Cloud Data Platforms": 04_Cloud_Data_Platforms/README.md
-      - "05 Data Modeling": 05_Data_Modeling_Architecture/README.md
+      - "05 Data Modeling": 04_Data_Modeling_Architecture/README.md
       - "06 Data Products": 06_Data_Product_Architecture/README.md
   - Analytics And AI:
       - "08 Analytics": 08_Analytics_Architecture/README.md

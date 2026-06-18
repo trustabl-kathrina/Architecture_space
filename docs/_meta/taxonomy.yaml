@@ -117,20 +117,15 @@ sections:
       - 04.05_Lakehouse_Platforms
       - 04.06_FinOps
   - id: "05"
-    path: 05_Data_Modeling_Architecture
+    path: 04_Data_Modeling_Architecture
     title: "Data Modeling Architecture"
-    description: "Conceptual, logical, physical, dimensional, Data Vault, canonical, semantic, TMF SID, and industry modeling."
+    description: "Traditional, enterprise, modern, and industry reference data modeling."
     subsections:
-      - 05.01_Fundamentals
-      - 05.02_Conceptual_Modeling
-      - 05.03_Logical_Modeling
-      - 05.04_Physical_Modeling
-      - 05.05_Dimensional_Modeling
-      - 05.06_DataVault_2_0
-      - 05.07_Canonical_Modeling
-      - 05.08_Semantic_Modeling
-      - 05.09_TMF_SID
-      - 05.10_Industry_Models
+      - 05.01_Traditional
+      - 05.02_Enterprise
+      - 05.03_Modern
+      - 05.04_Industry_Reference_Models
+      - 05.05_Cross_Cutting_Standards
   - id: "06"
     path: 06_Data_Product_Architecture
     title: "Data Product Architecture"
