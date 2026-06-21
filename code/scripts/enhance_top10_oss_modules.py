@@ -605,8 +605,8 @@ SPECS = [
     ("02.03.03.02_Apache_Airflow_Learning_Guide", AIRFLOW),
     ("02.03.03.03_Prefect_Learning_Guide", PREFECT),
     ("02.03.03.04_Dagster_Learning_Guide", DAGSTER),
-    ("02.03.03.10_Temporal_Learning_Guide", TEMPORAL),
-    ("02.03.03.11_Argo_Workflows_Learning_Guide", ARGO),
+    ("02.03.03.05_Temporal_Learning_Guide", TEMPORAL),
+    ("02.03.03.06_Argo_Workflows_Learning_Guide", ARGO),
 ]
 
 SUFFIX = {
@@ -618,15 +618,20 @@ SUFFIX = {
 
 def main():
     updated = 0
+    skipped = 0
     for folder, blocks in SPECS:
-        sec = folder.split("_")[0]  # 02.03.03.02
+        sec = folder.split("_")[0]  # e.g. 02.03.03.02 from 02.03.03.02_Apache_Airflow_Learning_Guide
         for num, block in blocks.items():
             mod = SUFFIX[num].split("_", 1)[1].replace(".md", "")
             fname = f"{sec}.{num}_{mod}.md"
             path = os.path.join(BASE, folder, fname)
+            if not os.path.isfile(path):
+                print(f"SKIP missing: {path}")
+                skipped += 1
+                continue
             if insert_before_related(path, block):
                 updated += 1
-    print(f"Enhanced {updated} module files")
+    print(f"Enhanced {updated} module files ({skipped} skipped)")
 
 if __name__ == "__main__":
     main()

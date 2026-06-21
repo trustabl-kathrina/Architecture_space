@@ -11,8 +11,8 @@ function Write-Doc($RelativePath, $Meta, $Body) {
 }
 
 $files = @{
-    "03_Data_Architecture/02.05.01_Overview/What_Is_Data_Architecture.md" = @{
-        title = "What Is Data Architecture"; section = "02.05.01"
+    "01_Data_Architecture/01.01_Fundamentals/Overview/What_Is_Data_Architecture.md" = @{
+        title = "What Is Data Architecture"; section = "01.01"
         body = @'
 # What Is Data Architecture
 
@@ -26,7 +26,7 @@ Data architecture defines how enterprise data is structured, integrated, governe
 In scope: data models, domains, integration patterns, metadata. Out of scope: application UI design, network infrastructure.
 
 ## Related
-- [Data Architecture Framework](../02.05.02_Data_Architecture_Framework/Data_Architecture_Framework.md)
+- [Data Architecture Framework](../Data_Architecture_Framework/Data_Architecture_Framework.md)
 - [Data Mesh Hub](../../hubs/Data_Mesh_Hub.md)
 '@
     }

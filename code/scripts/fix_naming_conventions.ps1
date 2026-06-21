@@ -83,8 +83,8 @@ $DeTopicGroupMap = @{
     "Data_Quality_Engineering"      = "02.04_Data_Observability_Architecture"
     "Performance_Optimization"      = "02.02_Data_Transformation_Architecture"
     "AI_Assisted_Data_Engineering"  = "02.03_Data_Orchestration_Architecture"
-    "Data_Engineering_Governance"   = ""
-    "Data_Engineering_Maturity"     = ""
+    "Data_Engineering_Governance"   = "02.03_Data_Orchestration_Architecture"
+    "Data_Engineering_Maturity"     = "02.04_Data_Observability_Architecture"
 }
 
 # Cost optimization belongs in cloud FinOps
@@ -131,6 +131,7 @@ Write-Host "  Renamed/merged: $($Stats.folders_renamed)"
 Write-Host "Phase 2: reorganize section 02 topic groups into correct subsections"
 $deRoot = Join-Path $DocsRoot "02_Data_Engineering_Architecture"
 foreach ($entry in $DeTopicGroupMap.GetEnumerator()) {
+    if ([string]::IsNullOrWhiteSpace($entry.Value)) { continue }
     $srcDir = Join-Path $deRoot "02.01_Data_Ingestion_Architecture\$($entry.Key)"
     $destSub = Join-Path $deRoot $entry.Value
     if (-not (Test-Path $srcDir)) { continue }

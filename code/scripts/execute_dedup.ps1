@@ -263,7 +263,8 @@ $keepIn201 = @("04.01_Overview", "04.02_Data_Engineering_Strategy", "04.05_Data_
     "04.20_Cost_Optimization", "04.21_AI_Assisted_Data_Engineering", "04.22_Reference_Architectures",
     "04.23_Data_Engineering_Governance", "04.24_Data_Engineering_Maturity")
 
-# Reliability topics from 02.04 -> 02.05
+# Reliability topics from 02.04 observability root -> dedicated reliability folder under 02.04
+# (02.05 is Data Storage; legacy 02.05_Data_Reliability_Architecture was removed)
 $reliabilityNames = @(
     "Reliability_Architecture.md", "Reliability_Engineering.md", "Reliability_Metrics.md", "Reliability_Scorecard.md",
     "Resilience_Patterns.md", "Recovery_Strategies.md", "Disaster_Recovery.md", "DRE_Framework.md",
@@ -271,7 +272,7 @@ $reliabilityNames = @(
     "RCA_Framework.md", "Root_Cause_Analysis.md", "Failure_Analysis.md", "Incident_Management.md"
 )
 $obsRoot = Join-Path $deRoot "02.04_Data_Observability_Architecture"
-$relRoot = Join-Path $deRoot ""
+$relRoot = Join-Path $obsRoot "Reliability_Engineering"
 Ensure-Dir $relRoot
 foreach ($name in $reliabilityNames) {
     $src = Join-Path $obsRoot $name
