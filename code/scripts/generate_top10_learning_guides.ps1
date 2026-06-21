@@ -5,8 +5,7 @@ $Base = [System.IO.Path]::GetFullPath($Base)
 $RemoveFolders = @(
     "02.03.03.05_Cloud_Composer_Learning_Guide", "02.03.03.06_MWAA_Learning_Guide",
     "02.03.03.07_Azure_Data_Factory_Learning_Guide", "02.03.03.08_Step_Functions_Learning_Guide",
-    "02.03.03.09_Cloud_Workflows_Learning_Guide",
-    "02.03.03.10_Temporal_Learning_Guide", "02.03.03.11_Argo_Workflows_Learning_Guide"
+    "02.03.03.09_Cloud_Workflows_Learning_Guide"
 )
 
 $Techs = @(
