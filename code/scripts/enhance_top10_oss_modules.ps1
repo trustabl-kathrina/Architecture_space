@@ -31,6 +31,7 @@ function Insert-BeforeRelated([string]$Path, [string]$Block) {
 }
 
 $py = [IO.File]::ReadAllText($PySource, $utf8)
+# Top 10 slot map: .05 Temporal, .06 Argo — .10 Metaflow, .11 Mage (not Temporal/Argo)
 $Specs = @(
     @{ Folder = "02.03.03.02_Apache_Airflow_Learning_Guide"; Var = "AIRFLOW" },
     @{ Folder = "02.03.03.03_Prefect_Learning_Guide"; Var = "PREFECT" },
@@ -54,7 +55,7 @@ foreach ($spec in $Specs) {
         $fname = "$sec.$num`_$mod.md"
         $path = Join-Path (Join-Path $Base $spec.Folder) $fname
         if (-not [IO.File]::Exists($path)) {
-            Write-Warning "SKIP missing: $path"
+            Write-Error "Missing guide module (check SPECS folder IDs): $path"
             $skipped++
             continue
         }
@@ -62,3 +63,4 @@ foreach ($spec in $Specs) {
     }
 }
 Write-Host "Enhanced $updated module files ($skipped skipped)"
+if ($skipped -gt 0) { exit 1 }

@@ -601,6 +601,10 @@ Time 100-step fan-out on n nodes; measure pod scheduling latency p99; stress art
 """,
 }
 
+# Top 10 slot map (see 02.03.03.01.01_Top_10_Orchestration_Technologies.md):
+#   .02 Airflow | .03 Prefect | .04 Dagster | .05 Temporal | .06 Argo
+#   .07 Kestra  | .08 Flyte   | .09 Luigi   | .10 Metaflow | .11 Mage
+# Do NOT point Temporal/Argo at .10/.11 — those folders are Metaflow/Mage.
 SPECS = [
     ("02.03.03.02_Apache_Airflow_Learning_Guide", AIRFLOW),
     ("02.03.03.03_Prefect_Learning_Guide", PREFECT),
@@ -626,12 +630,14 @@ def main():
             fname = f"{sec}.{num}_{mod}.md"
             path = os.path.join(BASE, folder, fname)
             if not os.path.isfile(path):
-                print(f"SKIP missing: {path}")
+                print(f"ERROR missing guide module: {path}", file=__import__("sys").stderr)
                 skipped += 1
                 continue
             if insert_before_related(path, block):
                 updated += 1
     print(f"Enhanced {updated} module files ({skipped} skipped)")
+    if skipped:
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     main()
