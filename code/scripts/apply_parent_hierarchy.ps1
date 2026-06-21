@@ -16,10 +16,10 @@ $SectionMoves = @(
         NewPrefix = "00.10."
     },
     @{
-        Old = "02_Data_Engineering_Architecture\02.06_Data_Storage_Architecture"
-        New = "02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture"
+        Old = "02_Data_Engineering_Architecture\02.05_Data_Storage_Architecture"
+        New = "02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture"
         OldPrefix = "03."
-        NewPrefix = "02.06."
+        NewPrefix = "02.05."
     },
     @{
         Old = "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming"

@@ -9,7 +9,7 @@ Five former top-level sections were nested under parent folders. Flat legacy num
 | Former flat # | Current domain ID | Parent | Path |
 | --- | --- | --- | --- |
 | 07 | **00.10** | 00 Architecture Governance | `00_Architecture_Governance/00.10_Data_Governance_And_Metadata/` |
-| 03 | **02.06** | 02 Data Engineering | `02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/` |
+| 03 | **02.05** | 02 Data Engineering | `02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/` |
 | 09 | **02.07** | 02 Data Engineering | `02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming/` |
 | 10 | **08.10** | 08 Analytics | `08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture/` |
 | 12 | **11.12** | 11 AI Data | `11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/` |
@@ -34,5 +34,5 @@ Folder names, taxonomy `id`, front matter `section:`, and cross-links all follow
 
 ## Metadata
 
-- `docs/_meta/taxonomy.yaml` — domain entries use IDs `02.06`, `00.10`, `02.07`, `08.10`, `11.12`
+- `docs/_meta/taxonomy.yaml` — domain entries use IDs `02.05`, `00.10`, `02.07`, `08.10`, `11.12`
 - `docs/README.md`, `docs/CONTRIBUTING.md`, `code/mkdocs.yml`

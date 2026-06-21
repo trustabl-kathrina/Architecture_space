@@ -1,0 +1,40 @@
+---
+title: Azure Stream Analytics Learning Guide
+section: "02.02.02.03.07"
+status: complete
+template: hub
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [azure, streaming, top-10]
+canonical: true
+---
+# Azure Stream Analytics Learning Guide
+
+> **Rank #6** in [Top 10 Streaming Transformation Technologies](../02.02.02.03.01_Overview/02.02.02.03.01.01_Top_10_Streaming_Transformation_Technologies.md).
+
+Structured learning path for **SQL-based real-time transformation on Event Hubs and IoT Hub**.
+
+
+## Prerequisites
+
+- Stream SQL, Azure Event Hubs
+
+## Modules
+
+| # | Module | Focus |
+| ---: | --- | --- |
+| 1 | [Overview](02.02.02.03.07.01_Overview.md) | What it is, mental model, when to use |
+| 2 | [Architecture](02.02.02.03.07.02_Architecture.md) | Components, execution model, data flow |
+| 3 | [How To Use](02.02.02.03.07.03_How_To_Use.md) | Author, deploy, test, operate transforms |
+| 4 | [Scenarios](02.02.02.03.07.04_Scenarios.md) | Enterprise medallion, SCD, conformed layers |
+| 5 | [Limitations And Scenarios](02.02.02.03.07.05_Limitations_And_Scenarios.md) | Quotas, constraints, anti-patterns |
+| 6 | [Costing](02.02.02.03.07.06_Costing.md) | Compute, storage, licensing cost models |
+| 7 | [Production Configuration](02.02.02.03.07.07_Production_Configuration.md) | HA, security, monitoring, SLAs |
+| 8 | [Evaluation Criteria](02.02.02.03.07.08_Evaluation_Criteria.md) | Scorecard vs peer technologies |
+| 9 | [Benchmarking](02.02.02.03.07.09_Benchmarking.md) | Reference workloads and sizing profiles |
+
+## Quick links
+
+- [Mode README](../README.md)
+- [Official documentation](https://learn.microsoft.com/azure/stream-analytics/)
+- [Official pricing](https://azure.microsoft.com/pricing/details/stream-analytics/)

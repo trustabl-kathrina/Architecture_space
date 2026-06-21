@@ -83,8 +83,8 @@ $DeTopicGroupMap = @{
     "Data_Quality_Engineering"      = "02.04_Data_Observability_Architecture"
     "Performance_Optimization"      = "02.02_Data_Transformation_Architecture"
     "AI_Assisted_Data_Engineering"  = "02.03_Data_Orchestration_Architecture"
-    "Data_Engineering_Governance"   = "02.05_Data_Reliability_Architecture"
-    "Data_Engineering_Maturity"     = "02.05_Data_Reliability_Architecture"
+    "Data_Engineering_Governance"   = ""
+    "Data_Engineering_Maturity"     = ""
 }
 
 # Cost optimization belongs in cloud FinOps

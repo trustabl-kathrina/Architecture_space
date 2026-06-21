@@ -36,13 +36,13 @@ Thank you for contributing to the architecture documentation. This guide explain
 | Range | Sections |
 | --- | --- |
 | Foundations | `00_Architecture_Governance` (incl. `00.10` governance), `01_Data_Architecture` |
-| Data Platform | `02_Data_Engineering_Architecture` (incl. `02.06` storage, `02.01.02` streaming under `02.01`), `04`–`06` |
+| Data Platform | `02_Data_Engineering_Architecture` (incl. `02.05` storage, `02.01.02` streaming under `02.01`), `04`–`06` |
 | Analytics and AI | `08_Analytics_Architecture` (incl. `08.10` real-time), `11_AI_Data_Architecture` (incl. `11.12` agentic), `13_MLOps_Architecture` |
 | Assurance and Industry | `14_Security_And_Privacy_Architecture`, `15_Industry_Reference_Architectures` |
 | Practitioner | `16_Architecture_Interview_Preparation` through `19_Templates_And_Frameworks` |
 | Product | `20_Pluto_MIND` |
 
-Use hierarchical IDs **02.06**, **00.10**, **02.01.02** (streaming under data ingestion), **08.10**, and **11.12** at every level.
+Use hierarchical IDs **02.05**, **00.10**, **02.01.02** (streaming under data ingestion), **08.10**, and **11.12** at every level.
 
 POCs and benchmarks live in the relevant technology section (see [POC Index](_meta/poc_index.md)).
 

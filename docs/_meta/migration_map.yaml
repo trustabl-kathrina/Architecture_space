@@ -1525,280 +1525,280 @@ items:
     new_path: "docs/00_Architecture_Governance/00.03_Architecture_Decision_Records/02_Enterprise_Architecture/ADR_008_Target_State_Architecture.md"
     status: draft
     migration_action: copied
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Deliverables.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Deliverables.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Deliverables.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Deliverables.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Maturity_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Maturity_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Maturity_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Maturity_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Mission.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Mission.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Mission.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Mission.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Principles.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Principles.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Principles.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Principles.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Roles.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Roles.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Roles.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Roles.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Target_State.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Target_State.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Target_State.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Target_State.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Data_Architecture_Vision.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Data_Architecture_Vision.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Data_Architecture_Vision.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Data_Architecture_Vision.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/Enterprise_Data_Strategy_Alignment.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/Enterprise_Data_Strategy_Alignment.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/Enterprise_Data_Strategy_Alignment.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/Enterprise_Data_Strategy_Alignment.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.01_Overview/What_Is_Data_Architecture.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.01_Overview/What_Is_Data_Architecture.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.01_Overview/What_Is_Data_Architecture.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.01_Overview/What_Is_Data_Architecture.md"
     status: complete
     migration_action: copied
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/DAMA_DMBOK_Alignment.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/DAMA_DMBOK_Alignment.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/DAMA_DMBOK_Alignment.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/DAMA_DMBOK_Alignment.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Data_Architecture_Framework.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Data_Architecture_Framework.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Data_Architecture_Framework.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Data_Architecture_Framework.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Data_Architecture_Guiding_Principles.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Data_Architecture_Guiding_Principles.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Data_Architecture_Guiding_Principles.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Data_Architecture_Guiding_Principles.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Data_Architecture_Reference_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Data_Architecture_Reference_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Data_Architecture_Reference_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Data_Architecture_Reference_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Data_Architecture_Roadmap.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Data_Architecture_Roadmap.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Data_Architecture_Roadmap.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Data_Architecture_Roadmap.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Data_Architecture_Standards.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Data_Architecture_Standards.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Data_Architecture_Standards.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Data_Architecture_Standards.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Data_Decision_Framework.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Data_Decision_Framework.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Data_Decision_Framework.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Data_Decision_Framework.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/DCAM_Alignment.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/DCAM_Alignment.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/DCAM_Alignment.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/DCAM_Alignment.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.02_Data_Architecture_Framework/Enterprise_Data_Operating_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.02_Data_Architecture_Framework/Enterprise_Data_Operating_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.02_Data_Architecture_Framework/Enterprise_Data_Operating_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.02_Data_Architecture_Framework/Enterprise_Data_Operating_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Data_Vault_Standards.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Data_Vault_Standards.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Data_Vault_Standards.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Dimensional_Modeling_Guidelines.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Dimensional_Modeling_Guidelines.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Dimensional_Modeling_Guidelines.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Enterprise_Canonical_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Enterprise_Canonical_Model.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Enterprise_Canonical_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Enterprise_Conceptual_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Enterprise_Conceptual_Model.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Enterprise_Conceptual_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Enterprise_Logical_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Enterprise_Logical_Model.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Enterprise_Logical_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Modeling_Standards.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Modeling_Standards.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Modeling_Standards.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.03_Enterprise_Data_Modeling/Naming_Standards.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.03_Enterprise_Data_Modeling/Naming_Standards.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Naming_Standards.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Customer_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Customer_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Customer_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Customer_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Domain_Boundaries.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Domain_Boundaries.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Domain_Boundaries.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Domain_Boundaries.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Domain_Data_Products.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Domain_Data_Products.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Domain_Data_Products.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Domain_Data_Products.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Domain_Identification.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Domain_Identification.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Domain_Identification.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Domain_Identification.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Domain_Interaction_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Domain_Interaction_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Domain_Interaction_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Domain_Interaction_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Domain_Ownership_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Domain_Ownership_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Domain_Ownership_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Domain_Ownership_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Enterprise_Domain_Map.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Enterprise_Domain_Map.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Enterprise_Domain_Map.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Enterprise_Domain_Map.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Finance_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Finance_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Finance_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Finance_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Marketing_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Marketing_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Marketing_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Marketing_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Network_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Network_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Network_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Network_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Product_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Product_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Product_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Product_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Sales_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Sales_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Sales_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Sales_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.04_Data_Domain_Architecture/Supply_Chain_Domain.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.04_Data_Domain_Architecture/Supply_Chain_Domain.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.04_Data_Domain_Architecture/Supply_Chain_Domain.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.04_Data_Domain_Architecture/Supply_Chain_Domain.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Business_Glossary_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Business_Glossary_Model.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Business_Glossary_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Enterprise_Information_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Enterprise_Information_Model.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Enterprise_Information_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Enterprise_Taxonomy.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Enterprise_Taxonomy.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Enterprise_Taxonomy.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Architecture_Standards.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Architecture_Standards.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Architecture_Standards.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Classification.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Classification.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Classification.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Domains.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Domains.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Domains.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Flow_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Flow_Model.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Flow_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Lifecycle.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Lifecycle.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Lifecycle.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Ownership.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Ownership.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Ownership.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.05_Enterprise_Information_Architecture/Information_Value_Framework.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.05_Enterprise_Information_Architecture/Information_Value_Framework.md"
     new_path: "docs/05_Data_Modeling_Architecture/05.01_Fundamentals/Information_Value_Framework.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Architecture_Patterns.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Architecture_Patterns.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Architecture_Patterns.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Canvas.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Canvas.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Canvas.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Classification.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Classification.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Classification.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Discovery.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Discovery.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Discovery.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Framework.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Framework.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Framework.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Lifecycle.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Lifecycle.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Lifecycle.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Marketplace.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Marketplace.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Marketplace.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Metadata_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Metadata_Model.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Metadata_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Quality_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Quality_Model.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Quality_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_Reference_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_Reference_Model.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_Reference_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.06_Data_Product_Architecture/Data_Product_SLA_Framework.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.06_Data_Product_Architecture/Data_Product_SLA_Framework.md"
     new_path: "docs/06_Data_Product_Architecture/06.01_Fundamentals/Data_Product_SLA_Framework.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Data_Mesh_Principles.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Data_Mesh_Principles.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Data_Mesh_Principles.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Data_Mesh_Principles.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Data_Product_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Data_Product_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Data_Product_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Data_Product_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Domain_Architecture.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Domain_Architecture.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Domain_Architecture.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Domain_Architecture.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Domain_Owned_Data.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Domain_Owned_Data.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Domain_Owned_Data.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Domain_Owned_Data.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Federated_Governance.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Federated_Governance.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Federated_Governance.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Federated_Governance.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Mesh_Governance.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Mesh_Governance.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Mesh_Governance.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Mesh_Governance.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Mesh_Maturity_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Mesh_Maturity_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Mesh_Maturity_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Mesh_Maturity_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Mesh_Operating_Model.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Mesh_Operating_Model.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Mesh_Operating_Model.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Mesh_Operating_Model.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Mesh_Reference_Architecture.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Mesh_Reference_Architecture.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Mesh_Reference_Architecture.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Mesh_Reference_Architecture.md"
     status: stub
     migration_action: planned_stub
-  - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.07_Data_Mesh_Architecture/Self_Service_Platform.md"
-    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.06.07_Data_Mesh_Architecture/Self_Service_Platform.md"
+  - old_path: "Enterprise Transformation/03_Data_Architecture/02.05.07_Data_Mesh_Architecture/Self_Service_Platform.md"
+    new_path: "docs/01_Data_Architecture/01.01_Fundamentals/02.05.07_Data_Mesh_Architecture/Self_Service_Platform.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/03_Data_Architecture/02.06.08_Data_Fabric_Architecture/Active_Metadata.md"
@@ -8850,147 +8850,147 @@ items:
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Curated_Zone_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Curated_Zone_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Curated_Zone_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Data_Lake_Anti_Patterns.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Data_Lake_Anti_Patterns.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Data_Lake_Anti_Patterns.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Data_Lake_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Data_Lake_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Data_Lake_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Governance.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Lake_Governance.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Lake_Governance.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Metadata_Model.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Lake_Metadata_Model.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Lake_Metadata_Model.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Optimization.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Lake_Optimization.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Lake_Optimization.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Security.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Lake_Security.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Lake_Security.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Raw_Zone_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Raw_Zone_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Raw_Zone_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Trusted_Zone_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Trusted_Zone_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Trusted_Zone_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Data_Mart_Consolidation.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Data_Mart_Consolidation.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Data_Mart_Consolidation.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Hybrid_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Hybrid_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Hybrid_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Legacy_Warehouse_Assessment.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Legacy_Warehouse_Assessment.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Legacy_Warehouse_Assessment.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Migration_Roadmap.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Migration_Roadmap.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Migration_Roadmap.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Modernization_Case_Studies.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Modernization_Case_Studies.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Modernization_Case_Studies.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_Decommissioning.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Warehouse_Decommissioning.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Warehouse_Decommissioning.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_Migration_Strategy.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Warehouse_Migration_Strategy.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Warehouse_Migration_Strategy.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_Modernization_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Warehouse_Modernization_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Warehouse_Modernization_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_To_Lakehouse.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Warehouse_To_Lakehouse.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Warehouse_To_Lakehouse.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Apache_Hudi.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Apache_Hudi.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Apache_Hudi.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Apache_Iceberg.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Apache_Iceberg.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Apache_Iceberg.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Delta_Lake.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Delta_Lake.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Delta_Lake.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Format_Comparison_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Format_Comparison_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Format_Comparison_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Format_Selection_Guidelines.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Format_Selection_Guidelines.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Format_Selection_Guidelines.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Interoperability_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Interoperability_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Interoperability_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Metadata_Management.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Metadata_Management.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Metadata_Management.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Open_Table_Format_Strategy.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Open_Table_Format_Strategy.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Open_Table_Format_Strategy.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Table_Governance.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Table_Governance.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Table_Governance.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Archival_Strategy.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Archival_Strategy.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Archival_Strategy.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Data_Retention.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Data_Retention.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Data_Retention.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Object_Storage_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Object_Storage_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Object_Storage_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Benchmarking.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Storage_Benchmarking.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Storage_Benchmarking.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Governance.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Storage_Governance.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Storage_Governance.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Optimization.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Storage_Optimization.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Storage_Optimization.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Reference_Model.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Storage_Reference_Model.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Storage_Reference_Model.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Security.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Storage_Security.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Storage_Security.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Tiering.md"
-    new_path: "docs/02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/02.06.03_Lakehouse/Storage_Tiering.md"
+    new_path: "docs/02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/02.05.03_Lakehouse/Storage_Tiering.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.10_Compute_Architecture/Compute_Benchmarking.md"

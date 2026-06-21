@@ -271,7 +271,7 @@ $reliabilityNames = @(
     "RCA_Framework.md", "Root_Cause_Analysis.md", "Failure_Analysis.md", "Incident_Management.md"
 )
 $obsRoot = Join-Path $deRoot "02.04_Data_Observability_Architecture"
-$relRoot = Join-Path $deRoot "02.05_Data_Reliability_Architecture"
+$relRoot = Join-Path $deRoot ""
 Ensure-Dir $relRoot
 foreach ($name in $reliabilityNames) {
     $src = Join-Path $obsRoot $name

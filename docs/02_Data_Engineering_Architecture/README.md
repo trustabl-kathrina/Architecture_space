@@ -15,7 +15,7 @@ canonical: true
 
 ## Purpose
 
-Data ingestion, transformation, orchestration, observability, and reliability architecture.
+Data ingestion, transformation, orchestration, observability, and storage architecture.
 
 ## Start here
 
@@ -26,11 +26,10 @@ Data ingestion, transformation, orchestration, observability, and reliability ar
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
 | 02.01 | Data Ingestion Architecture | — | [README](02.01_Data_Ingestion_Architecture/README.md) — batch, streaming, near-real-time | stub |
-| 02.02 | Data Transformation Architecture | 38 | [Batch Architecture](02.02_Data_Transformation_Architecture/Batch_Architecture.md) | stub |
-| 02.03 | Data Orchestration Architecture | 49 | [Active Metadata](02.03_Data_Orchestration_Architecture/Active_Metadata.md) | stub |
+| 02.02 | Data Transformation Architecture | 486 | [README](02.02_Data_Transformation_Architecture/README.md) — batch, streaming, NRT, Top 10 + cloud guides | complete |
+| 02.03 | Data Orchestration Architecture | 49 | [README](02.03_Data_Orchestration_Architecture/README.md) — workflow, DataOps, metadata-driven | stub |
 | 02.04 | Data Observability Architecture | 68 | [Active Metadata Observability](02.04_Data_Observability_Architecture/Active_Metadata_Observability.md) | stub |
-| 02.05 | Data Reliability Architecture | 34 | [Coding Standards](02.05_Data_Reliability_Architecture/Data_Engineering_Governance/Coding_Standards.md) | stub |
-| 02.06 | Data Storage Architecture | — | [README](02.06_Data_Storage_Architecture/README.md) | stub |
+| 02.05 | Data Storage Architecture | — | [README](02.05_Data_Storage_Architecture/README.md) | stub |
 
 ## Related
 

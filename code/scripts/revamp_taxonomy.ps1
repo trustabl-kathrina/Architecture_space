@@ -17,11 +17,11 @@ $Sections = @(
     @{ id = "01"; name = "01_Data_Architecture"; description = "Data architecture fundamentals, enterprise data architecture, mesh, fabric, lakehouse concepts, data products, metadata-driven architecture, and domain-driven design."; subs = @(
         "01.01_Fundamentals","01.02_Data_Architecture_Patterns","01.03_Reference_Architectures","01.04_Architecture_Case_Studies"
     ) },
-    @{ id = "02"; name = "02_Data_Engineering_Architecture"; description = "Data ingestion, transformation, orchestration, observability, reliability, storage, and event streaming architecture."; subs = @(
-        "02.01_Data_Ingestion_Architecture","02.02_Data_Transformation_Architecture","02.03_Data_Orchestration_Architecture","02.04_Data_Observability_Architecture","02.05_Data_Reliability_Architecture","02.06_Data_Storage_Architecture","02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
+    @{ id = "02"; name = "02_Data_Engineering_Architecture"; description = "Data ingestion, transformation, orchestration, observability, and storage architecture."; subs = @(
+        "02.01_Data_Ingestion_Architecture","02.02_Data_Transformation_Architecture","02.03_Data_Orchestration_Architecture","02.04_Data_Observability_Architecture","02.05_Data_Storage_Architecture","02.01_Data_Ingestion_Architecture/02.01.02_Streaming"
     ) },
-    @{ id = "02.06"; name = "02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture"; description = "Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns."; subs = @(
-        "02.06.01_Data_Lake","02.06.02_Data_Warehouse","02.06.03_Lakehouse","02.06.04_Data_Marts","02.06.05_Operational_Data_Store","02.06.06_Analytical_Stores","02.06.07_Storage_Patterns"
+    @{ id = "02.05"; name = "02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture"; description = "Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns."; subs = @(
+        "02.05.01_Data_Lake","02.05.02_Data_Warehouse","02.05.03_Lakehouse","02.05.04_Data_Marts","02.05.05_Operational_Data_Store","02.05.06_Analytical_Stores","02.05.07_Storage_Patterns"
     ) },
     @{ id = "04"; name = "04_Cloud_Data_Platforms"; description = "Cloud data platform services and reference implementations across GCP, AWS, and Azure."; subs = @(
         "04.01_GCP","04.02_AWS","04.03_Azure","04.04_Platform_Engineering","04.05_Lakehouse_Platforms","04.06_FinOps"
@@ -241,7 +241,7 @@ function Get-TargetForPath([string]$RelPath, [string]$Status) {
             return "01_Data_Architecture/01.01_Fundamentals/" + $rest
         }
         '^10_' {
-            if ($sub -match '10\.06|10\.07|10\.08|10\.09') { return "02_Data_Engineering_Architecture\02.06_Data_Storage_Architecture/02.06.03_Lakehouse/" + ($parts[2..($parts.Count-1)] -join '/') }
+            if ($sub -match '10\.06|10\.07|10\.08|10\.09') { return "02_Data_Engineering_Architecture\02.05_Data_Storage_Architecture/02.05.03_Lakehouse/" + ($parts[2..($parts.Count-1)] -join '/') }
             if ($sub -match '10\.16|10\.17') { return "02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming/02.01.02.02_Cloud_Services/" + ($parts[2..($parts.Count-1)] -join '/') }
             return "04_Cloud_Data_Platforms/04.05_Lakehouse_Platforms/" + $rest
         }

@@ -29,14 +29,13 @@ sections:
   - id: "02"
     path: 02_Data_Engineering_Architecture
     title: "Data Engineering Architecture"
-    description: "Data ingestion, transformation, orchestration, observability, and reliability architecture."
+    description: "Data ingestion, transformation, orchestration, observability, and storage architecture."
     subsections:
       - 02.01_Data_Ingestion_Architecture
       - 02.02_Data_Transformation_Architecture
       - 02.03_Data_Orchestration_Architecture
       - 02.04_Data_Observability_Architecture
-      - 02.05_Data_Reliability_Architecture
-      - 02.06_Data_Storage_Architecture
+      - 02.05_Data_Storage_Architecture
   - id: "02.01"
     path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture
     parent: "02"
@@ -91,20 +90,31 @@ sections:
       - 02.01.04.04_Enterprise_Data_Frameworks
       - 02.01.04.05_Reference_Architectures
       - 02.01.04.06_Cross_Mode_Ingestion
-  - id: "02.06"
-    path: 02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture
+  - id: "02.02"
+    path: 02_Data_Engineering_Architecture/02.02_Data_Transformation_Architecture
     parent: "02"
-    domain_id: "02.06"
+    domain_id: "02.02"
+    title: "Data Transformation Architecture"
+    description: "Batch, streaming, and near-real-time transformation; ETL/ELT, medallion, SCD; Top 10 engines and cloud managed transform services."
+    subsections:
+      - 02.02.01_Batch_Transformation
+      - 02.02.02_Streaming_Transformation
+      - 02.02.03_Near_Real_Time_Transformation
+      - 02.02.04_Shared_Foundations
+  - id: "02.05"
+    path: 02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture
+    parent: "02"
+    domain_id: "02.05"
     title: "Data Storage Architecture"
     description: "Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns."
     subsections:
-      - 02.06.01_Data_Lake
-      - 02.06.02_Data_Warehouse
-      - 02.06.03_Lakehouse
-      - 02.06.04_Data_Marts
-      - 02.06.05_Operational_Data_Store
-      - 02.06.06_Analytical_Stores
-      - 02.06.07_Storage_Patterns
+      - 02.05.01_Data_Lake
+      - 02.05.02_Data_Warehouse
+      - 02.05.03_Lakehouse
+      - 02.05.04_Data_Marts
+      - 02.05.05_Operational_Data_Store
+      - 02.05.06_Analytical_Stores
+      - 02.05.07_Storage_Patterns
   - id: "04"
     path: 04_Cloud_Data_Platforms
     title: "Cloud Data Platforms"
@@ -187,6 +197,22 @@ sections:
       - 02.01.02.07_Interview_Questions
       - 02.01.02.08_Integration_Patterns
       - 02.01.02.09_Reference_Architectures
+  - id: "02.03"
+    path: 02_Data_Engineering_Architecture/02.03_Data_Orchestration_Architecture
+    parent: "02"
+    domain_id: "02.03"
+    title: "Data Orchestration Architecture"
+    description: "Workflow orchestration, DataOps, metadata-driven pipelines, platform engineering, cloud managed workflows, and open source orchestrators."
+    subsections:
+      - 02.03.01_Fundamentals
+      - 02.03.02_Cloud_Services
+      - 02.03.03_Top_10
+      - 02.03.04_Architecture_Patterns
+      - 02.03.05_Benchmarks
+      - 02.03.06_Comparisons
+      - 02.03.07_Interview_Questions
+      - 02.03.08_Integration_Patterns
+      - 02.03.09_Reference_Architectures
   - id: "08.10"
     path: 08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture
     parent: "08"

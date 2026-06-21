@@ -20,7 +20,7 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | 00 | Architecture Governance | Cross-cutting EA, ADRs, standards | 45 | 1,542 | **Purge** nested legacy 01–25 trees |
 | 01 | Data Architecture | Enterprise data design concepts | 35 | 328 | Consolidate; remove engineering detail |
 | 02 | Data Engineering | Pipelines, orchestration, reliability | 55 | 290 | Reorganize into 02.01–02.05 |
-| 02.06 | Data Storage | Lake, WH, lakehouse, marts | 30 | 36 | Expand storage patterns |
+| 02.05 | Data Storage | Lake, WH, lakehouse, marts | 30 | 36 | Expand storage patterns |
 | 04 | Cloud Data Platforms | GCP/AWS/Azure + FinOps | 80 | 962 | **Purge** non-cloud duplicates |
 | 05 | Data Modeling | Conceptual → physical models | 40 | 38 | Align to subsection model |
 | 06 | Data Products | Product lifecycle & contracts | 35 | 49 | Keep; link governance to 00.10 |
@@ -84,7 +84,7 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 
 ## 02 — Data Engineering Architecture
 
-**Owns:** How data is moved, transformed, scheduled, observed, and kept reliable.
+**Owns:** How data is moved, transformed, scheduled, observed, and stored.
 
 | Capability | Subsection |
 | --- | --- |
@@ -96,12 +96,12 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 | **Orchestration** — DataOps, CI/CD, GitOps for data | 02.03 |
 | **Observability** — pipeline monitoring, freshness, schema drift | 02.04 |
 | **Observability** — lineage-aware monitoring, alerting | 02.04 |
-| **Reliability** — SLO/SLA, error budgets, resilience, DR | 02.05 |
+| **Storage** — lake, warehouse, lakehouse, marts, ODS | 02.05 |
 | Lakehouse engineering (medallion execution) | 02.02 |
 | Metadata-driven pipeline generation | 02.03 |
 | Performance & query optimization (engineering) | 02.02 |
 | AI-assisted pipeline engineering | 02.03 |
-| DE governance (coding standards, pipeline review) | 02.05 |
+| Open table formats (Delta, Iceberg, Hudi) | 02.05 |
 
 **Remove:** `Governance_Maturity`, `Compliance_Framework`, `Showback_Model` (→ 04.06 / 07).  
 **Remove:** Streaming fundamentals (→ 09), enterprise DQ framework (→ 00.10.04).  
@@ -109,20 +109,20 @@ See also: [canonical_ownership.yaml](canonical_ownership.yaml) | [taxonomy.yaml]
 
 ---
 
-## 02.06 — Data Storage Architecture
+## 02.05 — Data Storage Architecture
 
 **Owns:** Where and how data is persisted analytically.
 
 | Capability | Subsection |
 | --- | --- |
-| Data lake architecture | 02.06.01 |
-| Data warehouse architecture | 02.06.02 |
-| Lakehouse storage model | 02.06.03 |
-| Data marts & ODS | 02.06.04–02.06.05 |
-| Analytical stores (columnar, OLAP serving) | 02.06.06 |
-| Partitioning, clustering, lifecycle | 02.06.07 |
-| Open table formats (Delta, Iceberg, Hudi) | 02.06.03 |
-| Storage tiering & archival | 02.06.07 |
+| Data lake architecture | 02.05.01 |
+| Data warehouse architecture | 02.05.02 |
+| Lakehouse storage model | 02.05.03 |
+| Data marts & ODS | 02.05.04–02.05.05 |
+| Analytical stores (columnar, OLAP serving) | 02.05.06 |
+| Partitioning, clustering, lifecycle | 02.05.07 |
+| Open table formats (Delta, Iceberg, Hudi) | 02.05.03 |
+| Storage tiering & archival | 02.05.07 |
 
 **Remove:** Cloud-specific service docs (→ 04), real-time engines (→ 10).
 

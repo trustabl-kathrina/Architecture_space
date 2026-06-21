@@ -65,7 +65,10 @@ nav:
       - "02.01.02 Streaming": 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming/README.md
       - "02.01.03 Near-Real-Time": 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.03_Near_Real_Time_Ingestion/README.md
       - "02.01.04 Shared Foundations": 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.04_Shared_Foundations/README.md
-      - "02.06 Data Storage": 02_Data_Engineering_Architecture/02.06_Data_Storage_Architecture/README.md
+      - "02.02 Data Transformation": 02_Data_Engineering_Architecture/02.02_Data_Transformation_Architecture/README.md
+      - "02.02.01 Batch Transformation": 02_Data_Engineering_Architecture/02.02_Data_Transformation_Architecture/02.02.01_Batch_Transformation/README.md
+      - "02.02.02 Streaming Transformation": 02_Data_Engineering_Architecture/02.02_Data_Transformation_Architecture/02.02.02_Streaming_Transformation/README.md
+      - "02.05 Data Storage": 02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture/README.md
       - "04 Cloud Data Platforms": 04_Cloud_Data_Platforms/README.md
       - "05 Data Modeling": 04_Data_Modeling_Architecture/README.md
       - "06 Data Products": 06_Data_Product_Architecture/README.md

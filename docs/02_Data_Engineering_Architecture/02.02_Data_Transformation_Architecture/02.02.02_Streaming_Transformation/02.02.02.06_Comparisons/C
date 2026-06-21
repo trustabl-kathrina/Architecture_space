@@ -1,0 +1,20 @@
+---
+title: o
+section: "02.02.02.06"
+status: complete
+template: evaluation
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [comparison, streaming]
+canonical: true
+---
+# o
+
+r
+
+| Dimension | Option A | Option B |
+| --- | --- | --- |
+| Latency | | |
+| State | | |
+| Ops | | |
+| Cost | | |

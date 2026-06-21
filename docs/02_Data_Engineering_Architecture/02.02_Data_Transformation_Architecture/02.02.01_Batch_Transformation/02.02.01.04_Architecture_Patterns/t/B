@@ -1,0 +1,29 @@
+---
+title: a
+section: "02.02.01.04"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [batch, architecture]
+canonical: true
+---
+# a
+
+## Overview
+
+c
+
+## Diagram
+
+``mermaid
+flowchart LR
+  Src[Sources] --> Ext[Extract]
+  Ext --> Tr[Transform]
+  Tr --> Load[Load]
+``n
+## Best practices
+
+- Idempotent partition overwrites.
+- Schema contracts in catalog.
+- Backfill runbook documented.
