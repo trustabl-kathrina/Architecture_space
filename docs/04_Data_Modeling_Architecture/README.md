@@ -30,11 +30,11 @@ Enterprise data modeling across traditional warehouse patterns, enterprise canon
 
 | # | Pillar | Path | Description |
 | --- | --- | --- | --- |
-| 05.01 | [Traditional](05.01_Traditional/README.md) | Relational, Kimball, Inmon, Data Vault | Classic warehouse and relational modeling |
-| 05.02 | [Enterprise](05.02_Enterprise/README.md) | DDD, Canonical, MDM, Data Products | Enterprise-wide models and party/product semantics |
-| 05.03 | [Modern](05.03_Modern/README.md) | Event, Semantic, Knowledge Graph, AI | Event-driven, semantic layer, graphs, and AI/RAG modeling |
-| 05.04 | [Industry Reference Models](05.04_Industry_Reference_Models/README.md) | SID, BIAN, verticals | Industry-standard reference models |
-| 05.05 | [Cross-Cutting Standards](05.05_Cross_Cutting_Standards/README.md) | Naming, modeling standards | Shared modeling standards and information architecture |
+| 05.01 | [Traditional](01_Traditional/README.md) | Relational, Kimball, Inmon, Data Vault | Classic warehouse and relational modeling |
+| 05.02 | [Enterprise](02_Enterprise/README.md) | DDD, Canonical, MDM, Data Products | Enterprise-wide models and party/product semantics |
+| 05.03 | [Modern](03_Modern/README.md) | Event, Semantic, Knowledge Graph, AI | Event-driven, semantic layer, graphs, and AI/RAG modeling |
+| 05.04 | [Industry Reference Models](04_Industry_Reference_Models/README.md) | SID, BIAN, verticals | Industry-standard reference models |
+| 05.05 | [Cross-Cutting Standards](05_Cross_Cutting_Standards/README.md) | Naming, modeling standards | Shared modeling standards and information architecture |
 
 ## Structure
 
@@ -61,14 +61,14 @@ Data Modeling
 
 ## Start here
 
-- [ER Modeling](05.01_Traditional/05.01.01_Relational/05.01.01.01_ER_Modeling.md)
-- [Star Schema](05.01_Traditional/05.01.02_Kimball_Dimensional/05.01.02.01_Star_Schema.md)
-- [Enterprise Data Model](05.02_Enterprise/05.02.02_Canonical/05.02.02.01_Enterprise_Data_Model.md)
-- [Metrics Layer](05.03_Modern/05.03.02_Semantic_Modeling/05.03.02.01_Metrics_Layer.md)
-- [TM Forum SID](05.04_Industry_Reference_Models/05.04.01_TM_Forum_SID.md)
+- [ER Modeling](01_Traditional/01_Relational/01_ER_Modeling.md)
+- [Star Schema](01_Traditional/02_Kimball_Dimensional/01_Star_Schema.md)
+- [Enterprise Data Model](02_Enterprise/02_Canonical/01_Enterprise_Data_Model.md)
+- [Metrics Layer](03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+- [TM Forum SID](04_Industry_Reference_Models/01_TM_Forum_SID.md)
 
 ## Related
 
 - [Architecture Space](../README.md)
 - [06 Data Product Architecture](../06_Data_Product_Architecture/README.md)
-- [02.01 Data Ingestion](../02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/README.md)
+- [02.01 Data Ingestion](../02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/README.md)

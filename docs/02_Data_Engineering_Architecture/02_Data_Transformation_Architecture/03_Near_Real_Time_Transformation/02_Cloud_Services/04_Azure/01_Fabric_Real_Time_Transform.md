@@ -1,0 +1,41 @@
+---
+title: Fabric Real-Time Transform
+section: "02.02.03.02.04"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [azure, fabric, nrt]
+canonical: true
+---
+# Microsoft Fabric Real-Time Transformation
+
+## Components
+
+| Component | NRT role |
+| --- | --- |
+| **Eventstream** | Ingest events into OneLake |
+| **KQL Database** | Real-time transform and query |
+| **Spark notebook** | Micro-batch on OneLake Delta |
+| **Data pipeline** | Schedule notebook/activity every N minutes |
+
+## Eventstream â†’ Lakehouse flow
+
+```mermaid
+flowchart LR
+  EH[Event_Hubs] --> ES[Eventstream]
+  ES --> OL[OneLake_Delta]
+  OL --> NB[Spark_Notebook_MERGE]
+  NB --> LH[Lakehouse_Silver]
+```
+
+## NRT pipeline pattern
+
+1. Eventstream captures source events to **Delta bronze**.
+2. Fabric pipeline triggers Spark notebook every **5 minutes**.
+3. Notebook runs **MERGE** into silver lakehouse table.
+4. Direct Lake mode exposes silver to Power BI with freshness SLA.
+
+## Related
+
+- [Fabric RTI Learning Guide](../../../02_Streaming_Transformation/02_Cloud_Services/04_Azure/04_Fabric_Real_Time_Intelligence_Learning_Guide/README.md)

@@ -7,22 +7,22 @@ sections:
     title: "Architecture Governance"
     description: "Architecture principles, reference architectures, ADRs, patterns, review checklists, NFRs, blueprints, standards, and strategy alignment."
     subsections:
-      - 00.01_Architecture_Principles
+      - 01_Architecture_Principles
       - 00.02_Reference_Architectures
-      - 00.03_Architecture_Decision_Records
+      - 03_Architecture_Decision_Records
       - 00.04_Architecture_Patterns
       - 00.05_Architecture_Review_Checklists
       - 00.06_Non_Functional_Requirements
       - 00.07_Solution_Blueprints
       - 00.08_Standards_And_Guidelines
       - 00.09_Enterprise_Strategy_And_Operating_Model
-      - 00.10_Data_Governance_And_Metadata
+      - 10_Data_Governance_And_Metadata
   - id: "01"
     path: 01_Data_Architecture
     title: "Data Architecture"
     description: "Data architecture fundamentals, enterprise data architecture, mesh, fabric, lakehouse concepts, data products, metadata-driven architecture, and domain-driven design."
     subsections:
-      - 01.01_Fundamentals
+      - 01_Fundamentals
       - 01.02_Data_Architecture_Patterns
       - 01.03_Reference_Architectures
       - 01.04_Architecture_Case_Studies
@@ -31,78 +31,78 @@ sections:
     title: "Data Engineering Architecture"
     description: "Data ingestion, transformation, orchestration, observability, and storage architecture."
     subsections:
-      - 02.01_Data_Ingestion_Architecture
-      - 02.02_Data_Transformation_Architecture
-      - 02.03_Data_Orchestration_Architecture
-      - 02.04_Data_Observability_Architecture
-      - 02.05_Data_Storage_Architecture
+      - 01_Data_Ingestion_Architecture
+      - 02_Data_Transformation_Architecture
+      - 03_Data_Orchestration_Architecture
+      - 04_Data_Observability_Architecture
+      - 05_Data_Storage_Architecture
   - id: "02.01"
-    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture
+    path: 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture
     parent: "02"
     title: "Data Ingestion Architecture"
     description: "Batch, streaming, and near-real-time data ingestion."
     subsections:
-      - 02.01.01_Batch_Ingestion
-      - 02.01.02_Streaming
-      - 02.01.03_Near_Real_Time_Ingestion
-      - 02.01.04_Shared_Foundations
+      - 01_Batch_Ingestion
+      - 02_Streaming
+      - 03_Near_Real_Time_Ingestion
+      - 04_Shared_Foundations
   - id: "02.01.01"
-    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.01_Batch_Ingestion
+    path: 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/01_Batch_Ingestion
     parent: "02.01"
     domain_id: "02.01.01"
     title: "Batch Ingestion"
     description: "Scheduled bulk loads, file landing zones, ETL/ELT batch connectors, and batch cloud services."
     subsections:
-      - 02.01.01.01_Fundamentals
-      - 02.01.01.02_Cloud_Services
-      - 02.01.01.03_Open_Source
-      - 02.01.01.04_Architecture_Patterns
-      - 02.01.01.05_Benchmarks
-      - 02.01.01.06_Comparisons
-      - 02.01.01.07_Interview_Questions
-      - 02.01.01.08_Integration_Patterns
-      - 02.01.01.09_Reference_Architectures
+      - 01_Fundamentals
+      - 02_Cloud_Services
+      - 03_Open_Source
+      - 04_Architecture_Patterns
+      - 05_Benchmarks
+      - 06_Comparisons
+      - 07_Interview_Questions
+      - 08_Integration_Patterns
+      - 09_Reference_Architectures
   - id: "02.01.03"
-    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.03_Near_Real_Time_Ingestion
+    path: 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/03_Near_Real_Time_Ingestion
     parent: "02.01"
     domain_id: "02.01.03"
     title: "Near Real Time Ingestion"
     description: "Micro-batch and low-latency ingestion between batch and streaming."
     subsections:
-      - 02.01.03.01_Fundamentals
-      - 02.01.03.02_Cloud_Services
-      - 02.01.03.04_Architecture_Patterns
-      - 02.01.03.05_Benchmarks
-      - 02.01.03.06_Comparisons
-      - 02.01.03.07_Interview_Questions
-      - 02.01.03.08_Integration_Patterns
-      - 02.01.03.09_Reference_Architectures
+      - 01_Fundamentals
+      - 02_Cloud_Services
+      - 04_Architecture_Patterns
+      - 05_Benchmarks
+      - 06_Comparisons
+      - 07_Interview_Questions
+      - 08_Integration_Patterns
+      - 09_Reference_Architectures
   - id: "02.01.04"
-    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.04_Shared_Foundations
+    path: 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/04_Shared_Foundations
     parent: "02.01"
     domain_id: "02.01.04"
     title: "Shared Foundations"
     description: "Cross-mode data engineering vision, strategy, pipeline architecture, enterprise frameworks, and reference platforms."
     subsections:
-      - 02.01.04.01_Overview
-      - 02.01.04.02_Data_Engineering_Strategy
-      - 02.01.04.03_Data_Pipeline_Architecture
-      - 02.01.04.04_Enterprise_Data_Frameworks
-      - 02.01.04.05_Reference_Architectures
-      - 02.01.04.06_Cross_Mode_Ingestion
+      - 01_Overview
+      - 02_Data_Engineering_Strategy
+      - 03_Data_Pipeline_Architecture
+      - 04_Enterprise_Data_Frameworks
+      - 05_Reference_Architectures
+      - 06_Cross_Mode_Ingestion
   - id: "02.02"
-    path: 02_Data_Engineering_Architecture/02.02_Data_Transformation_Architecture
+    path: 02_Data_Engineering_Architecture/02_Data_Transformation_Architecture
     parent: "02"
     domain_id: "02.02"
     title: "Data Transformation Architecture"
     description: "Batch, streaming, and near-real-time transformation; ETL/ELT, medallion, SCD; Top 10 engines and cloud managed transform services."
     subsections:
-      - 02.02.01_Batch_Transformation
-      - 02.02.02_Streaming_Transformation
-      - 02.02.03_Near_Real_Time_Transformation
-      - 02.02.04_Shared_Foundations
+      - 01_Batch_Transformation
+      - 02_Streaming_Transformation
+      - 03_Near_Real_Time_Transformation
+      - 04_Shared_Foundations
   - id: "02.05"
-    path: 02_Data_Engineering_Architecture/02.05_Data_Storage_Architecture
+    path: 02_Data_Engineering_Architecture/05_Data_Storage_Architecture
     parent: "02"
     domain_id: "02.05"
     title: "Data Storage Architecture"
@@ -110,7 +110,7 @@ sections:
     subsections:
       - 02.05.01_Data_Lake
       - 02.05.02_Data_Warehouse
-      - 02.05.03_Lakehouse
+      - 03_Lakehouse
       - 02.05.04_Data_Marts
       - 02.05.05_Operational_Data_Store
       - 02.05.06_Analytical_Stores
@@ -120,28 +120,28 @@ sections:
     title: "Cloud Data Platforms"
     description: "Cloud data platform services and reference implementations across GCP, AWS, and Azure."
     subsections:
-      - 04.01_GCP
+      - 01_GCP
       - 04.02_AWS
       - 04.03_Azure
-      - 04.04_Platform_Engineering
-      - 04.05_Lakehouse_Platforms
-      - 04.06_FinOps
+      - 04_Platform_Engineering
+      - 05_Lakehouse_Platforms
+      - 06_FinOps
   - id: "05"
     path: 04_Data_Modeling_Architecture
     title: "Data Modeling Architecture"
     description: "Traditional, enterprise, modern, and industry reference data modeling."
     subsections:
-      - 05.01_Traditional
-      - 05.02_Enterprise
-      - 05.03_Modern
-      - 05.04_Industry_Reference_Models
-      - 05.05_Cross_Cutting_Standards
+      - 01_Traditional
+      - 02_Enterprise
+      - 03_Modern
+      - 04_Industry_Reference_Models
+      - 05_Cross_Cutting_Standards
   - id: "06"
     path: 06_Data_Product_Architecture
     title: "Data Product Architecture"
     description: "Data product lifecycle, design, SDP/ADP/CDP, marketplace, data contracts, and product governance."
     subsections:
-      - 06.01_Fundamentals
+      - 01_Fundamentals
       - 06.02_Data_Product_Lifecycle
       - 06.03_Data_Product_Design
       - 06.04_SDP
@@ -151,28 +151,28 @@ sections:
       - 06.08_Data_Contracts
       - 06.09_Product_Governance
   - id: "00.10"
-    path: 00_Architecture_Governance/00.10_Data_Governance_And_Metadata
+    path: 00_Architecture_Governance/10_Data_Governance_And_Metadata
     parent: "00"
     domain_id: "00.10"
     title: "Data Governance And Metadata"
     description: "Metadata management, catalog, lineage, quality, MDM, reference data, privacy, security, compliance, and governance operating model."
     subsections:
-      - 00.10.01_Metadata_Management
+      - 01_Metadata_Management
       - 00.10.02_Data_Catalog
       - 00.10.03_Data_Lineage
-      - 00.10.04_Data_Quality
-      - 00.10.05_Master_Data_Management
+      - 04_Data_Quality
+      - 05_Master_Data_Management
       - 00.10.06_Reference_Data
       - 00.10.07_Data_Privacy
       - 00.10.08_Data_Security
       - 00.10.09_Data_Compliance
-      - 00.10.10_Governance_Operating_Model
+      - 10_Governance_Operating_Model
   - id: "08"
     path: 08_Analytics_Architecture
     title: "Analytics Architecture"
     description: "BI, semantic layer, self-service analytics, dashboards, and analytics tools. Real-time OLAP engines live in 08.10."
     subsections:
-      - 08.01_BI_Architecture
+      - 01_BI_Architecture
       - 08.02_Semantic_Layer
       - 08.04_Self_Service_Analytics
       - 08.05_Dashboard_Architecture
@@ -180,41 +180,41 @@ sections:
       - 08.07_PowerBI
       - 08.08_Looker
       - 08.09_Metabase
-      - 08.10_Real_Time_Analytics_Architecture
+      - 10_Real_Time_Analytics_Architecture
   - id: "02.01.02"
-    path: 02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming
+    path: 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/02_Streaming
     parent: "02.01"
     domain_id: "02.01.02"
     title: "Streaming"
     description: "Event-driven architecture, stream processing, CDC, cloud streaming services, open source engines, patterns, benchmarks, comparisons, and interview questions."
     subsections:
-      - 02.01.02.01_Fundamentals
-      - 02.01.02.02_Cloud_Services
-      - 02.01.02.03_Open_Source
-      - 02.01.02.04_Architecture_Patterns
-      - 02.01.02.05_Benchmarks
-      - 02.01.02.06_Comparisons
-      - 02.01.02.07_Interview_Questions
-      - 02.01.02.08_Integration_Patterns
-      - 02.01.02.09_Reference_Architectures
+      - 01_Fundamentals
+      - 02_Cloud_Services
+      - 03_Open_Source
+      - 04_Architecture_Patterns
+      - 05_Benchmarks
+      - 06_Comparisons
+      - 07_Interview_Questions
+      - 08_Integration_Patterns
+      - 09_Reference_Architectures
   - id: "02.03"
-    path: 02_Data_Engineering_Architecture/02.03_Data_Orchestration_Architecture
+    path: 02_Data_Engineering_Architecture/03_Data_Orchestration_Architecture
     parent: "02"
     domain_id: "02.03"
     title: "Data Orchestration Architecture"
     description: "Workflow orchestration, DataOps, metadata-driven pipelines, platform engineering, cloud managed workflows, and open source orchestrators."
     subsections:
-      - 02.03.01_Fundamentals
-      - 02.03.02_Cloud_Services
-      - 02.03.03_Top_10
-      - 02.03.04_Architecture_Patterns
-      - 02.03.05_Benchmarks
-      - 02.03.06_Comparisons
-      - 02.03.07_Interview_Questions
-      - 02.03.08_Integration_Patterns
-      - 02.03.09_Reference_Architectures
+      - 01_Fundamentals
+      - 02_Cloud_Services
+      - 03_Top_10
+      - 04_Architecture_Patterns
+      - 05_Benchmarks
+      - 06_Comparisons
+      - 07_Interview_Questions
+      - 08_Integration_Patterns
+      - 09_Reference_Architectures
   - id: "08.10"
-    path: 08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture
+    path: 08_Analytics_Architecture/10_Real_Time_Analytics_Architecture
     parent: "08"
     domain_id: "08.10"
     title: "Real Time Analytics Architecture"
@@ -224,44 +224,44 @@ sections:
       - 08.10.02_Pinot
       - 08.10.03_Druid
       - 08.10.04_Elasticsearch
-      - 08.10.05_Streaming_Analytics
+      - 05_Streaming_Analytics
   - id: "11"
     path: 11_AI_Data_Architecture
     title: "AI Data Architecture"
     description: "AI-ready data platforms, feature stores, RAG, vector databases, prompt engineering, AI governance, AI observability, and AI FinOps."
     subsections:
-      - 11.01_AI_Ready_Data_Platform
+      - 01_AI_Ready_Data_Platform
       - 11.02_Feature_Store
-      - 11.03_RAG
+      - 03_RAG
       - 11.04_Agentic_AI_Data
       - 11.07_Vector_Databases
       - 11.08_Prompt_Engineering
-      - 11.09_AI_Governance
-      - 11.10_AI_Observability
-      - 11.11_AI_FinOps
-      - 11.12_Agentic_AI_Architecture
+      - 09_AI_Governance
+      - 10_AI_Observability
+      - 11_AI_FinOps
+      - 12_Agentic_AI_Architecture
   - id: "11.12"
-    path: 11_AI_Data_Architecture/11.12_Agentic_AI_Architecture
+    path: 11_AI_Data_Architecture/12_Agentic_AI_Architecture
     parent: "11"
     domain_id: "11.12"
     title: "Agentic AI Architecture"
     description: "Agentic AI strategy, agent architecture, MCP/A2A, tool use, orchestration, AgentOps, multi-agent systems, and digital workforce architecture."
     subsections:
-      - 11.12.01_Fundamentals
+      - 01_Fundamentals
       - 11.12.02_Agent_Architecture
       - 11.12.03_Agent_Design_Patterns
       - 11.12.04_MCP
       - 11.12.05_A2A
-      - 11.12.06_Agent_Orchestration
+      - 06_Agent_Orchestration
       - 11.12.07_AgentOps
       - 11.12.08_Multi_Agent_Systems
-      - 11.12.09_Digital_Workforce
+      - 09_Digital_Workforce
   - id: "13"
     path: 13_MLOps_Architecture
     title: "MLOps Architecture"
     description: "ML lifecycle, feature engineering, training, deployment, monitoring, and model governance."
     subsections:
-      - 13.01_ML_Lifecycle
+      - 01_ML_Lifecycle
       - 13.02_Feature_Engineering
       - 13.03_Training
       - 13.04_Deployment
@@ -272,14 +272,14 @@ sections:
     title: "Security And Privacy Architecture"
     description: "IAM, encryption, secrets management, RLS/CLS, zero trust, compliance, AI security, and privacy engineering."
     subsections:
-      - 14.01_IAM
+      - 01_IAM
       - 14.02_Encryption
       - 14.03_Secrets_Management
       - 14.04_Row_Level_Security
       - 14.05_Column_Level_Security
       - 14.06_Zero_Trust
       - 14.07_Compliance
-      - 14.08_AI_Security
+      - 08_AI_Security
       - 14.09_Privacy_Engineering
   - id: "15"
     path: 15_Industry_Reference_Architectures

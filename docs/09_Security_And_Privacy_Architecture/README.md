@@ -19,15 +19,15 @@ IAM, encryption, secrets management, RLS/CLS, zero trust, compliance, AI securit
 
 ## Start here
 
-- [What Is Enterprise Security](14.01_IAM/14.01_Overview/What_Is_Enterprise_Security.md)
-- [What Is Privacy Engineering](14.01_IAM/14.01_Overview/What_Is_Privacy_Engineering.md)
+- [What Is Enterprise Security](01_IAM/01_Overview/What_Is_Enterprise_Security.md)
+- [What Is Privacy Engineering](01_IAM/01_Overview/What_Is_Privacy_Engineering.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 14.01 | IAM | 245 | [Enterprise Risk Model](14.01_IAM/14.01_Overview/Enterprise_Risk_Model.md) | stub |
-| 14.08 | AI Security | 11 | [Adversarial AI](14.08_AI_Security/Adversarial_AI.md) | stub |
+| 14.01 | IAM | 245 | [Enterprise Risk Model](01_IAM/01_Overview/Enterprise_Risk_Model.md) | stub |
+| 14.08 | AI Security | 11 | [Adversarial AI](08_AI_Security/Adversarial_AI.md) | stub |
 
 ## Related
 

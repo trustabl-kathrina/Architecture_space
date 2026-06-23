@@ -1,0 +1,59 @@
+---
+title: Trigger-Based Transforms
+section: "02.02.03.01.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [trigger, nrt]
+canonical: true
+---
+# Trigger-Based Transforms
+
+## Trigger types
+
+| Trigger | Engine examples | Use case |
+| --- | --- | --- |
+| **Processing time** | Spark SS, Dataflow | Regular freshness, simple ops |
+| **Available-now** | Spark SS (legacy) | Process as fast as possible |
+| **Once** | Spark SS, Beam | Backfill single batch |
+| **Continuous** | Spark SS experimental | Low latency micro-batch |
+| **Orchestrator cron** | Airflow, Dagster | Warehouse SQL every N minutes |
+| **Event-driven** | Lambda, Cloud Functions | File arrival, queue message |
+
+## Orchestration-triggered NRT
+
+```mermaid
+sequenceDiagram
+  participant Orch as Orchestrator
+  participant Ingest as Ingestion
+  participant Transform as NRT_Job
+  participant Lake as Lakehouse
+  Orch->>Ingest: Sensor file count
+  Ingest-->>Orch: Ready
+  Orch->>Transform: Run incremental MERGE
+  Transform->>Lake: Upsert silver
+  Transform-->>Orch: Success metrics
+```
+
+## Databricks trigger example
+
+```python
+# Delta Live Tables / structured streaming pipeline
+@dlt.table
+def silver_orders():
+    return spark.readStream.table("bronze.orders") \
+        .withWatermark("order_ts", "15 minutes") \
+        .dropDuplicates(["order_id"])
+```
+
+## Operational checklist
+
+- [ ] Trigger interval documented in SLA matrix
+- [ ] Checkpoint/watermark paths on durable storage
+- [ ] Alert on processing delay > 2Ã- trigger interval
+- [ ] Backfill procedure uses same MERGE logic
+
+## Related
+
+- [Integration: Orchestration Triggers](../../08_Integration_Patterns/01_Orchestration_Triggers.md)

@@ -1,0 +1,48 @@
+---
+title: Metadata Automation
+section: "02.03.04.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [metadata-driven, automation, orchestration]
+canonical: true
+---
+# Metadata Automation
+
+## Problem
+
+Catalog entries, lineage, and SLA tags lag reality when updated manually after each deploy. **Metadata automation** syncs orchestrator state ↔ catalog continuously.
+
+## Automation flows
+
+| Trigger | Automated action |
+| --- | --- |
+| DAG deploy (CI) | Register/update dataset stubs in catalog |
+| Task success | Update last_refreshed, row count stats |
+| Schema change task | Bump schema version in registry |
+| New dependency in code | OpenLineage → lineage graph edge |
+| SLA breach | Tag dataset t_risk; notify owner |
+
+```mermaid
+flowchart LR
+  Orch[Orchestrator_events]
+  OL[OpenLineage]
+  Cat[Catalog_API]
+  Orch --> OL --> Cat
+  Cat --> Rules[Policy_rules]
+  Rules --> Orch
+```
+
+## Implementation stack
+
+| Component | Options |
+| --- | --- |
+| Lineage | OpenLineage, Dagster events, native asset materializations |
+| Catalog | DataHub, Alation, Collibra, Unity Catalog |
+| Sync worker | Custom lambda, Marquez, catalog ingestion jobs |
+
+## Related
+
+- [Metadata Orchestration](07_Metadata_Orchestration.md)
+- [Active Metadata](../../01_Fundamentals/06_Active_Metadata/01_Active_Metadata.md)

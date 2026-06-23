@@ -1,0 +1,42 @@
+---
+title: Streaming Fundamentals Questions
+section: "02.01"
+status: complete
+template: interview
+last_reviewed: 2026-06-18
+owner: architecture-team
+tags: [interview, streaming]
+canonical: true
+---
+# Streaming Fundamentals — Interview Questions
+
+## Conceptual
+
+1. **What is the difference between event time and processing time?** When would you choose each for windowing?
+2. **Explain at-least-once vs exactly-once semantics.** How do idempotent consumers fit in?
+3. **What is a watermark?** How do you handle late-arriving data?
+4. **Event vs message** — when is a queue more appropriate than an event log?
+5. **What is consumer lag?** What operational actions reduce lag?
+
+## Architecture
+
+6. Design a **real-time fraud detection** pipeline: source, broker, processor, store, SLA.
+7. How does **CDC** differ from application-published domain events?
+8. Describe the **outbox pattern** and why dual writes are unsafe.
+9. **Choreography vs orchestration** — trade-offs for a 5-service order flow.
+10. How do you enforce **schema evolution** without breaking consumers?
+
+## System design scenarios
+
+11. **1M events/sec** ingest — how do you partition? What hot-key mitigations apply?
+12. **Global active-active** — Kafka stretch cluster vs dual-write vs aggregate regions?
+13. **Replay** a topic for a new consumer without impacting production — approach?
+
+## Model answers
+
+Link to canonical docs: [Exactly Once Semantics](../01_Fundamentals/03_Core_Concepts/03_Exactly_Once_Semantics.md), [Watermarks](../05_Benchmarks/02_Watermarks.md), [Enterprise Kafka Platform](../04_Architecture_Patterns/05_Reference_Architectures/01_Enterprise_Kafka_Platform.md).
+
+## Related
+
+- [Kafka Deep Dive Questions](02.01.02.01.02.02_Kafka_Deep_Dive_Questions.md)
+- [System Design Streaming Cases](02.01.02.01.02.05_System_Design_Streaming_Cases.md)

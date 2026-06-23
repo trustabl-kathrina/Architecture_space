@@ -19,15 +19,15 @@ Data product lifecycle, design, SDP/ADP/CDP, marketplace, data contracts, and pr
 
 ## Start here
 
-- [Data Product Architecture Patterns](06.01_Fundamentals/Data_Product_Architecture_Patterns.md)
-- [Data Product Canvas](06.01_Fundamentals/Data_Product_Canvas.md)
-- [Data Product Classification](06.01_Fundamentals/Data_Product_Classification.md)
+- [Data Product Architecture Patterns](01_Fundamentals/Data_Product_Architecture_Patterns.md)
+- [Data Product Canvas](01_Fundamentals/Data_Product_Canvas.md)
+- [Data Product Classification](01_Fundamentals/Data_Product_Classification.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 06.01 | Fundamentals | 49 | [Data Product Architecture Patterns](06.01_Fundamentals/Data_Product_Architecture_Patterns.md) | stub |
+| 06.01 | Fundamentals | 49 | [Data Product Architecture Patterns](01_Fundamentals/Data_Product_Architecture_Patterns.md) | stub |
 
 ## Related
 

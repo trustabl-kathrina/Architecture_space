@@ -1,0 +1,44 @@
+---
+title: AI Data Mapping
+section: "02.03.04.04"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [ai, data-mapping, orchestration]
+canonical: true
+---
+# AI Data Mapping
+
+## Problem
+
+Source-to-target column mapping for new integrations is slow and error-prone. **AI data mapping** proposes mappings from schema samples and glossary terms; orchestration **materializes** approved mappings into ingest/transform tasks.
+
+## Pattern
+
+| Step | Actor |
+| --- | --- |
+| 1. Profile source | Automated crawler |
+| 2. Propose mapping | LLM + business glossary RAG |
+| 3. Review | Data steward in catalog UI |
+| 4. Emit config | Mapping YAML in Git |
+| 5. Generate tasks | Metadata factory → orchestrator |
+
+```mermaid
+flowchart LR
+  Src[Source_schema]
+  AI[Mapping_suggestions]
+  Steward[Steward_approval]
+  Meta[Mapping_metadata]
+  Orch[Ingest_DAG]
+  Src --> AI --> Steward --> Meta --> Orch
+```
+
+## Orchestration hook
+
+Mapping version 3 tagged in metadata → CI regenerates ingest DAG → staged run validates row-level hash compare before prod.
+
+## Related
+
+- [Metadata-Driven ETL](../02_Metadata_Driven/02_Metadata_Driven_ETL.md)
+- [Configuration-Driven Processing](../02_Metadata_Driven/04_Configuration_Driven_Processing.md)

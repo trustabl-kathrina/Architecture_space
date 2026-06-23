@@ -16,4 +16,4 @@ Canonical navigation hub for data mesh fundamentals, data products, federated go
 
 - [Data Architecture](../01_Data_Architecture/README.md)
 - [Data Product Architecture](../06_Data_Product_Architecture/README.md)
-- [Data Governance And Metadata](../00_Architecture_Governance/00.10_Data_Governance_And_Metadata/README.md)
+- [Data Governance And Metadata](../00_Architecture_Governance/10_Data_Governance_And_Metadata/README.md)

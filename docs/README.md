@@ -19,7 +19,7 @@ Architecture-first documentation space for enterprise data, analytics, AI, cloud
 
 ## Sections
 
-Numbering is hierarchical at every level: parent sections (`00`–`20`), nested domains (`00.10`, `02.05`, `08.10`, `11.12`), ingestion modes under `02.01` (`02.01.01` batch, `02.01.02` streaming, `02.01.03` near-real-time, `02.01.04` shared foundations), and sequenced topic files (`02.01.02.01.01.01_*`). Folder names, front matter `section:` fields, and taxonomy IDs all use the same scheme.
+Numbering uses **two digits per level** in folder and file names (e.g. `02_Streaming/01_Fundamentals/01_Overview/03_Event_vs_Message.md`). The full taxonomy ID (`02.01.02.01.01.03`) is kept in front matter `section:` fields and tables—not repeated in every path segment.
 
 | # | Section | Path | Purpose |
 | --- | --- | --- | --- |
@@ -27,7 +27,7 @@ Numbering is hierarchical at every level: parent sections (`00`–`20`), nested 
 | 00.10 | ↳ Data Governance And Metadata | `00.10_*` under 00 | Metadata, catalog, lineage, quality, MDM, privacy, security, compliance, and governance operating model. |
 | 01 | [Data Architecture](01_Data_Architecture/README.md) | `01_*` | Data architecture fundamentals, enterprise data architecture, mesh, fabric, lakehouse concepts, and domain-driven design. |
 | 02 | [Data Engineering Architecture](02_Data_Engineering_Architecture/README.md) | `02_*` | Data ingestion, transformation, orchestration, observability, and storage architecture. |
-| 02.01 | ↳ Data Ingestion (batch / streaming / NRT / shared) | `02.01_*` under 02 | [02.01.01](02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.01_Batch_Ingestion/README.md) batch, [02.01.02](02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.02_Streaming/README.md) streaming, [02.01.03](02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.03_Near_Real_Time_Ingestion/README.md) near-real-time, [02.01.04](02_Data_Engineering_Architecture/02.01_Data_Ingestion_Architecture/02.01.04_Shared_Foundations/README.md) shared |
+| 02.01 | ↳ Data Ingestion (batch / streaming / NRT / shared) | `02.01_*` under 02 | [02.01.01](02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/01_Batch_Ingestion/README.md) batch, [02.01.02](02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/02_Streaming/README.md) streaming, [02.01.03](02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/03_Near_Real_Time_Ingestion/README.md) near-real-time, [02.01.04](02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/04_Shared_Foundations/README.md) shared |
 | 02.05 | ↳ Data Storage Architecture | `02.05_*` under 02 | Data lake, warehouse, lakehouse, marts, ODS, analytical stores, and storage design patterns. |
 | 04 | [Cloud Data Platforms](04_Cloud_Data_Platforms/README.md) | `04_*` | Cloud data platform services across GCP, AWS, and Azure. |
 | 05 | [Data Modeling Architecture](04_Data_Modeling_Architecture/README.md) | `05_*` | Traditional, enterprise, modern, and industry reference modeling. |

@@ -1,0 +1,43 @@
+---
+title: Amazon Athena SQL Overview
+section: "02.02.01.02.03.05"
+status: complete
+template: overview
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [aws, athena, sql, learning-guide]
+canonical: true
+---
+# 1. Amazon Athena SQL Overview
+
+## What is 
+
+**Amazon Athena SQL** is serverless SQL transforms on S3 tables via Glue Catalog.
+
+## Mental model
+
+`mermaid
+flowchart LR
+  In[Raw_or_Staged_Input] --> T[Athena_Transform]
+  T --> Out[Curated_Output]
+`
+
+- **You own** business rules, schema contracts, test suites, and deployment pipelines.
+- **Platform owns** compute scheduling, optimizer, and managed runtime (where applicable).
+
+## When to use Athena
+
+| Use when... | Consider alternatives when... |
+| --- | --- |
+| Transform workload matches engine strengths | Simpler SQL-only path exists in warehouse |
+| Team has platform expertise | Sub-second streaming only -> dedicated stream processor |
+| Medallion or dimensional modeling at scale | Lightweight one-off scripts -> simpler tooling |
+
+## Learning path
+
+Continue to [Architecture](02_Architecture.md) or [Scenarios](04_Scenarios.md).
+
+## Related
+
+- [Official documentation](https://docs.aws.amazon.com/athena/)
+- [Batch Cloud Services](../../README.md)

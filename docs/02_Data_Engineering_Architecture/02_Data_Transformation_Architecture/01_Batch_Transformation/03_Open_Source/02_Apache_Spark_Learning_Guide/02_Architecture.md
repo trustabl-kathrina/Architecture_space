@@ -1,0 +1,60 @@
+---
+title: Apache Spark Architecture
+section: "02.02.01.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [spark, architecture]
+canonical: true
+---
+# 2. Architecture of Apache Spark
+
+## Cluster architecture
+
+| Component | Role |
+| --- | --- |
+| **Driver** | SparkContext/SparkSession, DAGScheduler, TaskScheduler |
+| **Cluster Manager** | YARN, Kubernetes, Mesos, or standalone |
+| **Executor** | JVM process running tasks; caches partitions |
+| **Catalog** | Hive, Glue, Unity, Iceberg REST |
+
+## Job lifecycle
+
+```mermaid
+stateDiagram-v2
+  [*] --> Parse: SQL_DataFrame_API
+  Parse --> Optimize: Catalyst_Rules
+  Optimize --> Plan: Physical_Plan
+  Plan --> Stage: Shuffle_Boundary
+  Stage --> Task: Parallel_Tasks
+  Task --> Commit: Write_Output
+  Commit --> [*]
+```
+
+## Shuffle and partitioning
+
+- **Hash partition** - equi-joins, group-by keys.
+- **Range partition** - order-sensitive ops (limited).
+- **Coalesce/repartition** - control output file count (target 128MB-1GB objects).
+- **Adaptive Query Execution (AQE)** - runtime skew join handling, coalesce shuffle partitions.
+
+## Lakehouse integration
+
+| Format | Spark integration |
+| --- | --- |
+| **Delta Lake** | ACID MERGE, time travel, OPTIMIZE/VACUUM |
+| **Iceberg** | Hidden partitioning, branch/tag, merge-on-read |
+| **Hudi** | Upsert, incremental pull, clustering |
+
+## Production checklist
+
+- Dynamic partition overwrite for idempotent daily loads
+- Broadcast joins only under size threshold (~10-50MB tuned)
+- Speculative execution for straggler mitigation
+- Event logging to Spark History Server / OTel
+
+## Related
+
+- [Dataproc Learning Guide](../../02_Cloud_Services/02_GCP/03_Dataproc_Spark_Learning_Guide/README.md)
+- [EMR Spark Learning Guide](../../02_Cloud_Services/03_AWS/04_EMR_Spark_Learning_Guide/README.md)

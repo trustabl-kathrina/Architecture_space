@@ -19,20 +19,20 @@ Cloud data platform services and reference implementations across GCP, AWS, and 
 
 ## Start here
 
-- [What Is Cloud Architecture](04.01_GCP/Overview/What_Is_Cloud_Architecture.md)
-- [What Is Platform Engineering](04.04_Platform_Engineering/Overview/What_Is_Platform_Engineering.md)
-- [What Is A Lakehouse](04.05_Lakehouse_Platforms/Overview/What_Is_A_Lakehouse.md)
-- [What Is FinOps](04.06_FinOps/Overview/What_Is_FinOps.md)
-- [Showback Model](04.06_FinOps/Showback_Model.md)
+- [What Is Cloud Architecture](01_GCP/Overview/What_Is_Cloud_Architecture.md)
+- [What Is Platform Engineering](04_Platform_Engineering/Overview/What_Is_Platform_Engineering.md)
+- [What Is A Lakehouse](05_Lakehouse_Platforms/Overview/What_Is_A_Lakehouse.md)
+- [What Is FinOps](06_FinOps/Overview/What_Is_FinOps.md)
+- [Showback Model](06_FinOps/Showback_Model.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 04.01 | GCP | 251 | [AI Cloud Framework](04.01_GCP/AI_And_GPU_Cloud_Architecture/AI_Cloud_Framework.md) | stub |
-| 04.04 | Platform Engineering | 245 | [A2A Platform](04.04_Platform_Engineering/Agent_Platform_Engineering/A2A_Platform.md) | stub |
-| 04.05 | Lakehouse Platforms | 197 | [AI Context Platform](04.05_Lakehouse_Platforms/AI_Ready_Data_Platform/AI_Context_Platform.md) | stub |
-| 04.06 | FinOps | 245 | [Agent Chargeback](04.06_FinOps/Agent_FinOps/Agent_Chargeback.md) | stub |
+| 04.01 | GCP | 251 | [AI Cloud Framework](01_GCP/AI_And_GPU_Cloud_Architecture/AI_Cloud_Framework.md) | stub |
+| 04.04 | Platform Engineering | 245 | [A2A Platform](04_Platform_Engineering/Agent_Platform_Engineering/A2A_Platform.md) | stub |
+| 04.05 | Lakehouse Platforms | 197 | [AI Context Platform](05_Lakehouse_Platforms/AI_Ready_Data_Platform/AI_Context_Platform.md) | stub |
+| 04.06 | FinOps | 245 | [Agent Chargeback](06_FinOps/Agent_FinOps/Agent_Chargeback.md) | stub |
 
 ## Related
 

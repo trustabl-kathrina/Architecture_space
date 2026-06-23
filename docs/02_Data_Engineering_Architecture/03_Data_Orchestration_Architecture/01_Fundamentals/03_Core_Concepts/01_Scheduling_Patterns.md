@@ -1,0 +1,115 @@
+---
+title: Scheduling Patterns
+section: "02.03.01.03"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [orchestration, scheduling, cron, triggers]
+canonical: true
+---
+# Scheduling Patterns
+
+Scheduling determines **when** DAG runs are created and **which logical date** (`execution_date` / data interval) each run represents. Poor scheduling causes duplicate loads, missed windows, and timezone bugs in global enterprises.
+
+## Scheduling types
+
+| Pattern | Mechanism | Use case | Risk |
+| --- | --- | --- | --- |
+| **Time-based (cron)** | `0 2 * * *` daily at 02:00 | Regular batch refresh | Timezone/DST errors; overlap if run exceeds interval |
+| **Interval** | Every `@hourly`, `timedelta(hours=6)` | Micro-batch, frequent sync | Backlog if interval < runtime |
+| **One-shot / manual** | Trigger API or UI | Ad hoc fixes, POC | No automation |
+| **Event-driven** | Dataset update, Pub/Sub, S3 event | Downstream on upstream completion | Requires idempotent consumers |
+| **External dependency** | Sensor on partition / flag file | Legacy "wait for landing" | Sensor inefficiency at scale |
+| **Backfill** | `start_date`–`end_date` range | Historical reprocessing | Resource spikes; downstream notification |
+
+## Logical date vs wall-clock time
+
+Batch orchestrators (Airflow) distinguish:
+
+| Concept | Meaning |
+| --- | --- |
+| **Data interval** | The slice of data the run processes (e.g., 2026-06-19 00:00–24:00 UTC) |
+| **Run after** | Earliest wall-clock time the scheduler may start the run |
+| **Catchup** | Whether missed intervals between `start_date` and now are auto-scheduled |
+
+**Rule:** Pass `{{ ds }}` or `data_interval_start` into tasks as the partition key — never hardcode "yesterday" in task code.
+
+```python
+# Airflow 2.x pattern (conceptual)
+@dag(schedule="0 2 * * *", catchup=False, start_date=datetime(2024, 1, 1))
+def orders_daily():
+    load_orders(partition="{{ data_interval_start | ds }}")
+```
+
+## Cron design guidelines
+
+1. **Stagger heavy DAGs** — Avoid all domains at `:00`; use `:05`, `:17` offsets to reduce warehouse contention.
+2. **Align to source readiness** — Schedule after upstream SaaS export completes (document vendor SLA).
+3. **Use UTC internally** — Convert to local only for business reporting labels.
+4. **Disable catchup in prod** unless backfill is intentional (`catchup=False`).
+5. **Set `max_active_runs=1`** for non-idempotent or resource-heavy DAGs.
+
+## Event and data-aware scheduling
+
+Prefer **explicit data dependencies** over arbitrary delays:
+
+| Anti-pattern | Replacement |
+| --- | --- |
+| Run B two hours after A | Dataset trigger when A's output table updated |
+| Poll S3 every 60s forever | ObjectCreated event → trigger DAG run |
+| Global "wait for 06:00 flag" | Metadata table `pipeline_ready` + single sensor with timeout |
+
+**Airflow 2.4+ Datasets:** Downstream DAG schedules when upstream dataset URIs update.
+
+**Dagster:** Asset materialization events automatically downstream.
+
+## Partitioned and incremental schedules
+
+| Model | Schedule | Task behavior |
+| --- | --- | --- |
+| **Daily partition** | `@daily` | Process one `ds` per run |
+| **Hourly partition** | `@hourly` | Process hour bucket; watch SLA at day boundary |
+| **Rolling window** | Every 15 min | Process last N minutes; idempotent merge |
+| **Full refresh (weekly)** | `@weekly` | Rebuild dimension; coordinate with downstream |
+
+## Catchup and backfill
+
+| Operation | When | Controls |
+| --- | --- | --- |
+| **Catchup** | New DAG with old `start_date` | `catchup=True` schedules all missed intervals |
+| **Backfill CLI/UI** | Logic bug fixed for date range | Limit concurrency; notify consumers |
+| **Clear and rerun** | Failed mid-DAG | Clear downstream tasks; preserve audit trail |
+
+Backfill checklist: confirm **idempotency**, **downstream re-notification**, **cost cap** (pools), and **schema compatibility** for historical data.
+
+## Sensors and deferrable operators
+
+**Sensors** block a worker slot while polling (file exists, partition present). At scale:
+
+- Use **reschedule mode** (release slot between pokes) or **deferrable operators** (async triggerer).
+- Set **timeouts** and **soft_fail** where appropriate to avoid silent stalls.
+- Replace long sensors with **event-driven triggers** when possible.
+
+## Multi-timezone and calendar awareness
+
+- **Business calendars** — Skip bank holidays via custom timetable or short-circuit task.
+- **Fiscal periods** — Parameterize month-end DAGs; do not assume calendar month equals fiscal month.
+- **Global enterprises** — "Daily" may mean per-region staggered runs or single UTC cut for global mart.
+
+## Monitoring scheduling health
+
+| Metric | Alert if |
+| --- | --- |
+| Scheduler heartbeat lag | > 2 minutes |
+| DAG run queue depth | Sustained growth |
+| Missed schedule (no run created) | Expected cron tick absent |
+| Run duration vs schedule interval | Duration ≥ interval (overlap risk) |
+| Sensor poke failures | Timeout rate spikes |
+
+## Related
+
+- [Dependency Management](02_Dependency_Management.md)
+- [SLA Management](04_SLA_Management.md)
+- [Orchestration Strategy](../02_Strategy/01_Orchestration_Strategy.md)
+- [Active Metadata](../06_Active_Metadata/01_Active_Metadata.md)

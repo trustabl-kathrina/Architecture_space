@@ -1,0 +1,17 @@
+---
+title: What Is Data Engineering
+section: "02.01"
+status: complete
+template: overview
+last_reviewed: 2026-06-18
+owner: architecture-team
+tags: []
+canonical: true
+---
+# What Is Data Engineering
+
+## Definition
+Data engineering builds reliable pipelines that ingest, transform, and deliver data for analytics, AI, and operations.
+
+## Related
+- [Streaming Strategy](../../../02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/02_Streaming/01_Fundamentals/02_Strategy/02_Streaming_Strategy.md)

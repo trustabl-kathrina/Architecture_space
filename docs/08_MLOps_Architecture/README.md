@@ -19,15 +19,15 @@ ML lifecycle, feature engineering, training, deployment, monitoring, and model g
 
 ## Start here
 
-- [AI Product Canvas](13.01_ML_Lifecycle/AI_Product_Canvas.md)
-- [AI Product Classification](13.01_ML_Lifecycle/AI_Product_Classification.md)
-- [AI Product Framework](13.01_ML_Lifecycle/AI_Product_Framework.md)
+- [AI Product Canvas](01_ML_Lifecycle/AI_Product_Canvas.md)
+- [AI Product Classification](01_ML_Lifecycle/AI_Product_Classification.md)
+- [AI Product Framework](01_ML_Lifecycle/AI_Product_Framework.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 13.01 | ML Lifecycle | 47 | [AI Product Canvas](13.01_ML_Lifecycle/AI_Product_Canvas.md) | stub |
+| 13.01 | ML Lifecycle | 47 | [AI Product Canvas](01_ML_Lifecycle/AI_Product_Canvas.md) | stub |
 
 ## Related
 

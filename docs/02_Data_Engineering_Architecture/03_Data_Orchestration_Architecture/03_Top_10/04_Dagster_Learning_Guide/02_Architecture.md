@@ -1,0 +1,50 @@
+---
+title: Dagster Architecture
+section: "02.03.03.04"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [dagster, open-source, assets, top-10, learning-guide]
+canonical: true
+---
+# 2. Architecture of Dagster
+
+## Control plane vs execution plane
+
+| Plane | Responsibility |
+| --- | --- |
+| **Control plane** | Dagster webserver, daemon, metadata DB (runs, assets, events) |
+| **Execution plane** | Run coordinators launching ops in processes, containers, or K8s |
+
+## Core components
+
+| Component | Function |
+| --- | --- |
+| **Software-defined assets** | Tables/files/models as first-class objects with lineage |
+| **Ops & graphs** | Executable units composed into jobs |
+| **Code locations** | gRPC servers exposing definitions from repos |
+| **Dagster daemon** | Schedules, sensors, backfills, run queue |
+| **I/O managers & resources** | Pluggable storage and connections |
+
+Asset materializations emit **events** — enabling column-level lineage and partition-aware backfills without separate catalog tooling.
+
+## Design principle
+
+**Assets over tasks** — model what you produce (datasets) not only how you run steps; lineage is built in.
+
+## Runtime architecture
+
+| Service | Responsibility |
+| --- | --- |
+| **Webserver (UI + GraphQL)** | Catalog, launchpad, asset graph |
+| **Daemon** | Runs schedules, sensors, backfills |
+| **Code locations** | gRPC servers exposing definitions (often one per repo) |
+| **Run coordinator / launcher** | Queues runs; K8s, Docker, or external |
+
+**I/O managers** standardize how asset materializations land in Snowflake, S3, or local storage—reducing ad-hoc path logic.
+
+## Related
+
+- [Active Metadata](../../01_Fundamentals/06_Active_Metadata/01_Active_Metadata.md)
+- [Top 10 README](../README.md)

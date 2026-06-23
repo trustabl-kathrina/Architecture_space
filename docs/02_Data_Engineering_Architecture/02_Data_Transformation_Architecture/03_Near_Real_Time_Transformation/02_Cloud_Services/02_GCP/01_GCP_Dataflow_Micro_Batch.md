@@ -1,0 +1,45 @@
+---
+title: GCP Dataflow Micro-Batch
+section: "02.02.03.02.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [gcp, dataflow, nrt]
+canonical: true
+---
+# GCP Dataflow Micro-Batch Transformation
+
+## Overview
+
+**Cloud Dataflow** runs Apache Beam pipelines with autoscaling workers. For NRT, use **streaming runner** with windowing or **batch runner** on short Composer schedules for file-based NRT.
+
+## Configuration
+
+| Parameter | NRT recommendation |
+| --- | --- |
+| `streaming` | `true` for Pub/Sub sources |
+| `maxNumWorkers` | Cap for cost control |
+| `workerMachineType` | `n1-standard-4` baseline |
+| Window | Fixed 1â€“5m for aggregations |
+
+## Beam trigger example
+
+```python
+options = PipelineOptions(streaming=True, max_num_workers=20)
+with beam.Pipeline(options=options) as p:
+    (p | 'Read' >> beam.io.ReadFromPubSub(subscription=SUB)
+       | 'Parse' >> beam.Map(parse_json)
+       | 'Window' >> beam.WindowInto(beam.window.FixedWindows(60))
+       | 'Write' >> beam.io.WriteToBigQuery(TABLE, method='STREAMING_INSERTS'))
+```
+
+## IAM minimum
+
+- `roles/dataflow.worker` on worker SA
+- `roles/pubsub.subscriber` on source subscription
+- `roles/bigquery.dataEditor` on target dataset
+
+## Related
+
+- [Dataflow Learning Guide](../../../02_Streaming_Transformation/02_Cloud_Services/02_GCP/03_Dataflow_Learning_Guide/README.md)

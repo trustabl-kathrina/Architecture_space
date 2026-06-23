@@ -1,0 +1,24 @@
+# Documentation AI Factory — runtime dependencies
+# Python 3.12 required. Install: pip install -r requirements.txt
+
+# Agent orchestration and Gemini integration
+google-adk>=2.3.0
+google-genai>=2.8,<3
+
+# Web research
+tavily-python>=0.5.0
+
+# Data contracts and configuration
+pydantic>=2.12,<3
+pydantic-settings>=2.7,<3
+
+# Markdown generation and YAML front matter
+markdown-it-py>=3.0,<4
+pyyaml>=6.0.2,<7
+jinja2>=3.1,<4
+
+# CLI and utilities
+click>=8.1.8,<9
+python-dotenv>=1,<2
+tenacity>=9,<10
+httpx>=0.27,<1

@@ -1,0 +1,53 @@
+# Topic keyword → Architecture Space docs/ section prefix
+# Used by TaxonomyMappingAgent and taxonomy_lookup tool.
+
+schema_version: "1.0"
+
+mappings:
+  - keywords: [data mesh, datamesh, decentralized data]
+    section_prefix: "01_Data_Architecture"
+    default_tags: [data-mesh, domain-driven]
+
+  - keywords: [data vault, datavault, dvb]
+    section_prefix: "04_Data_Modeling_Architecture"
+    default_tags: [data-vault, modeling]
+
+  - keywords: [kafka, event streaming, apache kafka]
+    section_prefix: "09_Event_And_Streaming_Architecture"
+    default_tags: [kafka, streaming]
+
+  - keywords: [flink, apache flink, stream processing]
+    section_prefix: "09_Event_And_Streaming_Architecture"
+    default_tags: [flink, streaming]
+
+  - keywords: [airflow, apache airflow, orchestration]
+    section_prefix: "02_Data_Engineering_Architecture"
+    default_tags: [airflow, orchestration]
+
+  - keywords: [dbt, data build tool]
+    section_prefix: "02_Data_Engineering_Architecture"
+    default_tags: [dbt, transformation]
+
+  - keywords: [bigquery, bq, google bigquery]
+    section_prefix: "03_Cloud_Data_Platforms"
+    default_tags: [bigquery, gcp]
+
+  - keywords: [data engineering, etl, elt, pipeline]
+    section_prefix: "02_Data_Engineering_Architecture"
+    default_tags: [data-engineering]
+
+  - keywords: [data modeling, dimensional, star schema]
+    section_prefix: "04_Data_Modeling_Architecture"
+    default_tags: [data-modeling]
+
+  - keywords: [cloud architecture, cloud data platform]
+    section_prefix: "03_Cloud_Data_Platforms"
+    default_tags: [cloud]
+
+  - keywords: [ai architecture, rag, llm platform]
+    section_prefix: "07_AI_Data_Architecture"
+    default_tags: [ai, architecture]
+
+fallback:
+  section_prefix: "00_Architecture_Governance"
+  needs_manual_mapping: true

@@ -6,17 +6,17 @@ Thank you for contributing to the architecture documentation. This guide explain
 
 1. Read the [repository README](../README.md) and [docs README](README.md).
 2. Check `status` in front matter — do not expand `stub` files without updating status.
-3. Use the correct [template](../code/templates/) for your document type.
+3. Use the correct [template](../tools/docs/templates/) for your document type.
 4. Check the [migration map](_meta/migration_map.yaml) before creating new canonical docs.
 
 ## Document types
 
 | Type | Template | Use when |
 | --- | --- | --- |
-| Overview | `code/templates/overview.md` | Section introductions, `What_Is_*`, vision docs |
-| Concept | `code/templates/concept.md` | Fundamentals, patterns, technical primers |
-| Evaluation | `code/templates/evaluation.md` | Vendor/platform selection, benchmarks |
-| ADR | `code/templates/adr.md` | Architecture Decision Records in `*_ADR/` folders |
+| Overview | `tools/docs/templates/overview.md` | Section introductions, `What_Is_*`, vision docs |
+| Concept | `tools/docs/templates/concept.md` | Fundamentals, patterns, technical primers |
+| Evaluation | `tools/docs/templates/evaluation.md` | Vendor/platform selection, benchmarks |
+| ADR | `tools/docs/templates/adr.md` | Architecture Decision Records in `*_ADR/` folders |
 | Hub | Existing hub pattern | Cross-section indexes in `_hubs/` |
 | Interview | Section skeleton | Interview preparation and scenario questions |
 | POC | Evaluation/concept | Benchmarks and proof-of-concepts in technology sections |
@@ -25,7 +25,7 @@ Thank you for contributing to the architecture documentation. This guide explain
 
 - **Content root:** `docs/`
 - **Parent sections:** `NN_Topic_Name/` (e.g. `02_Data_Engineering_Architecture/`)
-- **Nested domains:** `NN.MM_Topic_Name/` under a parent (e.g. `02.01_Data_Ingestion_Architecture/02.01.02_Streaming/`)
+- **Nested domains:** `NN.MM_Topic_Name/` under a parent (e.g. `01_Data_Ingestion_Architecture/02_Streaming/`)
 - **Subsections:** `NN.MM_Topic_Name/` or `NN.MM.SS_Topic_Name/` for topic groups
 - **Files:** sequenced prefixes where applicable (`02.01.02.01.01.01_Topic.md`) or `Topic_Name.md` in Pascal_Snake_Case
 - **Hubs:** `_hubs/Topic_Hub.md`
@@ -89,12 +89,12 @@ canonical: true
 1. Create or edit the markdown file under `docs/`.
 2. Refresh indexes if needed:
    ```powershell
-   powershell -ExecutionPolicy Bypass -File code/scripts/revamp_taxonomy.ps1 -RefreshOnly
+   powershell -ExecutionPolicy Bypass -File tools/docs/scripts/revamp_taxonomy.ps1 -RefreshOnly
    ```
 3. Validate when Python is available:
    ```bash
-   python code/scripts/validate_front_matter.py
-   python code/scripts/validate_links.py
+   python tools/docs/scripts/validate_front_matter.py
+   python tools/docs/scripts/validate_links.py
    ```
 4. Submit a pull request with a clear summary of what changed and why.
 
@@ -106,4 +106,4 @@ canonical: true
 
 ## Tooling
 
-See [code/README.md](../code/README.md) for scripts, MkDocs, and CI details.
+See [tools/docs/README.md](../tools/docs/README.md) for scripts, MkDocs, and CI details.

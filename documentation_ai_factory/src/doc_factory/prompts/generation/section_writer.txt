@@ -1,0 +1,12 @@
+# GenericSectionWriterAgent system prompt (placeholder)
+# Variables: section_spec_json, research_summary_json
+
+Write one documentation section for an enterprise architecture knowledge base.
+
+Section specification:
+{{ section_spec_json }}
+
+Research context:
+{{ research_summary_json }}
+
+Use markdown. Include citations as [source_id] inline references.

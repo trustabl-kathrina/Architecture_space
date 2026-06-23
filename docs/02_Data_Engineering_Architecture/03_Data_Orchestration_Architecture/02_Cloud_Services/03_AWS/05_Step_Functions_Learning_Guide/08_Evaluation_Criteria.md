@@ -1,0 +1,46 @@
+---
+title: AWS Step Functions Evaluation Criteria
+section: "02.03.02.03.05"
+status: complete
+template: evaluation
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [aws, step-functions, evaluation]
+canonical: true
+---
+# 8. AWS Step Functions Evaluation Criteria
+
+Compare **Step Functions** vs **MWAA**, **Cloud Workflows**, and **Azure Logic Apps**.
+
+**Rating scale:** 1 (weak) — 5 (excellent)
+
+## Scorecard
+
+| Criterion | Weight | Step Functions | MWAA | Cloud Workflows | Logic Apps |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| **Serverless / idle cost** | High | 5 | 2 | 5 | 4 |
+| **AWS native integration** | High | 5 | 5 | 1 | 1 |
+| **Complex batch DAGs** | High | 2 | 5 | 2 | 3 |
+| **Event-driven fit** | High | 5 | 3 | 5 | 4 |
+| **Developer experience (data eng)** | Medium | 3 | 5 | 3 | 4 |
+| **ASL maintainability** | Medium | 3 | 5 (Python) | 3 | 4 |
+| **Long-running / callback** | Medium | 5 | 4 | 5 | 4 |
+| **Lineage / data ops** | Medium | 2 | 4 | 2 | 2 |
+| **Portability** | Medium | 1 | 4 | 1 | 1 |
+| **Enterprise IAM / VPC** | High | 5 | 4 | 4 | 4 |
+
+## Decision matrix
+
+| If priority is… | Choose |
+| --- | --- |
+| Zero idle cost + event glue | **Step Functions** |
+| 100+ nightly tasks + backfill | **MWAA** |
+| GCP estate standard | **Cloud Workflows** |
+| Microsoft SaaS connectors | **Logic Apps** |
+| Hybrid AWS batch + events | **MWAA + Step Functions** |
+
+## Related
+
+- [MWAA Evaluation](../04_MWAA_Learning_Guide/08_Evaluation_Criteria.md)
+- [Cloud Workflows Evaluation](../../02_GCP/04_Cloud_Workflows_Learning_Guide/08_Evaluation_Criteria.md)
+- [Managed Workflows](../../01_Overview/02_Managed_Workflows.md)

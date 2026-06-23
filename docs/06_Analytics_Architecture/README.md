@@ -15,18 +15,18 @@ canonical: true
 
 ## Purpose
 
-BI, semantic layer, self-service analytics, dashboards, and analytics tools. Real-time OLAP engines live in [08.10](08.10_Real_Time_Analytics_Architecture/README.md).
+BI, semantic layer, self-service analytics, dashboards, and analytics tools. Real-time OLAP engines live in [08.10](10_Real_Time_Analytics_Architecture/README.md).
 
 ## Start here
 
-- [What Is Analytics Architecture](08.01_BI_Architecture/Overview/What_Is_Analytics_Architecture.md)
+- [What Is Analytics Architecture](01_BI_Architecture/Overview/What_Is_Analytics_Architecture.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 08.01 | BI Architecture | 206 | [Advanced Analytics Framework](08.01_BI_Architecture/Advanced_Analytics/Advanced_Analytics_Framework.md) | stub |
-| 08.10 | Real Time Analytics Architecture | — | [README](08.10_Real_Time_Analytics_Architecture/README.md) | stub |
+| 08.01 | BI Architecture | 206 | [Advanced Analytics Framework](01_BI_Architecture/Advanced_Analytics/Advanced_Analytics_Framework.md) | stub |
+| 08.10 | Real Time Analytics Architecture | — | [README](10_Real_Time_Analytics_Architecture/README.md) | stub |
 
 ## Related
 

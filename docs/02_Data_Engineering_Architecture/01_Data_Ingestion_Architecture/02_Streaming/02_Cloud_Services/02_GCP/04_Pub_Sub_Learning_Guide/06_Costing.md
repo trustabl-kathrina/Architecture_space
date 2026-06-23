@@ -1,0 +1,128 @@
+---
+title: Pub/Sub Costing
+section: "02.01"
+status: complete
+template: evaluation
+last_reviewed: 2026-06-18
+owner: architecture-team
+tags: [gcp, pubsub, finops, costing]
+canonical: true
+---
+# 6. Pub/Sub Costing
+
+> **Source of truth:** [Google Cloud Pub/Sub pricing](https://cloud.google.com/pubsub/pricing) — verify rates before budgeting; prices below reflect official documentation as of 2026-06.
+
+## Cost components
+
+Pub/Sub charges fall into three categories:
+
+1. **Throughput** — bytes published and bytes delivered to subscribers
+2. **Storage** — retained messages (topic retention, acked message retention, snapshots)
+3. **Data transfer** — when delivery crosses zone/region boundaries (standard GCP data transfer SKUs)
+
+There is **no charge for idle topics** with no publish/delivery activity. Empty pull/streaming-pull requests that return no messages are not billed for message throughput.
+
+## Standard Pub/Sub pricing (official)
+
+| Component | Rate | Notes |
+| --- | --- | --- |
+| Message throughput | **First 10 GiB/month free** per billing account; then **$40 per TiB** | Applies to publish + deliver volume (Message Delivery Basic SKU) |
+| Minimum billable request | **1 KB per publish/pull/push request** | Batch small messages to reduce cost |
+| Message storage | **$0.27 per GiB-month** | Topic retention, acked message retention on subscription, snapshots |
+| BigQuery subscription | **$50 per TiB** delivered to BigQuery | No separate BigQuery ingestion fee; storage/query costs apply |
+| Cloud Storage subscription | **$50 per TiB** | Plus bucket storage charges |
+| Import topics (Kinesis) | **$50 per TiB** ingest | Plus source egress (e.g., AWS) |
+| Import topics (MSK, Confluent, Event Hubs, GCS) | **$80 per TiB** ingest | First 10 GiB not free for import |
+
+**Data transfer:** No charge for ingress to Pub/Sub. Cross-region / internet delivery billed at [standard GCP data transfer rates](https://cloud.google.com/vpc/pricing). No zone data transfer fee for Pub/Sub-specific SKUs within normal Pub/Sub delivery.
+
+**Pub/Sub Lite:** Deprecated — turn down **March 18, 2026**. Migrate to standard Pub/Sub.
+
+## Volume calculation
+
+Billable bytes per message ≈ `len(data)` + sum of attribute keys/values + ~20 B timestamp + `message_id` + overhead.
+
+**Example:** 200 B JSON event → billed as 1 KB if published alone (minimum per request). Batching 50 such events in one publish ≈ 10 KB billable in one request.
+
+## Official pricing examples (North America)
+
+From GCP pricing page (50% utilization assumptions for Lite; 24h retention; pull/push subs):
+
+| Publish throughput | Subscriptions | Pub/Sub (USD/month) |
+| ---: | ---: | ---: |
+| 10 MiB/s | 1 | ~$2,000 |
+| 10 MiB/s | 2 | ~$3,000 |
+| 100 MiB/s | 1 | ~$19,760 |
+| 100 MiB/s | 2 | ~$29,640 |
+
+Fan-out multiplies **delivery** throughput: one 1 GiB published to 3 subscriptions ≈ 1 GiB publish + 3 GiB deliver = 4 GiB billable throughput.
+
+## Scenario cost models
+
+### Scenario A — Dev/test event bus
+
+| Assumption | Value |
+| --- | --- |
+| Volume | 500K messages/month × 500 B avg, batched 50/msg |
+| Requests | ~10K publish requests → ~10 MB + delivery similar |
+| Subscriptions | 2 |
+| **Est. throughput** | < 10 GiB free tier |
+| **Est. monthly cost** | **$0** (within free tier) + negligible storage |
+
+### Scenario B — Microservices production (single region)
+
+| Assumption | Value |
+| --- | --- |
+| Volume | 50M messages/month × 2 KB avg |
+| Publish | ~100 GB |
+| Fan-out | 4 subscriptions → ~400 GB delivery |
+| **Total throughput** | ~500 GB (~0.49 TiB) |
+| **Throughput cost** | ~0.49 × $40 ≈ **$20/month** (after free 10 GiB) |
+| Storage (7d retention) | Low GB → **< $5/month** |
+
+### Scenario C — Analytics pipeline (Dataflow + BigQuery)
+
+| Assumption | Value |
+| --- | --- |
+| Ingest | 5 TiB/month publish |
+| BigQuery subscription | 5 TiB export @ $50/TiB |
+| **Pub/Sub throughput** | 5 TiB × $40 + 5 TiB × $50 |
+| **Est. monthly** | **~$200 + $250 = $450** (+ BQ storage/query) |
+
+### Scenario D — Multi-region disaster recovery
+
+| Assumption | Value |
+| --- | --- |
+| Primary region publish | 2 TiB/month |
+| DR subscriber cross-region | 2 TiB delivery + data transfer |
+| **Extra cost driver** | Cross-region data transfer ($0.01–$0.08+/GiB depending on path) |
+| **Est. uplift** | **15–40%** over single-region baseline |
+
+### Scenario E — IoT burst (1B small events)
+
+| Assumption | Value |
+| --- | --- |
+| Events | 1B × 300 B without batching → minimum 1 KB each |
+| **Risk** | Minimum KB rule inflates cost 3×+ |
+| **Mitigation** | Batch 100 events/request → ~10 GB publish vs ~1 PB theoretical worst case |
+| **Lesson** | Batching is a **FinOps requirement**, not optional |
+
+## Cost optimization checklist
+
+1. **Batch publishes** — target > 1 KB per request average.
+2. **Minimize fan-out** — merge consumers or use Dataflow side outputs.
+3. **Subscription filters** — drop irrelevant messages before delivery billing.
+4. **Regional co-location** — avoid cross-region delivery.
+5. **Retention policy** — shorten topic/subscription retention; export to cheap storage.
+6. **Right subscription type** — avoid BigQuery export SKU unless analytics-bound.
+7. **Monitor** — dashboard on `subscription/byte_cost` proxy metrics (throughput bytes).
+
+## FinOps linkage
+
+Chargeback labels: `cost-center`, `domain`, `environment` on topics/subscriptions. Integrate with [FinOps section](../../../../04_Cloud_Data_Platforms/06_FinOps/README.md).
+
+## Related
+
+- [Benchmarking](09_Benchmarking.md)
+- [Real-Time Configuration](07_Real_Time_Configuration.md)
+- [Official pricing calculator](https://cloud.google.com/products/calculator)

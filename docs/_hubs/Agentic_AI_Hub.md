@@ -14,6 +14,6 @@ Canonical navigation hub for agent design, MCP, A2A, orchestration, AgentOps, an
 
 ## Canonical Sections
 
-- [Agentic AI Architecture](../11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/README.md)
+- [Agentic AI Architecture](../11_AI_Data_Architecture/12_Agentic_AI_Architecture/README.md)
 - [AI Data Architecture](../11_AI_Data_Architecture/README.md)
 - [MLOps Architecture](../13_MLOps_Architecture/README.md)

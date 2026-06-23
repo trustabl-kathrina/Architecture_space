@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-surface: 250 250 250;
+    --color-surface-raised: 255 255 255;
+    --color-surface-overlay: 244 244 245;
+    --color-surface-input: 255 255 255;
+    --color-border: 228 228 231;
+    --color-border-strong: 212 212 216;
+    --color-content: 24 24 27;
+    --color-content-muted: 82 82 91;
+    --color-content-subtle: 113 113 122;
+    --color-accent: 16 163 127;
+    --color-accent-hover: 13 143 111;
+    --color-accent-muted: 220 252 231;
+  }
+
+  .dark {
+    --color-surface: 33 33 33;
+    --color-surface-raised: 23 23 23;
+    --color-surface-overlay: 48 48 48;
+    --color-surface-input: 45 45 45;
+    --color-border: 64 64 64;
+    --color-border-strong: 82 82 82;
+    --color-content: 236 236 236;
+    --color-content-muted: 180 180 180;
+    --color-content-subtle: 142 142 142;
+    --color-accent: 16 163 127;
+    --color-accent-hover: 26 185 143;
+    --color-accent-muted: 6 78 59;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    overflow: hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-border)) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-border));
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-border-strong));
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .panel-header {
+    @apply flex h-11 shrink-0 items-center border-b border-border/60 px-4;
+  }
+
+  .panel-title {
+    @apply text-sm font-medium text-content;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-border/60 bg-surface-input px-3 py-2 text-sm text-content placeholder:text-content-subtle;
+    @apply focus:border-border-strong focus:outline-none focus:ring-1 focus:ring-border-strong/80;
+  }
+
+  .btn-ghost {
+    @apply rounded-lg px-2.5 py-1.5 text-sm text-content-muted transition-colors hover:bg-surface-overlay hover:text-content;
+  }
+
+  .btn-primary {
+    @apply rounded-lg bg-accent px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-secondary {
+    @apply rounded-lg border border-border/60 bg-transparent px-3 py-1.5 text-sm text-content-muted transition-colors hover:bg-surface-overlay hover:text-content disabled:opacity-40;
+  }
+
+  .resize-handle {
+    @apply w-px shrink-0 bg-border/40 transition-colors hover:bg-border-strong/80;
+  }
+}
+
+/* Tiptap editor */
+.tiptap-editor {
+  @apply min-h-full text-[15px] leading-7 text-content;
+}
+
+.tiptap-editor h1 {
+  @apply mb-4 mt-8 text-2xl font-semibold tracking-tight;
+}
+
+.tiptap-editor h2 {
+  @apply mb-3 mt-6 text-xl font-semibold tracking-tight;
+}
+
+.tiptap-editor h3 {
+  @apply mb-2 mt-5 text-lg font-medium;
+}
+
+.tiptap-editor p {
+  @apply mb-4 text-content-muted;
+}
+
+.tiptap-editor ul {
+  @apply mb-4 list-disc pl-6 text-content-muted;
+}
+
+.tiptap-editor ol {
+  @apply mb-4 list-decimal pl-6 text-content-muted;
+}
+
+.tiptap-editor pre {
+  @apply mb-4 overflow-x-auto rounded-xl bg-surface-overlay p-4 font-mono text-sm;
+}
+
+.tiptap-editor code {
+  @apply rounded-md bg-surface-overlay px-1.5 py-0.5 font-mono text-sm text-content;
+}
+
+.tiptap-editor table {
+  @apply mb-4 w-full border-collapse text-sm;
+}
+
+.tiptap-editor th,
+.tiptap-editor td {
+  @apply border border-border/60 px-3 py-2 text-left;
+}
+
+.tiptap-editor th {
+  @apply bg-surface-overlay font-medium;
+}
+
+/* Markdown preview */
+.markdown-preview {
+  @apply text-[15px] leading-7 text-content;
+}
+
+.markdown-preview h1 {
+  @apply mb-4 mt-8 text-2xl font-semibold tracking-tight;
+}
+
+.markdown-preview h2 {
+  @apply mb-3 mt-6 text-xl font-semibold tracking-tight;
+}
+
+.markdown-preview h3 {
+  @apply mb-2 mt-5 text-lg font-medium;
+}
+
+.markdown-preview p {
+  @apply mb-4 text-content-muted;
+}
+
+.markdown-preview ul {
+  @apply mb-4 list-disc pl-6 text-content-muted;
+}
+
+.markdown-preview ol {
+  @apply mb-4 list-decimal pl-6 text-content-muted;
+}
+
+.markdown-preview pre {
+  @apply mb-4 overflow-x-auto rounded-xl bg-surface-overlay p-4 font-mono text-sm;
+}
+
+.markdown-preview pre:not(.mermaid) code {
+  @apply text-content;
+}
+
+.markdown-preview code {
+  @apply rounded-md bg-surface-overlay px-1.5 py-0.5 font-mono text-sm text-content;
+}
+
+.markdown-preview table {
+  @apply mb-4 w-full border-collapse text-sm;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+  @apply border border-border/60 px-3 py-2 text-left;
+}
+
+.markdown-preview th {
+  @apply bg-surface-overlay font-medium;
+}
+
+.markdown-preview .mermaid {
+  @apply mb-6 flex justify-center rounded-xl bg-surface-overlay p-6;
+}
+
+.markdown-preview a {
+  @apply text-accent underline decoration-accent/40 underline-offset-2 hover:text-accent-hover;
+}
+
+.markdown-preview blockquote {
+  @apply mb-4 border-l-2 border-border-strong pl-4 text-content-muted;
+}
+
+/* Compact markdown in chat assistant bubbles */
+.prose-chat .markdown-preview {
+  @apply text-sm leading-relaxed;
+}
+
+.prose-chat .markdown-preview h1 {
+  @apply mb-2 mt-4 text-lg font-semibold;
+}
+
+.prose-chat .markdown-preview h2 {
+  @apply mb-2 mt-3 text-base font-semibold;
+}
+
+.prose-chat .markdown-preview h3 {
+  @apply mb-1.5 mt-2.5 text-sm font-medium;
+}
+
+.prose-chat .markdown-preview p {
+  @apply mb-2.5 last:mb-0;
+}
+
+.prose-chat .markdown-preview ul,
+.prose-chat .markdown-preview ol {
+  @apply mb-2.5;
+}
+
+.prose-chat .markdown-preview pre {
+  @apply mb-2.5 p-3 text-xs;
+}
+
+.prose-chat .markdown-preview .mermaid {
+  @apply mb-3 p-4;
+}

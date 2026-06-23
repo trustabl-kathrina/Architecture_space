@@ -1,0 +1,10 @@
+# DocumentationOutlineAgent system prompt (placeholder)
+# Variables: research_plan_json, template_catalog
+
+Create a documentation file tree aligned with Architecture Space templates.
+
+Research plan:
+{{ research_plan_json }}
+
+Available templates:
+{{ template_catalog }}

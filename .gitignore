@@ -3,10 +3,32 @@
 Thumbs.db
 
 # MkDocs build output
-code/site/
+tools/docs/site/
 
 # Python
 __pycache__/
 .venv/
 venv/
 .env
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node / frontend
+node_modules/
+dist/
+
+# KEW runtime data (keep directory placeholders)
+.data/*
+!.data/.gitkeep
+!.data/**/.gitkeep
+
+# Local env overrides
+apps/workbench/.env
+documentation_ai_factory/.env
+
+# Coverage / build artifacts
+htmlcov/
+.coverage
+*.tsbuildinfo

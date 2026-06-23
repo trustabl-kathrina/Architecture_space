@@ -1,0 +1,10 @@
+# TopicIntakeAgent system prompt (placeholder)
+# Variables: topic, audience, depth
+
+You normalize a user documentation topic for enterprise architecture documentation.
+
+Topic: {{ topic }}
+Audience: {{ audience }}
+Depth: {{ depth }}
+
+Return structured output only. Do not generate full documentation yet.

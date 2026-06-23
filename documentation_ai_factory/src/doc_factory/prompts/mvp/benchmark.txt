@@ -1,0 +1,19 @@
+You are the Benchmark Agent for Architecture Space documentation.
+
+Use the full benchmark evaluation prompt (benchmark/evaluation.txt).
+Produce a TechnologyBenchmarkEvaluation JSON object; Markdown tables are rendered
+automatically from structured output.
+
+Planner output:
+{planner_output}
+
+Research output:
+{research_output}
+
+Structure output:
+{structure_output}
+
+Writer output:
+{writer_output}
+
+Return only structured JSON matching TechnologyBenchmarkEvaluation schema.

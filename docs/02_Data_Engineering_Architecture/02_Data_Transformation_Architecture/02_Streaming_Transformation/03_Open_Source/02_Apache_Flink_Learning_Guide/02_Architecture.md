@@ -1,0 +1,47 @@
+---
+title: Apache Flink Architecture
+section: "02.02.02.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [flink, architecture]
+canonical: true
+---
+# 2. Architecture of Apache Flink
+
+## Runtime components
+
+| Component | Role |
+| --- | --- |
+| **JobManager** | Coordination, checkpoint orchestration |
+| **TaskManager** | Slots run operators; manage network buffers |
+| **Operator** | Source, map, keyBy, window, sink |
+| **State backend** | RocksDB (default) or heap |
+
+## Checkpointing
+
+```mermaid
+sequenceDiagram
+  JM as JobManager
+  TM as TaskManager
+  JM->>TM: trigger_checkpoint
+  TM->>TM: barrier_align
+  TM->>JM: ack_snapshot
+  JM->>JM: complete_checkpoint
+```
+
+- **Barrier alignment** - exactly-once with Kafka source + two-phase commit sink.
+- **Unaligned checkpoints** - reduce backpressure impact (1.11+).
+
+## Time semantics
+
+| Time | Use |
+| --- | --- |
+| **Event time** | Business correctness with watermarks |
+| **Processing time** | Low-latency approximations |
+| **Ingestion time** | Audit only - avoid for analytics |
+
+## Related
+
+- [Dataflow Learning Guide](../../02_Cloud_Services/02_GCP/03_Dataflow_Learning_Guide/README.md)

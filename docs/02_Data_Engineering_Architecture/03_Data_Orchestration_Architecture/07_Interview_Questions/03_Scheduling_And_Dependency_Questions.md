@@ -1,0 +1,40 @@
+---
+title: Scheduling and Dependency Questions
+section: "02.03.07.03"
+status: complete
+template: interview
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [interview, scheduling, dependencies]
+canonical: true
+---
+# Scheduling and Dependency - Interview Questions
+
+## Scheduling
+
+1. **Cron vs interval vs timetable** - when is cron insufficient?
+2. Explain **data interval** vs **logical date** in Airflow.
+3. **Catchup** - when enabled vs disabled?
+4. **SLA misses** - detection and escalation design?
+5. **Cross-DAG dependencies** - ExternalTaskSensor vs datasets vs triggering API?
+
+## Dependencies
+
+6. **Trigger rules** (`all_success`, `none_failed`, etc.) - fan-in examples?
+7. How do you model **optional branches** in a DAG?
+8. **Partition-aware backfill** - upstream/downstream alignment?
+9. **Circular dependency** detection in CI?
+10. **Event-driven trigger** from catalog freshness - design outline?
+
+## Scenarios
+
+11. DAG A must finish before B and C, but B and C can run in parallel - draw it.
+12. Finance close: freeze deploys, guarantee 6 AM SLA - orchestration controls?
+
+## Model answers
+
+See [Scheduling Patterns](../01_Fundamentals/03_Core_Concepts/01_Scheduling_Patterns.md), [Dependency Management](../01_Fundamentals/03_Core_Concepts/02_Dependency_Management.md), [SLA Management](../01_Fundamentals/03_Core_Concepts/04_SLA_Management.md).
+
+## Related
+
+- [Orchestration Fundamentals](01_Orchestration_Fundamentals_Questions.md)

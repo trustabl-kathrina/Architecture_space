@@ -1,0 +1,96 @@
+site_name: Enterprise Architecture Space
+site_description: Architecture-first data, AI, cloud data platform, governance, and Pluto MIND knowledge base
+docs_dir: ../docs
+site_dir: site
+repo_url: https://github.com/your-org/architecture-space
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: README.md
+  - Hubs:
+      - Data Mesh Hub: _hubs/Data_Mesh_Hub.md
+      - FinOps Hub: _hubs/FinOps_Hub.md
+      - Agentic AI Hub: _hubs/Agentic_AI_Hub.md
+      - Pluto MIND Hub: _hubs/Pluto_MIND_Hub.md
+  - Foundations:
+      - "00 Architecture Governance": 00_Architecture_Governance/README.md
+      - "00.10 Governance & Metadata": 00_Architecture_Governance/10_Data_Governance_And_Metadata/README.md
+      - "01 Data Architecture": 01_Data_Architecture/README.md
+  - Data Platform:
+      - "02 Data Engineering": 02_Data_Engineering_Architecture/README.md
+      - "02.01 Data Ingestion": 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/README.md
+      - "02.01.01 Batch Ingestion": 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/01_Batch_Ingestion/README.md
+      - "02.01.02 Streaming": 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/02_Streaming/README.md
+      - "02.01.03 Near-Real-Time": 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/03_Near_Real_Time_Ingestion/README.md
+      - "02.01.04 Shared Foundations": 02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/04_Shared_Foundations/README.md
+      - "02.02 Data Transformation": 02_Data_Engineering_Architecture/02_Data_Transformation_Architecture/README.md
+      - "02.02.01 Batch Transformation": 02_Data_Engineering_Architecture/02_Data_Transformation_Architecture/01_Batch_Transformation/README.md
+      - "02.02.02 Streaming Transformation": 02_Data_Engineering_Architecture/02_Data_Transformation_Architecture/02_Streaming_Transformation/README.md
+      - "02.05 Data Storage": 02_Data_Engineering_Architecture/05_Data_Storage_Architecture/README.md
+      - "04 Cloud Data Platforms": 04_Cloud_Data_Platforms/README.md
+      - "05 Data Modeling": 04_Data_Modeling_Architecture/README.md
+      - "06 Data Products": 06_Data_Product_Architecture/README.md
+  - Analytics And AI:
+      - "08 Analytics": 08_Analytics_Architecture/README.md
+      - "08.10 Real-Time Analytics": 08_Analytics_Architecture/10_Real_Time_Analytics_Architecture/README.md
+      - "11 AI Data": 11_AI_Data_Architecture/README.md
+      - "11.12 Agentic AI": 11_AI_Data_Architecture/12_Agentic_AI_Architecture/README.md
+      - "13 MLOps": 13_MLOps_Architecture/README.md
+  - Assurance And Industry:
+      - "14 Security & Privacy": 14_Security_And_Privacy_Architecture/README.md
+      - "15 Industry Reference": 15_Industry_Reference_Architectures/README.md
+  - Practitioner:
+      - "16 Interview Preparation": 16_Architecture_Interview_Preparation/README.md
+      - "17 Technology Comparisons": 17_Technology_Comparisons/README.md
+      - "19 Templates & Frameworks": 19_Templates_And_Frameworks/README.md
+  - Pluto:
+      - "20 Pluto MIND": 20_Pluto_MIND/README.md
+  - Migration:
+      - Taxonomy Registry: _meta/taxonomy.yaml
+      - POC Index: _meta/poc_index.md
+      - Redirect Index: _meta/redirects.md
+
+extra:
+  generator: false

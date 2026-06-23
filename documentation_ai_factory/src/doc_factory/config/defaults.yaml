@@ -1,0 +1,22 @@
+# Non-secret pipeline defaults.
+# Override via DOC_FACTORY_* environment variables or .env.
+
+schema_version: "1.0"
+
+pipeline:
+  default_mode: full
+  human_review_before_export: true
+
+research:
+  recency_months: 24
+  min_unique_sources: 5
+
+generation:
+  default_audience: architect
+  include_mermaid: true
+  include_comparison_tables: true
+
+export:
+  default_status: draft
+  default_owner: architecture-team
+  canonical: false

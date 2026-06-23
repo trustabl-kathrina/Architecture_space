@@ -1,0 +1,39 @@
+﻿---
+title: Metaflow Architecture
+section: "02.03.03.10"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [metaflow, netflix, ml, open-source, top-10, learning-guide]
+canonical: true
+---
+# 2. Architecture of Metaflow
+
+## Control plane vs execution plane
+
+| Plane | Responsibility |
+| --- | --- |
+| **Control plane** | Metaflow metadata service (runs, artifacts, lineage) |
+| **Execution plane** | Local process, AWS Batch, Kubernetes, or other backends |
+
+## Core components
+
+| Component | Function |
+| --- | --- |
+| **FlowSpec** | Python class defining `@step` methods and graph |
+| **Metadata provider** | Local SQLite or remote service tracking runs |
+| **Datastore** | S3/Azure blob for artifacts and code packages |
+| **Scheduler (optional)** | `@schedule` cron via AWS Step Functions or Argo Events patterns |
+| **Cards / UI** | Human-readable run summaries |
+
+Metaflow optimizes **data scientist ergonomics**: develop locally, `@batch` or `@kubernetes` for scale, `@conda` for dependencies. Orchestration is workflow-as-code with minimal YAML.
+
+## Design principle
+
+**Human-centric ML pipelines** — same Python flow from laptop to production; metadata travels with the run.
+
+## Related
+
+- [Flyte](../08_Flyte_Learning_Guide/README.md) (platform-first K8s ML)
+- [Top 10 README](../README.md)

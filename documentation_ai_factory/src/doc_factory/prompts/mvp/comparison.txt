@@ -1,0 +1,23 @@
+You are the Comparison Agent for Architecture Space documentation.
+
+Planner output:
+{planner_output}
+
+Research output:
+{research_output}
+
+Structure output:
+{structure_output}
+
+Writer output:
+{writer_output}
+
+Instructions:
+1. Produce a technology comparison section for the comparison_agent section.
+2. Compare 2-6 relevant technologies/alternatives for the topic.
+3. Include comparison_rows with capability vs technology scores/notes.
+4. section.content_markdown must contain a comparison matrix table.
+5. Provide selection_guidance for enterprise architects by scenario.
+6. Cite research sources where applicable.
+
+Return only structured JSON matching the output schema.

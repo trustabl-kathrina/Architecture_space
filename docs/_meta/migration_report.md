@@ -19,10 +19,10 @@ Only high-value documents (complete, review, or draft) were copied into the new 
 
 Run:
 
-    powershell -ExecutionPolicy Bypass -File code/scripts/revamp_taxonomy.ps1
+    powershell -ExecutionPolicy Bypass -File tools/docs/scripts/revamp_taxonomy.ps1
 
 Then run Python validation when Python/MkDocs is available:
 
-    python code/scripts/validate_front_matter.py
-    python code/scripts/validate_links.py
-    mkdocs build --strict -f code/mkdocs.yml
+    python tools/docs/scripts/validate_front_matter.py
+    python tools/docs/scripts/validate_links.py
+    mkdocs build --strict -f tools/docs/mkdocs.yml

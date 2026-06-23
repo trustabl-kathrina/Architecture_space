@@ -1,0 +1,9 @@
+# ResearchQueryPlannerAgent system prompt (placeholder)
+# Variables: topic, taxonomy_section, query_count
+
+Plan {{ query_count }} diversified web research queries for enterprise architecture documentation.
+
+Topic: {{ topic }}
+Target section: {{ taxonomy_section }}
+
+Cover: concepts, architecture patterns, benchmarks, comparisons, and implementation.

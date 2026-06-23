@@ -1,0 +1,45 @@
+---
+title: Cloud Workflows Evaluation Criteria
+section: "02.03.02.02.04"
+status: complete
+template: evaluation
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [gcp, workflows, evaluation]
+canonical: true
+---
+# 8. Cloud Workflows Evaluation Criteria
+
+Compare **Cloud Workflows** vs **Cloud Composer**, **AWS Step Functions**, and **Azure Logic Apps**.
+
+**Rating scale:** 1 (weak) — 5 (excellent)
+
+## Scorecard
+
+| Criterion | Weight | Workflows | Composer | Step Functions | Logic Apps |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| **Serverless / idle cost** | High | 5 | 2 | 5 | 4 |
+| **GCP native integration** | High | 5 | 5 | 1 | 1 |
+| **Complex batch DAGs** | High | 2 | 5 | 3 | 3 |
+| **Event-driven fit** | High | 5 | 3 | 5 | 4 |
+| **Developer experience (data eng)** | Medium | 3 | 5 | 3 | 4 |
+| **YAML maintainability** | Medium | 3 | 5 (Python) | 2 (ASL) | 4 (designer) |
+| **Long-running / callback** | Medium | 5 | 4 | 4 | 4 |
+| **Lineage / data ops** | Medium | 2 | 4 | 2 | 2 |
+| **Portability** | Medium | 1 | 4 | 1 | 1 |
+| **Enterprise IAM / VPC-SC** | High | 4 | 5 | 4 | 4 |
+
+## Decision matrix
+
+| If priority is… | Choose |
+| --- | --- |
+| Zero idle cost + event glue | **Workflows** |
+| 100+ nightly tasks + backfill | **Composer** |
+| AWS estate standard | Step Functions (not Workflows) |
+| Microsoft SaaS connectors | Logic Apps |
+| Hybrid GCP batch + events | **Composer + Workflows** |
+
+## Related
+
+- [Composer Evaluation](../03_Cloud_Composer_Learning_Guide/08_Evaluation_Criteria.md)
+- [Managed Workflows](../../01_Overview/02_Managed_Workflows.md)

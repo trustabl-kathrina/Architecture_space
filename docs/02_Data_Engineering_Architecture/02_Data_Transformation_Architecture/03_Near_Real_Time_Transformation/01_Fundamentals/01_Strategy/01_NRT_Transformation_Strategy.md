@@ -1,0 +1,56 @@
+---
+title: NRT Transformation Strategy
+section: "02.02.03.01.01"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [nrt, strategy, micro-batch]
+canonical: true
+---
+# NRT Transformation Strategy
+
+## Definition
+
+**Near-real-time (NRT) transformation** sits between batch (minutesâ€“hours SLA) and streaming (sub-second). It delivers curated data within **seconds to low minutes** using **micro-batch**, **trigger-based**, or **short-interval scheduled** execution.
+
+## When to choose NRT
+
+| Signal | NRT fit |
+| --- | --- |
+| Business SLA 1â€“15 minutes | Strong |
+| Source is CDC or incremental files | Strong |
+| Need exactly-once lakehouse silver | Strong with Delta/Iceberg MERGE |
+| Sub-second alerting on raw events | Use streaming instead |
+| Daily/monthly reporting only | Use batch |
+
+## Latency tiers
+
+| Tier | Interval | Typical engines |
+| --- | --- | --- |
+| **T1** | 30sâ€“2m | Spark SS trigger, Databricks trigger, Dataflow streaming |
+| **T2** | 2â€“15m | Orchestrated micro-batch, Fabric pipelines |
+| **T3** | 15â€“60m | Scheduled warehouse SQL, Glue Flex jobs |
+
+## Architecture decision flow
+
+```mermaid
+flowchart TD
+  Q1{SLA under 1 min?}
+  Q1 -->|Yes| Stream[Streaming_transform]
+  Q1 -->|No| Q2{SLA under 15 min?}
+  Q2 -->|Yes| NRT[NRT_micro_batch]
+  Q2 -->|No| Batch[Batch_transform]
+```
+
+## Design principles
+
+1. **Idempotent sinks** â€” MERGE/upsert by business key; never blind append on updates.
+2. **Watermark late data** â€” define max lateness for micro-batch windows.
+3. **Cost vs freshness** â€” smaller trigger interval = higher cost; measure marginal value.
+4. **Unified model** â€” same silver schema whether batch backfill or NRT incremental.
+
+## Related
+
+- [Micro-Batch Patterns](../02_Micro_Batch_Patterns/01_Micro_Batch_Transform_Patterns.md)
+- [Batch vs Stream vs NRT](../../06_Comparisons/01_Batch_vs_Streaming_vs_NRT_Transform.md)

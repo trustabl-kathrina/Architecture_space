@@ -1,0 +1,35 @@
+---
+title: NRT Orchestration Triggers
+section: "02.02.03.08"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [integration, orchestration, nrt]
+canonical: true
+---
+# NRT Orchestration Triggers
+
+## Integration points
+
+| Upstream | Trigger mechanism | Downstream transform |
+| --- | --- | --- |
+| Batch ingest complete | Airflow dataset | Spark MERGE job |
+| File landing | S3 Event â†’ Step Functions | Glue Flex ETL |
+| CDC lag threshold | Dagster sensor | DLT pipeline run |
+| Message queue depth | Cloud Monitoring alert | Scale Dataflow workers |
+
+## Handoff contract
+
+```yaml
+dataset: silver.orders
+freshness_sla_minutes: 5
+upstream: ingest.orders_cdc
+quality_gate: orders_silver_tests
+owner: data-platform
+```
+
+## Related
+
+- [Ingestion Handoff](02_Ingestion_Handoff.md)
+- [02.03 Orchestration](../../../03_Data_Orchestration_Architecture/README.md)

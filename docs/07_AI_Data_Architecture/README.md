@@ -15,26 +15,26 @@ canonical: true
 
 ## Purpose
 
-AI-ready data platforms, feature stores, RAG, vector databases, prompt engineering, AI governance, AI observability, and AI FinOps. MCP and A2A are canonical in [11.12](11.12_Agentic_AI_Architecture/README.md).
+AI-ready data platforms, feature stores, RAG, vector databases, prompt engineering, AI governance, AI observability, and AI FinOps. MCP and A2A are canonical in [11.12](12_Agentic_AI_Architecture/README.md).
 
 ## Start here
 
-- [What Is AI Architecture](11.01_AI_Ready_Data_Platform/Overview/What_Is_AI_Architecture.md)
-- [Chunking Strategies](11.03_RAG/Chunking_Strategies.md)
-- [Data Cleaning](11.03_RAG/Data_Cleaning.md)
-- [Data Pipelines](11.03_RAG/Data_Pipelines.md)
-- [Document Parsing](11.03_RAG/Document_Parsing.md)
+- [What Is AI Architecture](01_AI_Ready_Data_Platform/Overview/What_Is_AI_Architecture.md)
+- [Chunking Strategies](03_RAG/Chunking_Strategies.md)
+- [Data Cleaning](03_RAG/Data_Cleaning.md)
+- [Data Pipelines](03_RAG/Data_Pipelines.md)
+- [Document Parsing](03_RAG/Document_Parsing.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 11.01 | AI Ready Data Platform | 174 | [AI Context Architecture](11.01_AI_Ready_Data_Platform/AI_Context_Architecture.md) | stub |
-| 11.03 | RAG | 21 | [Chunking Strategies](11.03_RAG/Chunking_Strategies.md) | complete |
-| 11.09 | AI Governance | 26 | [Agentic AI Operating Model](11.09_AI_Governance/Agentic_AI_Operating_Model.md) | stub |
-| 11.10 | AI Observability | 1 | [GenAI Evaluation And Observability](11.10_AI_Observability/GenAI_Evaluation_And_Observability.md) | stub |
-| 11.11 | AI FinOps | 1 | [GenAI Infrastructure And FinOps](11.11_AI_FinOps/GenAI_Infrastructure_And_FinOps.md) | stub |
-| 11.12 | Agentic AI Architecture | — | [README](11.12_Agentic_AI_Architecture/README.md) | stub |
+| 11.01 | AI Ready Data Platform | 174 | [AI Context Architecture](01_AI_Ready_Data_Platform/AI_Context_Architecture.md) | stub |
+| 11.03 | RAG | 21 | [Chunking Strategies](03_RAG/Chunking_Strategies.md) | complete |
+| 11.09 | AI Governance | 26 | [Agentic AI Operating Model](09_AI_Governance/Agentic_AI_Operating_Model.md) | stub |
+| 11.10 | AI Observability | 1 | [GenAI Evaluation And Observability](10_AI_Observability/GenAI_Evaluation_And_Observability.md) | stub |
+| 11.11 | AI FinOps | 1 | [GenAI Infrastructure And FinOps](11_AI_FinOps/GenAI_Infrastructure_And_FinOps.md) | stub |
+| 11.12 | Agentic AI Architecture | — | [README](12_Agentic_AI_Architecture/README.md) | stub |
 
 ## Related
 

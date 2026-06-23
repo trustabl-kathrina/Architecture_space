@@ -1,0 +1,47 @@
+# Section template type → base template and required headings
+
+schema_version: "1.0"
+
+templates:
+  overview:
+    source_template: overview.md
+    required_headings: [Definition, Scope, Key capabilities]
+
+  concept:
+    source_template: concept.md
+    required_headings: [Core Concepts, How it works, When to use]
+
+  evaluation:
+    source_template: evaluation.md
+    required_headings: [Problem Statement, Comparison Matrix, Recommendation]
+
+  hub:
+    source_template: null
+    required_headings: [Prerequisites, Modules, Quick links]
+
+  architecture:
+    required_headings: [Reference Architecture, Components, Data Flow]
+
+  scenarios:
+    required_headings: [Enterprise Scenarios, Decision Triggers]
+
+  implementation:
+    required_headings: [Prerequisites, Examples, Configuration]
+
+  benchmarks:
+    required_headings: [Methodology, Metrics, Sizing Guidance]
+
+  comparisons:
+    required_headings: [Comparison Matrix, Selection Criteria]
+
+  pros_cons:
+    required_headings: [Advantages, Disadvantages, When to Use]
+
+  best_practices:
+    required_headings: [Design, Operations, Security]
+
+  poc_learning:
+    required_headings: [POC Overview, Steps, Exercises]
+
+  references:
+    required_headings: [Primary Sources, Further Reading]

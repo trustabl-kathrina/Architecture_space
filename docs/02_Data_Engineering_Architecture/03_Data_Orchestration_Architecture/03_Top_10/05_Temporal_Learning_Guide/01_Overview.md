@@ -1,0 +1,44 @@
+---
+title: Temporal Overview
+section: "02.03.03.05"
+status: complete
+template: overview
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [temporal, durable-execution, open-source, top-10, learning-guide]
+canonical: true
+---
+
+# 1. Temporal Overview
+
+## What is Temporal?
+
+**Temporal** is a durable execution platform for fault-tolerant, long-running workflows (self-host or Temporal Cloud). Category: **Durable execution (open source core)**.
+
+## Why Top 10 rank #4?
+
+Ranked in [Top 10 Open Source Orchestration](../01_Overview/01_Top_10_Orchestration_Technologies.md) for adoption in data engineering, OSS community, and production fit â€” **excluding** hyperscaler managed services covered in [Cloud Services](../../02_Cloud_Services/README.md).
+
+## When to use Temporal
+
+| Use whenâ€¦ | Consider alternatives whenâ€¦ |
+| --- | --- |
+| Durable execution (open source core) matches your platform strategy | Managed cloud-only standard â†’ [Cloud Services](../../02_Cloud_Services/README.md) |
+| Team prefers Temporal model | Portable DAG mesh â†’ **Airflow** or **Prefect** |
+| Self-host or bring-your-own K8s | Serverless cloud glue only â†’ Step Functions / Workflows in Cloud Services |
+
+## Learning path
+
+Continue to [Architecture](02.03.03.05.01_Architecture.md) or [Scenarios](02.03.03.05.01_Scenarios.md).
+## Durable execution
+
+Temporal guarantees **workflow state** survives process crashes and infrastructure failures. Developers write ordinary code; the **Temporal service** records event history and replays deterministically.
+
+## SDKs
+
+Official SDKs for Go, Java, Python, TypeScript, .NET—workflows coordinate **activities** (non-deterministic side effects) with automatic retries and timeouts.
+
+## Related
+
+- [Top 10 README](../README.md)
+- [Temporal hub](../README.md)

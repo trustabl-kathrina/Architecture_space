@@ -1,201 +1,201 @@
 # 02.01.02 streaming consolidation — canonical targets and redirect rules
 generated_on: 2026-06-18
-section_root: 02_Data_Engineering_Architecture\02.01_Data_Ingestion_Architecture/02.01.02_Streaming
+section_root: 02_Data_Engineering_Architecture\01_Data_Ingestion_Architecture/02_Streaming
 
 canonical_targets:
   # 02.01.02.01 Fundamentals
-  - 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.01_What_Is_Event_Driven_Architecture.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.02_What_Is_Stream_Processing.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.03_Event_vs_Message.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.04_Streaming_vs_Batch.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.01_Event_First_Strategy.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.02_Streaming_Strategy.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.03_Streaming_Reference_Model.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.01_Event_Driven_Architecture.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.02_Event_Time_vs_Processing_Time.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.03_Exactly_Once_Semantics.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.04_Stateful_Processing.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.01_CDC_Overview.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.02_Change_Data_Capture_Patterns.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.03_Outbox_Pattern.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.04_Debezium_Architecture.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.01_EventOps_Framework.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.02_Stream_Observability.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.03_Stream_Governance.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.04_Stream_SLA_Framework.md
-  - 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.05_Agent_Event_Bus.md
+  - 01_Fundamentals/01_Overview/01_What_Is_Event_Driven_Architecture.md
+  - 01_Fundamentals/01_Overview/02_What_Is_Stream_Processing.md
+  - 01_Fundamentals/01_Overview/03_Event_vs_Message.md
+  - 01_Fundamentals/01_Overview/04_Streaming_vs_Batch.md
+  - 01_Fundamentals/02_Strategy/01_Event_First_Strategy.md
+  - 01_Fundamentals/02_Strategy/02_Streaming_Strategy.md
+  - 01_Fundamentals/02_Strategy/03_Streaming_Reference_Model.md
+  - 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.01_Event_Driven_Architecture.md
+  - 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.02_Event_Time_vs_Processing_Time.md
+  - 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.03_Exactly_Once_Semantics.md
+  - 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.04_Stateful_Processing.md
+  - 01_Fundamentals/04_CDC_Architecture/01_CDC_Overview.md
+  - 01_Fundamentals/04_CDC_Architecture/02_Change_Data_Capture_Patterns.md
+  - 01_Fundamentals/04_CDC_Architecture/03_Outbox_Pattern.md
+  - 01_Fundamentals/04_CDC_Architecture/04_Debezium_Architecture.md
+  - 01_Fundamentals/05_EventOps/01_EventOps_Framework.md
+  - 01_Fundamentals/05_EventOps/02_Stream_Observability.md
+  - 01_Fundamentals/05_EventOps/03_Stream_Governance.md
+  - 01_Fundamentals/05_EventOps/04_Stream_SLA_Framework.md
+  - 01_Fundamentals/05_EventOps/05_Agent_Event_Bus.md
   # 02.01.02.02 Cloud Services
-  - 02.01.02.02_Cloud_Services/02.01.02.02.01_Overview/02.01.02.02.01.01_Cloud_Streaming_Reference_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.02_GCP/02.01.02.02.02.01_Pub_Sub_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.02_GCP/02.01.02.02.02.02_Dataflow_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.02_GCP/02.01.02.02.02.03_GCP_PubSub_POC.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.03_AWS/02.01.02.02.02.06.01_MSK_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.03_AWS/02.01.02.02.02.06.02_Kinesis_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.03_AWS/02.01.02.02.02.06.03_Managed_Flink_on_AWS.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.04_Azure/02.01.02.02.04.01_Event_Hubs_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.04_Azure/02.01.02.02.04.02_Stream_Analytics_Architecture.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.04_Azure/02.01.02.02.04.03_Azure_Event_Grid.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.05_Cross_Cloud/02.01.02.02.05.01_Multi_Cloud_Streaming_Patterns.md
-  - 02.01.02.02_Cloud_Services/02.01.02.02.05_Cross_Cloud/02.01.02.02.05.02_Cloud_Streaming_Security.md
+  - 02_Cloud_Services/01_Overview/01_Cloud_Streaming_Reference_Architecture.md
+  - 02_Cloud_Services/02_GCP/02.01.02.02.02.01_Pub_Sub_Architecture.md
+  - 02_Cloud_Services/02_GCP/02.01.02.02.02.02_Dataflow_Architecture.md
+  - 02_Cloud_Services/02_GCP/02.01.02.02.02.03_GCP_PubSub_POC.md
+  - 02_Cloud_Services/03_AWS/02.01.02.02.02.06.01_MSK_Architecture.md
+  - 02_Cloud_Services/03_AWS/02.01.02.02.02.06.02_Kinesis_Architecture.md
+  - 02_Cloud_Services/03_AWS/02.01.02.02.02.06.03_Managed_Flink_on_AWS.md
+  - 02_Cloud_Services/04_Azure/01_Event_Hubs_Architecture.md
+  - 02_Cloud_Services/04_Azure/02_Stream_Analytics_Architecture.md
+  - 02_Cloud_Services/04_Azure/03_Azure_Event_Grid.md
+  - 02_Cloud_Services/05_Cross_Cloud/01_Multi_Cloud_Streaming_Patterns.md
+  - 02_Cloud_Services/05_Cross_Cloud/02_Cloud_Streaming_Security.md
   # 02.01.02.03 Open Source
-  - 02.01.02.03_Open_Source/02.01.02.02.06.01_Overview/02.01.02.02.06.01.01_Open_Source_Streaming_Landscape.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.01_Kafka_Architecture.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.02_Kafka_Topics_and_Partitions.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.03_Kafka_Streams.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.04_Kafka_Connect.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.03_Apache_Pulsar/02.01.02.02.06.03.01_Pulsar_Architecture.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.03_Apache_Pulsar/02.01.02.02.06.03.02_Pulsar_vs_Kafka_Summary.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.02_Flink_State_and_Checkpoints.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.05_Spark_Structured_Streaming/02.01.02.02.06.05.01_Spark_Streaming_Architecture.md
-  - 02.01.02.03_Open_Source/02.01.02.02.06.06_Beam/02.01.02.02.06.06.01_Beam_Dataflow_Model.md
+  - 03_Open_Source/02.01.02.02.06.01_Overview/02.01.02.02.06.01.01_Open_Source_Streaming_Landscape.md
+  - 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.01_Kafka_Architecture.md
+  - 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.02_Kafka_Topics_and_Partitions.md
+  - 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.03_Kafka_Streams.md
+  - 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.04_Kafka_Connect.md
+  - 03_Open_Source/02.01.02.02.06.03_Apache_Pulsar/02.01.02.02.06.03.01_Pulsar_Architecture.md
+  - 03_Open_Source/02.01.02.02.06.03_Apache_Pulsar/02.01.02.02.06.03.02_Pulsar_vs_Kafka_Summary.md
+  - 03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
+  - 03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.02_Flink_State_and_Checkpoints.md
+  - 03_Open_Source/02.01.02.02.06.05_Spark_Structured_Streaming/02.01.02.02.06.05.01_Spark_Streaming_Architecture.md
+  - 03_Open_Source/02.01.02.02.06.06_Beam/02.01.02.02.06.06.01_Beam_Dataflow_Model.md
   # 02.01.02.04 Architecture Patterns
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.01_Event_Driven_Patterns/02.01.02.04.01.01_Choreography_vs_Orchestration.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.01_Event_Driven_Patterns/02.01.02.04.01.02_Event_Notification_vs_Event_Carried_State.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.01_Event_Driven_Patterns/02.01.02.04.01.03_Event_Processing_Patterns.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.02_Stream_Processing_Patterns/02.01.02.04.02.01_Windowing_Strategies.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.02_Stream_Processing_Patterns/02.01.02.04.02.02_Watermarks_and_Late_Data.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.02_Stream_Processing_Patterns/02.01.02.04.02.03_Stream_Table_Duality.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.03_Integration_Patterns/02.01.02.04.02.06.01_Outbox_and_Inbox_Pattern.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.03_Integration_Patterns/02.01.02.04.02.06.02_Saga_Pattern.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.03_Integration_Patterns/02.01.02.04.02.06.03_Event_Carried_State_Transfer.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.04_CQRS_and_Event_Sourcing/02.01.02.04.04.01_CQRS_Architecture.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.04_CQRS_and_Event_Sourcing/02.01.02.04.04.02_Event_Sourcing.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.01_Enterprise_Kafka_Platform.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.02_Event_Driven_Data_Mesh.md
-  - 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.03_Streaming_To_Lakehouse.md
+  - 04_Architecture_Patterns/01_Event_Driven_Patterns/01_Choreography_vs_Orchestration.md
+  - 04_Architecture_Patterns/01_Event_Driven_Patterns/02_Event_Notification_vs_Event_Carried_State.md
+  - 04_Architecture_Patterns/01_Event_Driven_Patterns/03_Event_Processing_Patterns.md
+  - 04_Architecture_Patterns/02_Stream_Processing_Patterns/01_Windowing_Strategies.md
+  - 04_Architecture_Patterns/02_Stream_Processing_Patterns/02_Watermarks_and_Late_Data.md
+  - 04_Architecture_Patterns/02_Stream_Processing_Patterns/03_Stream_Table_Duality.md
+  - 04_Architecture_Patterns/03_Integration_Patterns/02.01.02.04.02.06.01_Outbox_and_Inbox_Pattern.md
+  - 04_Architecture_Patterns/03_Integration_Patterns/02.01.02.04.02.06.02_Saga_Pattern.md
+  - 04_Architecture_Patterns/03_Integration_Patterns/02.01.02.04.02.06.03_Event_Carried_State_Transfer.md
+  - 04_Architecture_Patterns/04_CQRS_and_Event_Sourcing/01_CQRS_Architecture.md
+  - 04_Architecture_Patterns/04_CQRS_and_Event_Sourcing/02_Event_Sourcing.md
+  - 04_Architecture_Patterns/05_Reference_Architectures/01_Enterprise_Kafka_Platform.md
+  - 04_Architecture_Patterns/05_Reference_Architectures/02_Event_Driven_Data_Mesh.md
+  - 04_Architecture_Patterns/05_Reference_Architectures/03_Streaming_To_Lakehouse.md
   # 02.01.02.05 Benchmarks
-  - 02.01.02.05_Benchmarks/02.01.02.05.01_Streaming_Design_Patterns.md
-  - 02.01.02.05_Benchmarks/02.01.02.05.02_Watermarks.md
-  - 02.01.02.05_Benchmarks/02.01.02.05.03_Windowing.md
-  - 02.01.02.05_Benchmarks/02.01.02.05.04_Kafka_Throughput_Benchmark.md
-  - 02.01.02.05_Benchmarks/02.01.02.05.05_Flink_Latency_Benchmark.md
+  - 05_Benchmarks/01_Streaming_Design_Patterns.md
+  - 05_Benchmarks/02_Watermarks.md
+  - 05_Benchmarks/03_Windowing.md
+  - 05_Benchmarks/04_Kafka_Throughput_Benchmark.md
+  - 05_Benchmarks/05_Flink_Latency_Benchmark.md
   # 02.01.02.06 Comparisons
-  - 02.01.02.06_Comparisons/02.01.02.06.01_Kafka_vs_Pulsar.md
-  - 02.01.02.06_Comparisons/02.01.02.06.02_Flink_vs_Spark_Structured_Streaming.md
-  - 02.01.02.06_Comparisons/02.01.02.06.03_Kinesis_vs_MSK.md
-  - 02.01.02.06_Comparisons/02.01.02.06.04_Pub_Sub_vs_Kafka.md
-  - 02.01.02.06_Comparisons/02.01.02.06.05_Stream_Processor_Selection_Framework.md
-  - 02.01.02.06_Comparisons/02.01.02.06.06_Broker_Selection_Framework.md
+  - 06_Comparisons/01_Kafka_vs_Pulsar.md
+  - 06_Comparisons/02_Flink_vs_Spark_Structured_Streaming.md
+  - 06_Comparisons/03_Kinesis_vs_MSK.md
+  - 06_Comparisons/04_Pub_Sub_vs_Kafka.md
+  - 06_Comparisons/05_Stream_Processor_Selection_Framework.md
+  - 06_Comparisons/06_Broker_Selection_Framework.md
   # 02.01.02.07 Interview Questions
-  - 02.01.02.07_Interview_Questions/02.01.02.00.10.01_Streaming_Fundamentals_Questions.md
-  - 02.01.02.07_Interview_Questions/02.01.02.00.10.02_Kafka_Deep_Dive_Questions.md
-  - 02.01.02.07_Interview_Questions/02.01.02.00.10.03_Flink_and_Windowing_Questions.md
-  - 02.01.02.07_Interview_Questions/02.01.02.00.10.04_Event_Driven_Design_Scenarios.md
-  - 02.01.02.07_Interview_Questions/02.01.02.00.10.05_System_Design_Streaming_Cases.md
+  - 07_Interview_Questions/02.01.02.00.10.01_Streaming_Fundamentals_Questions.md
+  - 07_Interview_Questions/02.01.02.00.10.02_Kafka_Deep_Dive_Questions.md
+  - 07_Interview_Questions/02.01.02.00.10.03_Flink_and_Windowing_Questions.md
+  - 07_Interview_Questions/02.01.02.00.10.04_Event_Driven_Design_Scenarios.md
+  - 07_Interview_Questions/02.01.02.00.10.05_System_Design_Streaming_Cases.md
   # 02.01.02.08 Integration Patterns
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.01_Domain_Events.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.02_Event_Modeling.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.03_Event_Schema_Management.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.04_Event_Contracts.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.05_Event_Versioning.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.06_Event_Catalog.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.07_Streaming_APIs.md
-  - 02.01.02.08_Integration_Patterns/02.01.02.08.08_Event_Driven_Microservices.md
+  - 08_Integration_Patterns/01_Domain_Events.md
+  - 08_Integration_Patterns/02_Event_Modeling.md
+  - 08_Integration_Patterns/03_Event_Schema_Management.md
+  - 08_Integration_Patterns/04_Event_Contracts.md
+  - 08_Integration_Patterns/05_Event_Versioning.md
+  - 08_Integration_Patterns/06_Event_Catalog.md
+  - 08_Integration_Patterns/07_Streaming_APIs.md
+  - 08_Integration_Patterns/08_Event_Driven_Microservices.md
 
 file_moves:
-  - from: 02.01.02.01_Fundamentals/Streaming_vs_Batch.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.04_Streaming_vs_Batch.md
-  - from: 02.01.02.01_Fundamentals/Streaming_Strategy.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.02_Streaming_Strategy.md
-  - from: 02.01.02.01_Fundamentals/Streaming_Reference_Model.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.03_Streaming_Reference_Model.md
-  - from: 02.01.02.01_Fundamentals/Event_Driven_Architecture.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.01_Event_Driven_Architecture.md
-  - from: 02.01.02.01_Fundamentals/Event_Time_vs_Processing_Time.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.02_Event_Time_vs_Processing_Time.md
-  - from: 02.01.02.01_Fundamentals/Exactly_Once_Semantics.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.03_Exactly_Once_Semantics.md
-  - from: 02.01.02.01_Fundamentals/Stateful_Processing.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.04_Stateful_Processing.md
-  - from: 02.01.02.01_Fundamentals/Windowing_Strategies.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.02_Stream_Processing_Patterns/02.01.02.04.02.01_Windowing_Strategies.md
-  - from: 02.01.02.01_Fundamentals/Event_Processing_Patterns.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.01_Event_Driven_Patterns/02.01.02.04.01.03_Event_Processing_Patterns.md
-  - from: 02.01.02.01_Fundamentals/Stream_Observability.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.02_Stream_Observability.md
-  - from: 02.01.02.01_Fundamentals/Stream_Governance.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.03_Stream_Governance.md
-  - from: 02.01.02.01_Fundamentals/Stream_SLA_Framework.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.04_Stream_SLA_Framework.md
-  - from: 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/CDC_Framework.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.01_CDC_Overview.md
-  - from: 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.04_Debezium_Architecture.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.04_Debezium_Architecture.md
-  - from: 02.01.02.01_Fundamentals/Real_Time_Strategy/Event_First_Strategy.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.01_Event_First_Strategy.md
-  - from: 02.01.02.01_Fundamentals/Stream_Processing/Apache_Flink.md
-    to: 02.01.02.03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
-  - from: 02.01.02.01_Fundamentals/Stream_Processing/Kafka_Streams.md
-    to: 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.03_Kafka_Streams.md
-  - from: 02.01.02.01_Fundamentals/Stream_Processing/Spark_Streaming.md
-    to: 02.01.02.03_Open_Source/02.01.02.02.06.05_Spark_Structured_Streaming/02.01.02.02.06.05.01_Spark_Streaming_Architecture.md
-  - from: 02.01.02.01_Fundamentals/Stream_Processing/Beam_Dataflow.md
-    to: 02.01.02.03_Open_Source/02.01.02.02.06.06_Beam/02.01.02.02.06.06.01_Beam_Dataflow_Model.md
-  - from: 02.01.02.01_Fundamentals/Reference_Architectures/Enterprise_Kafka_Platform.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.01_Enterprise_Kafka_Platform.md
-  - from: 02.01.02.01_Fundamentals/Reference_Architectures/Event_Driven_Data_Mesh.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.02_Event_Driven_Data_Mesh.md
-  - from: 02.01.02.01_Fundamentals/Reference_Architectures/Real_Time_Lakehouse.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.03_Streaming_To_Lakehouse.md
-  - from: 02.01.02.01_Fundamentals/CQRS_Architecture/CQRS_Framework.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.04_CQRS_and_Event_Sourcing/02.01.02.04.04.01_CQRS_Architecture.md
-  - from: 02.01.02.01_Fundamentals/Event_Sourcing/Event_Sourcing.md
-    to: 02.01.02.04_Architecture_Patterns/02.01.02.04.04_CQRS_and_Event_Sourcing/02.01.02.04.04.02_Event_Sourcing.md
-  - from: 02.01.02.01_Fundamentals/Event_Modeling/Event_Modeling.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.02_Event_Modeling.md
-  - from: 02.01.02.01_Fundamentals/Event_Contracts/Event_Contract_Framework.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.04_Event_Contracts.md
-  - from: 02.01.02.01_Fundamentals/Event_Contracts/Schema_Registry.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.03_Event_Schema_Management.md
-  - from: 02.01.02.01_Fundamentals/Event_Contracts/Event_Versioning.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.05_Event_Versioning.md
-  - from: 02.01.02.01_Fundamentals/Event_Catalog_And_Discovery/Event_Catalog.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.06_Event_Catalog.md
-  - from: 02.01.02.01_Fundamentals/Event_Driven_Enterprise/Event_Driven_Enterprise.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.08_Event_Driven_Microservices.md
-  - from: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.01_EventOps_Framework.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.01_EventOps_Framework.md
-  - from: 02.01.02.01_Fundamentals/AI_And_Agent_Event_Architecture/Agent_Event_Bus.md
-    to: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.05_Agent_Event_Bus.md
-  - from: 02.01.02.02_Cloud_Services/GCP_PubSub_POC.md
-    to: 02.01.02.02_Cloud_Services/02.01.02.02.02_GCP/02.01.02.02.02.03_GCP_PubSub_POC.md
-  - from: 02.01.02.02_Cloud_Services/Kafka_Platform.md
-    to: 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.01_Kafka_Architecture.md
-  - from: 02.01.02.02_Cloud_Services/Flink_Platform.md
-    to: 02.01.02.03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
-  - from: 02.01.02.08_Integration_Patterns/02.01.02.08.07_Streaming_APIs.md
-    to: 02.01.02.08_Integration_Patterns/02.01.02.08.07_Streaming_APIs.md
+  - from: 01_Fundamentals/Streaming_vs_Batch.md
+    to: 01_Fundamentals/01_Overview/04_Streaming_vs_Batch.md
+  - from: 01_Fundamentals/Streaming_Strategy.md
+    to: 01_Fundamentals/02_Strategy/02_Streaming_Strategy.md
+  - from: 01_Fundamentals/Streaming_Reference_Model.md
+    to: 01_Fundamentals/02_Strategy/03_Streaming_Reference_Model.md
+  - from: 01_Fundamentals/Event_Driven_Architecture.md
+    to: 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.01_Event_Driven_Architecture.md
+  - from: 01_Fundamentals/Event_Time_vs_Processing_Time.md
+    to: 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.02_Event_Time_vs_Processing_Time.md
+  - from: 01_Fundamentals/Exactly_Once_Semantics.md
+    to: 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.03_Exactly_Once_Semantics.md
+  - from: 01_Fundamentals/Stateful_Processing.md
+    to: 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.04_Stateful_Processing.md
+  - from: 01_Fundamentals/Windowing_Strategies.md
+    to: 04_Architecture_Patterns/02_Stream_Processing_Patterns/01_Windowing_Strategies.md
+  - from: 01_Fundamentals/Event_Processing_Patterns.md
+    to: 04_Architecture_Patterns/01_Event_Driven_Patterns/03_Event_Processing_Patterns.md
+  - from: 01_Fundamentals/Stream_Observability.md
+    to: 01_Fundamentals/05_EventOps/02_Stream_Observability.md
+  - from: 01_Fundamentals/Stream_Governance.md
+    to: 01_Fundamentals/05_EventOps/03_Stream_Governance.md
+  - from: 01_Fundamentals/Stream_SLA_Framework.md
+    to: 01_Fundamentals/05_EventOps/04_Stream_SLA_Framework.md
+  - from: 01_Fundamentals/04_CDC_Architecture/CDC_Framework.md
+    to: 01_Fundamentals/04_CDC_Architecture/01_CDC_Overview.md
+  - from: 01_Fundamentals/04_CDC_Architecture/04_Debezium_Architecture.md
+    to: 01_Fundamentals/04_CDC_Architecture/04_Debezium_Architecture.md
+  - from: 01_Fundamentals/Real_Time_Strategy/Event_First_Strategy.md
+    to: 01_Fundamentals/02_Strategy/01_Event_First_Strategy.md
+  - from: 01_Fundamentals/Stream_Processing/Apache_Flink.md
+    to: 03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
+  - from: 01_Fundamentals/Stream_Processing/Kafka_Streams.md
+    to: 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.03_Kafka_Streams.md
+  - from: 01_Fundamentals/Stream_Processing/Spark_Streaming.md
+    to: 03_Open_Source/02.01.02.02.06.05_Spark_Structured_Streaming/02.01.02.02.06.05.01_Spark_Streaming_Architecture.md
+  - from: 01_Fundamentals/Stream_Processing/Beam_Dataflow.md
+    to: 03_Open_Source/02.01.02.02.06.06_Beam/02.01.02.02.06.06.01_Beam_Dataflow_Model.md
+  - from: 01_Fundamentals/Reference_Architectures/Enterprise_Kafka_Platform.md
+    to: 04_Architecture_Patterns/05_Reference_Architectures/01_Enterprise_Kafka_Platform.md
+  - from: 01_Fundamentals/Reference_Architectures/Event_Driven_Data_Mesh.md
+    to: 04_Architecture_Patterns/05_Reference_Architectures/02_Event_Driven_Data_Mesh.md
+  - from: 01_Fundamentals/Reference_Architectures/Real_Time_Lakehouse.md
+    to: 04_Architecture_Patterns/05_Reference_Architectures/03_Streaming_To_Lakehouse.md
+  - from: 01_Fundamentals/CQRS_Architecture/CQRS_Framework.md
+    to: 04_Architecture_Patterns/04_CQRS_and_Event_Sourcing/01_CQRS_Architecture.md
+  - from: 01_Fundamentals/Event_Sourcing/Event_Sourcing.md
+    to: 04_Architecture_Patterns/04_CQRS_and_Event_Sourcing/02_Event_Sourcing.md
+  - from: 01_Fundamentals/Event_Modeling/Event_Modeling.md
+    to: 08_Integration_Patterns/02_Event_Modeling.md
+  - from: 01_Fundamentals/Event_Contracts/Event_Contract_Framework.md
+    to: 08_Integration_Patterns/04_Event_Contracts.md
+  - from: 01_Fundamentals/Event_Contracts/Schema_Registry.md
+    to: 08_Integration_Patterns/03_Event_Schema_Management.md
+  - from: 01_Fundamentals/Event_Contracts/Event_Versioning.md
+    to: 08_Integration_Patterns/05_Event_Versioning.md
+  - from: 01_Fundamentals/Event_Catalog_And_Discovery/Event_Catalog.md
+    to: 08_Integration_Patterns/06_Event_Catalog.md
+  - from: 01_Fundamentals/Event_Driven_Enterprise/Event_Driven_Enterprise.md
+    to: 08_Integration_Patterns/08_Event_Driven_Microservices.md
+  - from: 01_Fundamentals/05_EventOps/01_EventOps_Framework.md
+    to: 01_Fundamentals/05_EventOps/01_EventOps_Framework.md
+  - from: 01_Fundamentals/AI_And_Agent_Event_Architecture/Agent_Event_Bus.md
+    to: 01_Fundamentals/05_EventOps/05_Agent_Event_Bus.md
+  - from: 02_Cloud_Services/GCP_PubSub_POC.md
+    to: 02_Cloud_Services/02_GCP/02.01.02.02.02.03_GCP_PubSub_POC.md
+  - from: 02_Cloud_Services/Kafka_Platform.md
+    to: 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.01_Kafka_Architecture.md
+  - from: 02_Cloud_Services/Flink_Platform.md
+    to: 03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
+  - from: 08_Integration_Patterns/07_Streaming_APIs.md
+    to: 08_Integration_Patterns/07_Streaming_APIs.md
 
 folder_redirects:
-  AI_And_Agent_Event_Architecture: 11_AI_Data_Architecture\11.11_AI_Data_Architecture/11.12_Agentic_AI_Architecture/11.12.04_MCP/MCP_Protocol.md
-  Maturity_Model: 00_Architecture_Governance\00.10_Data_Governance_And_Metadata/00.10.10_Governance_Operating_Model/Governance_Maturity.md
+  AI_And_Agent_Event_Architecture: 11_AI_Data_Architecture\11.11_AI_Data_Architecture/12_Agentic_AI_Architecture/11.12.04_MCP/MCP_Protocol.md
+  Maturity_Model: 00_Architecture_Governance\10_Data_Governance_And_Metadata/10_Governance_Operating_Model/Governance_Maturity.md
   Digital_Twin_Architecture: 15_Industry_Reference_Architectures/15.08_Case_Studies/Overview/Industry_Architecture_Overview.md
-  IoT_And_Edge_Event_Architecture: 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.02_What_Is_Stream_Processing.md
-  Event_Security: 14_Security_And_Privacy_Architecture/14.01_IAM/README.md
+  IoT_And_Edge_Event_Architecture: 01_Fundamentals/01_Overview/02_What_Is_Stream_Processing.md
+  Event_Security: 14_Security_And_Privacy_Architecture/01_IAM/README.md
 
 filename_redirects:
-  Real_Time_Analytics.md: 08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture/08.10.05_Streaming_Analytics/Real_Time_Analytics_Architecture.md
-  Operational_Intelligence.md: 08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture/README.md
-  Low_Latency_Architecture.md: 08_Analytics_Architecture/08.10_Real_Time_Analytics_Architecture/README.md
+  Real_Time_Analytics.md: 08_Analytics_Architecture/10_Real_Time_Analytics_Architecture/05_Streaming_Analytics/Real_Time_Analytics_Architecture.md
+  Operational_Intelligence.md: 08_Analytics_Architecture/10_Real_Time_Analytics_Architecture/README.md
+  Low_Latency_Architecture.md: 08_Analytics_Architecture/10_Real_Time_Analytics_Architecture/README.md
 
 group_canonical:
-  CDC_Architecture: 02.01.02.01_Fundamentals/02.01.02.01.04_CDC_Architecture/02.01.02.01.04.01_CDC_Overview.md
-  Event_Bus_Architecture: 02.01.02.03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.01_Kafka_Architecture.md
-  Event_Streaming_Platforms: 02.01.02.03_Open_Source/02.01.02.02.06.01_Overview/02.01.02.02.06.01.01_Open_Source_Streaming_Landscape.md
-  Event_Architecture: 02.01.02.01_Fundamentals/02.01.02.01.03_Core_Concepts/02.01.02.01.02.06.01_Event_Driven_Architecture.md
-  Event_Governance: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.03_Stream_Governance.md
-  Event_Observability: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.02_Stream_Observability.md
-  Event_Driven_Framework: 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.03_Streaming_Reference_Model.md
-  Real_Time_Data_Platform: 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.03_Streaming_To_Lakehouse.md
-  CQRS_Architecture: 02.01.02.04_Architecture_Patterns/02.01.02.04.04_CQRS_and_Event_Sourcing/02.01.02.04.04.01_CQRS_Architecture.md
-  Event_Sourcing: 02.01.02.04_Architecture_Patterns/02.01.02.04.04_CQRS_and_Event_Sourcing/02.01.02.04.04.02_Event_Sourcing.md
-  Reference_Architectures: 02.01.02.04_Architecture_Patterns/02.01.02.04.05_Reference_Architectures/02.01.02.04.05.01_Enterprise_Kafka_Platform.md
-  Event_Modeling: 02.01.02.08_Integration_Patterns/02.01.02.08.02_Event_Modeling.md
-  Event_Contracts: 02.01.02.08_Integration_Patterns/02.01.02.08.04_Event_Contracts.md
-  Event_Catalog_And_Discovery: 02.01.02.08_Integration_Patterns/02.01.02.08.06_Event_Catalog.md
-  Event_Driven_Enterprise: 02.01.02.08_Integration_Patterns/02.01.02.08.08_Event_Driven_Microservices.md
-  Stream_Processing: 02.01.02.03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
-  EventOps: 02.01.02.01_Fundamentals/02.01.02.01.05_EventOps/02.01.02.01.05.01_EventOps_Framework.md
-  Real_Time_Strategy: 02.01.02.01_Fundamentals/02.01.02.01.02_Strategy/02.01.02.01.02.01_Event_First_Strategy.md
-  Overview: 02.01.02.01_Fundamentals/02.01.02.01.01_Overview/02.01.02.01.01.01_What_Is_Event_Driven_Architecture.md
+  CDC_Architecture: 01_Fundamentals/04_CDC_Architecture/01_CDC_Overview.md
+  Event_Bus_Architecture: 03_Open_Source/02.01.02.02.06.02_Apache_Kafka/02.01.02.02.06.02.01_Kafka_Architecture.md
+  Event_Streaming_Platforms: 03_Open_Source/02.01.02.02.06.01_Overview/02.01.02.02.06.01.01_Open_Source_Streaming_Landscape.md
+  Event_Architecture: 01_Fundamentals/03_Core_Concepts/02.01.02.01.02.06.01_Event_Driven_Architecture.md
+  Event_Governance: 01_Fundamentals/05_EventOps/03_Stream_Governance.md
+  Event_Observability: 01_Fundamentals/05_EventOps/02_Stream_Observability.md
+  Event_Driven_Framework: 01_Fundamentals/02_Strategy/03_Streaming_Reference_Model.md
+  Real_Time_Data_Platform: 04_Architecture_Patterns/05_Reference_Architectures/03_Streaming_To_Lakehouse.md
+  CQRS_Architecture: 04_Architecture_Patterns/04_CQRS_and_Event_Sourcing/01_CQRS_Architecture.md
+  Event_Sourcing: 04_Architecture_Patterns/04_CQRS_and_Event_Sourcing/02_Event_Sourcing.md
+  Reference_Architectures: 04_Architecture_Patterns/05_Reference_Architectures/01_Enterprise_Kafka_Platform.md
+  Event_Modeling: 08_Integration_Patterns/02_Event_Modeling.md
+  Event_Contracts: 08_Integration_Patterns/04_Event_Contracts.md
+  Event_Catalog_And_Discovery: 08_Integration_Patterns/06_Event_Catalog.md
+  Event_Driven_Enterprise: 08_Integration_Patterns/08_Event_Driven_Microservices.md
+  Stream_Processing: 03_Open_Source/02.01.02.02.06.04_Apache_Flink/02.01.02.02.06.04.01_Flink_Architecture.md
+  EventOps: 01_Fundamentals/05_EventOps/01_EventOps_Framework.md
+  Real_Time_Strategy: 01_Fundamentals/02_Strategy/01_Event_First_Strategy.md
+  Overview: 01_Fundamentals/01_Overview/01_What_Is_Event_Driven_Architecture.md

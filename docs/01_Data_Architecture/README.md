@@ -19,14 +19,14 @@ Data architecture fundamentals, enterprise data architecture, mesh, fabric, lake
 
 ## Start here
 
-- [What Is Data Architecture](01.01_Fundamentals/Overview/What_Is_Data_Architecture.md)
-- [What Is Data Mesh](01.01_Fundamentals/Overview/What_Is_Data_Mesh.md)
+- [What Is Data Architecture](01_Fundamentals/Overview/What_Is_Data_Architecture.md)
+- [What Is Data Mesh](01_Fundamentals/Overview/What_Is_Data_Mesh.md)
 
 ## Subsections
 
 | # | Topic | Topics | Key doc | Status |
 | --- | --- | ---: | --- | --- |
-| 01.01 | Fundamentals | 312 | [BI Architecture](01.01_Fundamentals/Analytical_Data_Architecture/BI_Architecture.md) | stub |
+| 01.01 | Fundamentals | 312 | [BI Architecture](01_Fundamentals/Analytical_Data_Architecture/BI_Architecture.md) | stub |
 
 ## Related
 

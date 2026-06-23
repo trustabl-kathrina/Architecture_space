@@ -1,0 +1,53 @@
+---
+title: AWS Glue Workflows Benchmarking
+section: "02.03.02.03.06"
+status: complete
+template: evaluation
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [aws, glue, benchmarking]
+canonical: true
+---
+# 9. AWS Glue Workflows Benchmarking
+
+Reference profiles for **sizing DPU and validating workflow design** before production.
+
+## Methodology
+
+1. Deploy workflow to **non-prod** with production-like job definitions.
+2. Run with representative data volumes and run properties.
+3. Measure: end-to-end workflow duration, DPU-hours, crawler time, failure rate.
+4. Compare Standard vs Flex and against [Costing](06_Costing.md).
+
+## Reference scenarios
+
+| ID | Profile | Steps | Volume | Measure |
+| ---: | --- | ---: | ---: | --- |
+| G1 | Crawler only | 1 crawler | 1 TB prefix | Crawler DPU-min |
+| G2 | Bronze Spark (bookmark) | 1 job | Daily increment | Job duration vs full scan |
+| G3 | Full medallion chain | 3 jobs + crawler | Nightly | End-to-end SLA |
+| G4 | Parallel crawlers × 4 | 4 + merge job | Weekly | Trigger fan-in |
+| G5 | Flex vs Standard | Same job | 10 runs each | Latency vs cost |
+| G6 | Worker scale 6 vs 12 | 1 job | 100 GB | Diminishing returns |
+| G7 | EventBridge batch trigger | 1 job | 500 files/15 min | Batch window behavior |
+| G8 | MaxConcurrentRuns=1 stress | 2 overlapping schedules | 1 week | Queue / skip behavior |
+
+## Expected outcomes (indicative)
+
+| Profile | Success criteria | Risk signal |
+| --- | --- | --- |
+| G3 | Complete within SLA window | Bronze straggler blocks silver |
+| G5 Flex | ≥30% cost reduction | Startup latency &gt; 2× Standard |
+| G6 | Near-linear speedup to 10 workers | &gt;12 workers little gain |
+| G8 | No duplicate silver writes | Overlapping runs without concurrency cap |
+
+## Anti-patterns in benchmarks
+
+- **G2 without bookmark** — full scan masquerades as incremental cost.
+- **G4 &gt;100 entities** — violates workflow size guidance.
+- **Manual job start during G3** — conditional triggers won't fire; invalid test.
+
+## Related
+
+- [Production Configuration](07_Production_Configuration.md)
+- [MWAA Benchmarking](../04_MWAA_Learning_Guide/09_Benchmarking.md)

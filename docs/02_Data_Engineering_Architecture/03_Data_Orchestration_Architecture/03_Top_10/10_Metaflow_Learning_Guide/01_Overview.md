@@ -1,0 +1,36 @@
+---
+title: Metaflow Overview
+section: "02.03.03.10"
+status: complete
+template: overview
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [metaflow, netflix, ml, open-source, top-10, learning-guide]
+canonical: true
+---
+
+# 1. Metaflow Overview
+
+## What is Metaflow?
+
+**Metaflow** is Netflix's human-centric framework for data science and ML workflows with local-to-cloud scaling. Category: **ML/data workflow framework**.
+
+## Why Top 10 rank #9?
+
+Ranked in [Top 10 Open Source Orchestration](../01_Overview/01_Top_10_Orchestration_Technologies.md) for adoption in data engineering, OSS community, and production fit â€” **excluding** hyperscaler managed services covered in [Cloud Services](../../02_Cloud_Services/README.md).
+
+## When to use Metaflow
+
+| Use whenâ€¦ | Consider alternatives whenâ€¦ |
+| --- | --- |
+| ML/data workflow framework matches your platform strategy | Managed cloud-only standard â†’ [Cloud Services](../../02_Cloud_Services/README.md) |
+| Team prefers Metaflow model | Portable DAG mesh â†’ **Airflow** or **Prefect** |
+| Self-host or bring-your-own K8s | Serverless cloud glue only â†’ Step Functions / Workflows in Cloud Services |
+
+## Learning path
+
+Continue to [Architecture](02.03.03.10.01_Architecture.md) or [Scenarios](02.03.03.10.01_Scenarios.md).
+## Related
+
+- [Top 10 README](../README.md)
+- [Metaflow hub](../README.md)

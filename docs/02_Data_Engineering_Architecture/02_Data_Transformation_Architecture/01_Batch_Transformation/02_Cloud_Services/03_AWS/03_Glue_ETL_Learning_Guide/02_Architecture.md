@@ -1,0 +1,39 @@
+---
+title: AWS Glue ETL Architecture
+section: "02.02.01.02.03.03"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [aws, glue]
+canonical: true
+---
+# 2. AWS Glue ETL Architecture
+
+## Job types
+
+| Type | Runtime |
+| --- | --- |
+| Spark ETL | Python/Scala on Glue Spark |
+| Python shell | Lightweight Python (no Spark) |
+| Ray | Python distributed ML prep |
+
+## DPU and workers
+
+- **Standard** - 4 vCPU, 16 GB per DPU.
+- **Flex** - discounted, slower startup; batch medallion friendly.
+- **Worker type G.1X/G.2X** - memory-heavy skew handling.
+
+## Incremental processing
+
+```mermaid
+flowchart LR
+  Bookmark[Job_Bookmark] --> Read[Incremental_Read]
+  Read --> Transform[Transform]
+  Transform --> Write[Write_Output]
+  Write --> Update[Update_Bookmark]
+```
+
+## Related
+
+- [Glue Workflows Orchestration](../../../../03_Data_Orchestration_Architecture/02_Cloud_Services/03_AWS/06_Glue_Workflows_Learning_Guide/README.md)

@@ -1,0 +1,66 @@
+---
+title: AWS Step Functions Limitations and Mitigations
+section: "02.03.02.03.05"
+status: complete
+template: concept
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [aws, step-functions, limitations]
+canonical: true
+---
+# 5. Limitations and Mitigation Scenarios
+
+## Platform limits (summary)
+
+Source: [Step Functions quotas](https://docs.aws.amazon.com/step-functions/latest/dg/limits.html) — verify current values.
+
+| Limit | Typical impact | Mitigation |
+| --- | --- | --- |
+| **256 KB payload** | Large input fails | Store in S3; pass URI in execution input |
+| **ASL definition size** | Deploy failure | Nested state machines; split workflows |
+| **Standard transition rate** | Throttling at burst | Request quota increase; Express for volume |
+| **Express 5 min max** | Long Glue jobs fail | Use Standard or MWAA |
+| **Map item count** | Large fan-out | Distributed Map with S3 item reader |
+| **Execution history PII** | Compliance risk | Input/output filtering; avoid secrets in paths |
+| **Verbose large graphs** | Maintainability | Sub-workflows; Step Functions Activities sparingly |
+
+## Limitation → mitigation
+
+| Limitation | Scenario | Mitigation |
+| --- | --- | --- |
+| No native DAG UI | 80-task nightly mesh | MWAA for core batch |
+| ASL complexity at scale | 200-state machine | CDK/Workflow Studio + modular nested SMs |
+| Retry billing (Standard) | Each retry = transitions | Fix root cause; cap `MaxAttempts` |
+| Express at-least-once | Duplicate side effects | Idempotent Glue job bookmarks / DynamoDB locks |
+| Cross-cloud portability | Multi-cloud strategy | Abstract critical flows; document ports |
+
+## When not to use Step Functions
+
+| Situation | Better fit |
+| --- | --- |
+| Nightly 80-task ELT DAG | **MWAA** |
+| Need dataset lineage / backfill | **MWAA** |
+| Glue-only crawler → job chain | **Glue Workflows** |
+| Long-running &gt; 5 min high-frequency | **Standard SF** or **MWAA** |
+
+## Risk scenarios
+
+### Transition storm on retry loop
+
+**Symptom:** Standard workflow costs multiply.  
+**Mitigation:** Exponential backoff; circuit-breaker Choice state; DLQ branch.
+
+### EventBridge duplicate delivery
+
+**Symptom:** Duplicate Glue runs.  
+**Mitigation:** Idempotent job names; check S3 etag; DynamoDB dedupe table.
+
+### Payload truncation
+
+**Symptom:** Execution fails at Map iterator.  
+**Mitigation:** S3 reference pattern; Step Functions `ResultSelector` to trim fields.
+
+## Related
+
+- [Evaluation Criteria](08_Evaluation_Criteria.md)
+- [Costing](06_Costing.md)

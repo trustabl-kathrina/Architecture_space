@@ -1,0 +1,43 @@
+---
+title: Microsoft Fabric Notebooks Overview
+section: "02.02.01.02.04.05"
+status: complete
+template: overview
+last_reviewed: 2026-06-20
+owner: architecture-team
+tags: [azure, fabric, spark, learning-guide]
+canonical: true
+---
+# 1. Microsoft Fabric Notebooks Overview
+
+## What is 
+
+**Microsoft Fabric Notebooks** is Spark notebooks and pipelines in Microsoft Fabric lakehouse.
+
+## Mental model
+
+`mermaid
+flowchart LR
+  In[Raw_or_Staged_Input] --> T[Fabric_Transform]
+  T --> Out[Curated_Output]
+`
+
+- **You own** business rules, schema contracts, test suites, and deployment pipelines.
+- **Platform owns** compute scheduling, optimizer, and managed runtime (where applicable).
+
+## When to use Fabric
+
+| Use when... | Consider alternatives when... |
+| --- | --- |
+| Transform workload matches engine strengths | Simpler SQL-only path exists in warehouse |
+| Team has platform expertise | Sub-second streaming only -> dedicated stream processor |
+| Medallion or dimensional modeling at scale | Lightweight one-off scripts -> simpler tooling |
+
+## Learning path
+
+Continue to [Architecture](02_Architecture.md) or [Scenarios](04_Scenarios.md).
+
+## Related
+
+- [Official documentation](https://learn.microsoft.com/fabric/data-engineering/)
+- [Batch Cloud Services](../../README.md)

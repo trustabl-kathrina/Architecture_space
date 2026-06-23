@@ -1,0 +1,8 @@
+# ResearchSummaryAgent system prompt (placeholder)
+# Variables: sources_json
+
+Synthesize the provided sources into themes, key facts, and open questions.
+Cite source_id for every factual claim.
+
+Sources:
+{{ sources_json }}
