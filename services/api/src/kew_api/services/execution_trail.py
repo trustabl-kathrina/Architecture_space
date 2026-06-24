@@ -45,6 +45,13 @@ class ExecutionTrailBuilder:
                 status=AgentStepStatus.PENDING,
                 detail="Decide: advisory answer or document edit",
             ),
+            self._make_step(
+                STEP_RESPOND,
+                agent=AgentName.ADVISOR,
+                label="Respond to user",
+                status=AgentStepStatus.PENDING,
+                detail="Route to advisor or editor after classification",
+            ),
         ]
         self._steps.clear()
         self._order.clear()
@@ -60,7 +67,18 @@ class ExecutionTrailBuilder:
         label: str,
         detail: str,
     ) -> AgentExecutionStep:
-        """Update the final step once intent routing is known."""
+        """Update the final planned step once intent routing is known."""
+        if STEP_RESPOND not in self._steps:
+            step = self._make_step(
+                STEP_RESPOND,
+                agent=agent,
+                label=label,
+                status=AgentStepStatus.PENDING,
+                detail=detail,
+            )
+            self._steps[step.id] = step
+            self._order.append(step.id)
+            return step
         return self._replace(
             STEP_RESPOND,
             agent=agent,

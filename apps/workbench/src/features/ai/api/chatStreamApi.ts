@@ -107,4 +107,8 @@ export async function streamChatMessage(
       }
     }
   }
+
+  if (!completed) {
+    throw new Error("The assistant stopped responding before finishing. Please try again.");
+  }
 }

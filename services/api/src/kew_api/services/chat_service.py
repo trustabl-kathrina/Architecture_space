@@ -36,13 +36,14 @@ from kew_api.services.document_service import DocumentService
 from kew_api.services.execution_trail import (
     STEP_CLASSIFY_INTENT,
     STEP_READ_CONTEXT,
+    STEP_RESPOND,
     ExecutionTrailBuilder,
 )
 from kew_api.services.markdown_utils import split_front_matter
 
 logger = logging.getLogger(__name__)
 
-from kew_api.ai.intent_heuristics import EDIT_HINTS, classify_intent_heuristic
+from kew_api.ai.intent_heuristics import classify_intent_heuristic
 
 
 class ChatService:
@@ -173,6 +174,20 @@ class ChatService:
                     detail=intent_detail,
                 ),
             )
+            respond_step = trail.set_respond_step(
+                agent=AgentName.PLANNER if intent.requires_change_plan else AgentName.ADVISOR,
+                label=(
+                    "Plan and draft document changes"
+                    if intent.requires_change_plan
+                    else "Draft advisory answer"
+                ),
+                detail=(
+                    "Planner and editor will propose an approval-gated change plan"
+                    if intent.requires_change_plan
+                    else "Advisor will answer using document context"
+                ),
+            )
+            yield ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=respond_step)
             async for chunk in stream_text_chunks(intent_detail):
                 yield ChatStreamEvent(
                     type=ChatStreamEventType.AGENT_THOUGHT,
@@ -189,6 +204,10 @@ class ChatService:
                 def queue_event(event: ChatStreamEvent) -> None:
                     queued_events.append(event)
 
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.TRAIL_STEP,
+                    step=trail.start(STEP_RESPOND, detail="Starting planner workflow…"),
+                )
                 assistant, change_plan, respond_detail = await self._handle_edit_intent(
                     doc_path=doc_path,
                     open_files=open_files,
@@ -204,6 +223,15 @@ class ChatService:
 
                 if change_plan is not None:
                     yield ChatStreamEvent(
+                        type=ChatStreamEventType.TRAIL_STEP,
+                        step=trail.complete(
+                            STEP_RESPOND,
+                            label="Change plan ready for review",
+                            detail=change_plan.summary,
+                            target_path=change_plan.document_path,
+                        ),
+                    )
+                    yield ChatStreamEvent(
                         type=ChatStreamEventType.STATUS,
                         message="Planner: sharing reasoning…",
                     )
@@ -218,6 +246,10 @@ class ChatService:
                             content=chunk,
                         )
                 elif respond_detail:
+                    yield ChatStreamEvent(
+                        type=ChatStreamEventType.TRAIL_STEP,
+                        step=trail.fail(STEP_RESPOND, respond_detail),
+                    )
                     blocked = trail.add(
                         agent=AgentName.EDITOR,
                         label="Change plan blocked",
@@ -228,20 +260,13 @@ class ChatService:
 
                 assistant_content = normalize_markdown_text(assistant.content)
             else:
-                advisor_step = trail.add(
-                    agent=AgentName.ADVISOR,
-                    label="Draft advisory answer",
-                    detail="Advisor will answer using document context",
-                    status=AgentStepStatus.PENDING,
-                )
-                yield ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=advisor_step)
                 yield ChatStreamEvent(
                     type=ChatStreamEventType.STATUS,
                     message="Advisor: drafting answer…",
                 )
                 yield ChatStreamEvent(
                     type=ChatStreamEventType.TRAIL_STEP,
-                    step=trail.start(advisor_step.id, detail="Generating response…"),
+                    step=trail.start(STEP_RESPOND, detail="Generating response…"),
                 )
                 advisory, respond_detail, respond_label = await self._run_advisor(
                     content, context, intent
@@ -249,7 +274,7 @@ class ChatService:
                 yield ChatStreamEvent(
                     type=ChatStreamEventType.TRAIL_STEP,
                     step=trail.complete(
-                        advisor_step.id,
+                        STEP_RESPOND,
                         label=respond_label,
                         detail=respond_detail,
                     ),
@@ -379,22 +404,7 @@ class ChatService:
         context: str,
     ) -> IntentResult:
         if self._settings.ai_mock_mode:
-            lowered = content.lower()
-            if any(hint in lowered for hint in EDIT_HINTS):
-                result = IntentResult(
-                    intent=ChatIntent.EXPAND,
-                    confidence=0.9,
-                    rationale="Mock: explicit edit request detected",
-                    requires_change_plan=True,
-                )
-            else:
-                result = IntentResult(
-                    intent=ChatIntent.ADVISE,
-                    confidence=0.9,
-                    rationale="Mock: advisory question",
-                    requires_change_plan=False,
-                )
-            return result
+            return classify_intent_heuristic(content)
 
         agent = build_orchestrator_agent(self._settings)
         prompt = f"Document context:\n{context}\n\nUser message:\n{content}"
@@ -422,12 +432,16 @@ class ChatService:
         intent: IntentResult,
     ) -> tuple[AdvisorOutput, str, str]:
         if self._settings.ai_mock_mode:
+            excerpt = self._mock_context_excerpt(context)
             return (
                 AdvisorOutput(
                     response=(
-                        f"[Mock advisory] Intent={intent.intent}. "
-                        "Based on the current document, focus on clarifying architecture "
-                        "decisions and adding measurable outcomes."
+                        f"[Mock advisory] Intent={intent.intent.value}. "
+                        f"Based on the active document"
+                        f"{f' ({excerpt})' if excerpt else ''}, "
+                        "here is a concise architecture-focused answer to your question. "
+                        "Ask me to **add**, **expand**, or **rewrite** a section when you want "
+                        "an approval-gated edit plan."
                     )
                 ),
                 "Answered using the active document context. No files were modified.",
@@ -724,6 +738,14 @@ class ChatService:
             f"Active file: {active}. Open tabs: {open_count}. "
             f"Section: {section}. Outline headings: {outline_count}."
         )
+
+    @staticmethod
+    def _mock_context_excerpt(context: str) -> str:
+        for line in context.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("Active document path:"):
+                return stripped.removeprefix("Active document path:").strip()
+        return ""
 
     @staticmethod
     def _format_plan_message(plan: ChangePlan) -> str:

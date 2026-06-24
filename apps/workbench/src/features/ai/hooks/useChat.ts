@@ -44,6 +44,10 @@ export function useChat(documentPath: string | null) {
       return;
     }
 
+    if (conversationId) {
+      return;
+    }
+
     let cancelled = false;
     setInitError(null);
 
@@ -64,7 +68,7 @@ export function useChat(documentPath: string | null) {
     return () => {
       cancelled = true;
     };
-  }, [documentPath, enabled, setConversationId, setPendingPlan]);
+  }, [documentPath, enabled, conversationId, setConversationId, setPendingPlan]);
 
   const conversationQuery = useQuery({
     queryKey: chatKeys.conversation(conversationId ?? ""),
@@ -228,6 +232,10 @@ export function useChat(documentPath: string | null) {
                 }
               : current,
           );
+          setIsSending(false);
+        }
+      } finally {
+        if (!completed) {
           setIsSending(false);
         }
       }

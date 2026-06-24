@@ -13,7 +13,7 @@ from kew_api.services.execution_trail import (
 def test_default_plan_has_orchestrator_steps() -> None:
     trail = ExecutionTrailBuilder()
     steps = trail.init_default_plan()
-    assert len(steps) == 2
+    assert len(steps) == 3
     assert all(step.status is AgentStepStatus.PENDING for step in steps)
     assert steps[0].id == STEP_READ_CONTEXT
     assert steps[1].id == STEP_CLASSIFY_INTENT
