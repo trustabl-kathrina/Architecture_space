@@ -18,7 +18,7 @@ POCs and benchmarks are distributed by technology domain — not centralized in 
 ## AI, RAG, and GenAI
 
 - [11 AI Data Architecture](../11_AI_Data_Architecture/README.md)
-  - [RAG evaluations](../11_AI_Data_Architecture/03_RAG/Document_Parsing.md) — document parsing, embeddings, vector DB, retrieval
+  - [RAG evaluations](../07_AI_Data_Architecture/03_RAG/02_Ingestion_And_Parsing/01_Document_Parsing.md) — document parsing, embeddings, vector DB, retrieval
   - [AI FinOps](../11_AI_Data_Architecture/11_AI_FinOps/GenAI_Infrastructure_And_FinOps.md)
   - [AI observability](../11_AI_Data_Architecture/10_AI_Observability/GenAI_Evaluation_And_Observability.md)
 

@@ -25,7 +25,7 @@ canonical_topics:
   FinOps_Framework.md: "04_Cloud_Data_Platforms/06_FinOps/FinOps_Framework.md"
   MCP_Protocol.md: "11_AI_Data_Architecture/12_Agentic_AI_Architecture/11.12.04_MCP/MCP_Protocol.md"
   A2A_Protocol.md: "11_AI_Data_Architecture/12_Agentic_AI_Architecture/11.12.05_A2A/A2A_Protocol.md"
-  RAG_Architecture.md: "11_AI_Data_Architecture/03_RAG/RAG_Architecture.md"
+  RAG_Architecture.md: "07_AI_Data_Architecture/03_RAG/08_Enterprise_Platform/01_RAG_Architecture.md"
   Feature_Store_Architecture.md: "11_AI_Data_Architecture/11.02_Feature_Store/Feature_Store_Architecture.md"
   MLOps_Framework.md: "13_MLOps_Architecture/01_ML_Lifecycle/MLOps_Framework.md"
   Zero_Trust_Architecture.md: "14_Security_And_Privacy_Architecture/14.06_Zero_Trust/Zero_Trust_Architecture.md"
