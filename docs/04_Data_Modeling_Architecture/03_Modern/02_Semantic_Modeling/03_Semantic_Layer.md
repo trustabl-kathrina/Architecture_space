@@ -1,92 +1,138 @@
 ---
 title: Semantic Layer
-section: "05.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "05.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [data-modeling, semantics, semantic-layer]
 canonical: true
 ---
+
 # Semantic Layer
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 03.10 Semantic Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+Analysts and applications should not need to understand warehouse table layouts, join paths, or SQL dialects to answer business questions. A **semantic layer** provides a logical, business-oriented view of data—entities, dimensions, measures, filters, and relationships—mapped to physical sources. It is the primary consumption abstraction between governed semantics and BI tools, APIs, and AI agents.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+This document defines the **semantic layer as a modeling pattern**. Platform strategy, vendor selection, and headless BI patterns are covered under [Semantic Layer Architecture](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/).
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+A **semantic layer** is a governed logical data model that exposes business-friendly objects (entities, dimensions, measures, hierarchies) with pre-defined relationships and calculations, abstracting consumers from physical storage and query complexity.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Scope
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+| In scope | Out of scope |
+| --- | --- |
+| Logical model structure (entities, dimensions, measures) | Physical warehouse schema design |
+| Mapping semantic objects to physical tables | ETL/ELT transformation logic |
+| Access control and row-level security concepts | Tool-specific implementation (LookML, Tabular, etc.) |
+| Relationship to metrics layer and glossary | Real-time OLAP engine internals |
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Core concepts
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+### Semantic layer components
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+| Component | Description |
+| --- | --- |
+| **Entity** | Business object (Customer, Order, Product) |
+| **Dimension** | Descriptive attribute for slicing (Region, Product Category, Time) |
+| **Measure** | Quantitative value; references [Metrics Layer](01_Metrics_Layer.md) definitions |
+| **Hierarchy** | Ordered dimension levels (Year → Quarter → Month) |
+| **Filter** | Reusable predicate (e.g., `status = 'Active'`) |
+| **Relationship** | Join logic between entities (one-to-many, many-to-many with bridge) |
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+### Layering model
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+```mermaid
+flowchart TB
+  subgraph consume [Consumption Layer]
+    BI[BI Tools]
+    API[Headless API]
+    Agents[AI Agents]
+  end
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+  subgraph semantic [Semantic Layer]
+  Entities[Entities and Dimensions]
+  Measures[Measures and Hierarchies]
+  Access[Access Rules]
+  end
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+  subgraph govern [Governed Semantics]
+    Glossary[Business Glossary]
+    Metrics[Metrics Layer]
+  end
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+  subgraph physical [Physical Layer]
+    DWH[Warehouse / Lake / Marts]
+  end
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+  BI --> semantic
+  API --> semantic
+  Agents --> semantic
+  Glossary --> Entities
+  Metrics --> Measures
+  semantic --> DWH
+```
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+### Single definition principle
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+Calculation logic for certified measures must be defined **once** in the semantic layer (or metrics layer that feeds it). Downstream tools consume—not redefine—measures. Duplicate definitions in individual dashboards are an architectural violation.
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+## Semantic model structure
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+A well-formed semantic model documents:
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+1. **Entities and keys** — grain and primary identifiers
+2. **Relationships** — cardinality, join keys, and fan-out risk
+3. **Dimensions** — attributes with glossary-linked labels
+4. **Measures** — certified metrics with aggregation rules
+5. **Hierarchies** — drill paths for time, geography, organization
+6. **Named filters** — standard business slices (fiscal year, active only)
+7. **Physical mapping** — source tables/views without exposing them to consumers
+
+See also [Semantic Model](05_Semantic_Model.md) and [Business Semantic Model](04_Business_Semantic_Model.md).
+
+## Business use cases
+
+- **Self-service BI**: Analysts drag dimensions and certified measures without writing joins.
+- **Consistent reporting**: Every dashboard uses the same revenue definition.
+- **Headless analytics**: Applications query a semantic API instead of raw SQL.
+- **Multi-tool consumption**: One semantic model feeds Power BI, Looker, and custom apps.
+- **AI copilots**: Agents query governed semantic objects with business labels.
+
+## Design principles
+
+| Principle | Rationale |
+| --- | --- |
+| **Glossary-aligned labels** | Dimension and measure names match [Business Glossary](02_Business_Glossary.md) preferred terms |
+| **Certified measures only** | Exploratory calculations stay in sandbox models |
+| **Explicit grain** | Every entity declares its grain to prevent fan-out |
+| **Versioned changes** | Breaking changes require migration plan and consumer notification |
+| **Least privilege** | Row-level and object-level security applied at semantic layer |
+
+## Anti-patterns
+
+| Anti-pattern | Consequence |
+| --- | --- |
+| Semantic layer per dashboard | Fragmented definitions; metric drift |
+| Skipping metrics layer | Business logic embedded only in BI tools |
+| Exposing raw table names to users | Leaks physical complexity; breaks on schema changes |
+| Unbounded many-to-many joins | Inflated aggregations; wrong totals |
+
+## Related topics
+
+- [Metrics Layer](01_Metrics_Layer.md) — upstream measure definitions
+- [Business Glossary](02_Business_Glossary.md) — term definitions for labels
+- [Business Semantic Model](04_Business_Semantic_Model.md) — enterprise entity-relationship view
+- [Semantic Model](05_Semantic_Model.md) — detailed model structure
+- [Semantic Data Products](09_Semantic_Data_Products.md) — packaging semantics for domains
+- [Semantic Layer Strategy](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Semantic_Layer_Strategy.md) — platform and rollout strategy
+- [Semantic Layer Platforms](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Semantic_Layer_Platforms.md) — tool-specific implementation
+- [Headless BI Architecture](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Headless_BI_Architecture.md) — API-driven consumption
+
+## ADR reference
+
+- [ADR 007 Semantic Layer Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Data_Architecture/ADR_007_Semantic_Layer_Strategy.md)
+- [ADR 002 Semantic Layer Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Analytics_Architecture/ADR_002_Semantic_Layer_Strategy.md)

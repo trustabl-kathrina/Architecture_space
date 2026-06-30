@@ -1,92 +1,52 @@
 ---
 title: Semantic Data Products
 section: "08.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
-canonical: true
+tags: [analytics, semantics, data-products]
+canonical: false
 ---
+
 # Semantic Data Products
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 05.07 Semantic Layer Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+This document covers how **analytics teams consume and publish** semantic data products—connecting domain semantics to BI workspaces, dashboards, and APIs. The modeling definition and contract structure are canonical elsewhere.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical source:** [Semantic Data Products (Modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/09_Semantic_Data_Products.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Analytics consumption patterns
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+| Pattern | Description | Example |
+| --- | --- | --- |
+| **Imported semantic model** | Connect BI tool to domain-published model | Power BI dataset from Finance semantic product |
+| **Certified explore** | Looker explore backed by domain LookML | `finance_revenue` explore |
+| **Metrics API** | Headless consumption for apps | REST/GraphQL endpoint from MetricFlow |
+| **Catalog discovery** | Find and request access via data marketplace | Collibra shopping experience |
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Publishing checklist for domain teams
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+1. Package glossary slice, certified metrics, and semantic model per [modeling spec](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/09_Semantic_Data_Products.md).
+2. Register product in catalog with contract, owner, and SLA.
+3. Expose consumption interface (BI connection string, API endpoint, or explore name).
+4. Document breaking-change policy and version.
+5. Provide sample dashboards using only product-certified measures.
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Analytics-specific quality gates
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+| Gate | Check before publish |
+| --- | --- |
+| **Reconciliation** | Semantic model totals match physical data product |
+| **Certification** | All measures are certified; no exploratory fields in executive tier |
+| **Access** | RLS and workspace permissions configured |
+| **Lineage** | Catalog shows semantic → physical lineage |
+| **Adoption** | At least one certified dashboard references the product |
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+## Related topics
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
-
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
-
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
-
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
-
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
-
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
-
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
-
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
-
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
-
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
-
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [Semantic Data Products (Modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/09_Semantic_Data_Products.md) — canonical definition
+- [Semantic Layer Strategy](Semantic_Layer_Strategy.md) — rollout strategy
+- [Analytics Data Products](../Analytics_Data_Products/KPI_Products.md) — KPI-focused data products
+- [Semantic Governance Framework](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Semantic_Governance_Framework.md)

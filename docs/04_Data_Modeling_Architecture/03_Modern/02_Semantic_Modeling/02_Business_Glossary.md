@@ -1,92 +1,150 @@
 ---
-title: Business Glossary Model
-section: "05.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+title: Business Glossary
+section: "05.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [data-modeling, semantics, glossary]
 canonical: true
 ---
-# Business Glossary Model
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 03.05 Enterprise Information Architecture.
+# Business Glossary
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+## Context
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+Business stakeholders, data engineers, and analysts use the same words to mean different things—"customer," "active user," "revenue," "churn"—because no shared vocabulary exists. A **business glossary** is the foundational artifact of enterprise semantics: a governed catalog of business terms with clear definitions, ownership, and relationships to data and metrics.
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+This document is the **canonical reference** for glossary structure and content. Enterprise-wide governance processes are documented in [Business Definition Governance](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Business_Definition_Governance.md); BI-facing usage patterns are in [Business Definitions](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Business_Definitions.md).
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+## Definition
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+A **business glossary** is a curated, enterprise-managed dictionary of business terms—each with a unique identifier, preferred definition, synonyms, antonyms, related terms, business owner, and optional links to physical data elements, metrics, and policies.
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+## Scope
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+| In scope | Out of scope |
+| --- | --- |
+| Glossary structure, term types, and relationships | Technical schema registry (column-level metadata) |
+| Stewardship and approval workflow (modeling view) | Ontology and knowledge-graph modeling |
+| Linkage to metrics and semantic models | Industry reference model content (TM Forum SID, BIAN) |
+| Synonym and hierarchy management | Translation/localization workflows |
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+## Core concepts
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+### Term types
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+| Type | Description | Example |
+| --- | --- | --- |
+| **Business concept** | Core entity or idea in the domain | Customer, Product, Policy |
+| **Business attribute** | Property of a concept | Customer Lifetime Value, Policy Effective Date |
+| **Business process** | Activity or workflow | Claims Adjudication, Order Fulfillment |
+| **Business rule** | Constraint or policy statement | "Active customer has transacted in last 90 days" |
+| **Metric term** | Named measure; links to [Metrics Layer](01_Metrics_Layer.md) | Net Revenue, Churn Rate |
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+### Term metadata model
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+| Field | Purpose |
+| --- | --- |
+| `term_id` | Stable identifier (e.g., `CUST.ACTIVE`) |
+| `preferred_name` | Canonical business label |
+| `definition` | Authoritative plain-language meaning |
+| `synonyms` | Alternate names used in source systems or departments |
+| `related_terms` | Parent, child, or associative relationships |
+| `domain` | Bounded context or business domain owner |
+| `steward` | Person accountable for definition quality |
+| `status` | proposed / approved / deprecated |
+| `linked_metrics` | References to certified metrics |
+| `linked_data_elements` | Optional mapping to physical columns or entities |
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+### Hierarchies and relationships
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+Glossaries support navigable structures:
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+- **Taxonomy**: `Customer` → `Retail Customer` → `Premium Retail Customer`
+- **Association**: `Policy` ↔ `Claim` (related concepts)
+- **Derivation**: `Churn Rate` derived from `Active Customer` and `Churned Customer`
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+Hierarchies must not duplicate conflicting definitions at parent and child levels; child terms **extend** parent definitions with additional constraints.
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+## Architecture pattern
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+```mermaid
+flowchart LR
+  subgraph glossary [Business Glossary]
+    Terms[Business Terms]
+    Rules[Business Rules]
+    Hierarchy[Taxonomies]
+  end
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+  subgraph downstream [Downstream Semantics]
+    Metrics[Metrics Layer]
+    Semantic[Semantic Layer]
+    Products[Semantic Data Products]
+  end
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+  subgraph governance [Governance]
+    Steward[Data Stewards]
+    Catalog[Data Catalog]
+  end
+
+  Terms --> Metrics
+  Terms --> Semantic
+  Rules --> Metrics
+  Hierarchy --> Terms
+  Steward --> Terms
+  Terms --> Catalog
+  Metrics --> Products
+```
+
+The glossary is **upstream** of metrics and semantic models. Metrics reference glossary terms in their definitions; semantic layers expose glossary-aligned labels to consumers.
+
+## Stewardship model
+
+| Role | Responsibility |
+| --- | --- |
+| **Business owner** | Approves meaning; resolves domain disputes |
+| **Data steward** | Maintains glossary entry quality, links, and status |
+| **Data architect** | Ensures alignment with canonical and semantic models |
+| **Consumer** | Uses approved terms; proposes new terms via intake process |
+
+Detailed enterprise workflow: [Business Definition Governance](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Business_Definition_Governance.md).
+
+## Business use cases
+
+- **Onboarding**: New analysts search the glossary before building reports.
+- **Data catalog integration**: Catalog columns inherit business term labels and definitions.
+- **Metric certification**: Metric owners must cite glossary terms in metric definitions.
+- **Cross-domain alignment**: Merging acquisitions requires mapping local terms to enterprise glossary entries.
+- **AI grounding**: Agents and copilots retrieve glossary definitions to reduce hallucinated business language.
+
+## Implementation guidance
+
+1. **Start with high-conflict terms**—the 20–30 words that cause the most reporting disputes.
+2. **One preferred definition per term**; capture synonyms separately, never as duplicate entries.
+3. **Require business owner approval** before setting status to `approved`.
+4. **Link every certified metric** to at least one glossary term.
+5. **Integrate with the data catalog** so physical metadata inherits semantic labels.
+6. **Review quarterly**; deprecate unused terms rather than leaving ambiguous entries.
+
+## Anti-patterns
+
+| Anti-pattern | Why it fails |
+| --- | --- |
+| IT-owned glossary without business sign-off | Definitions lack authority; adoption stalls |
+| Duplicate terms per department | Defeats the purpose of enterprise semantics |
+| Glossary disconnected from metrics/BI | Terms become documentation shelfware |
+| Over-granular initial scope | Hundreds of draft terms; none reach approved status |
+
+## Related topics
+
+- [Metrics Layer](01_Metrics_Layer.md) — measures that reference glossary terms
+- [Semantic Layer](03_Semantic_Layer.md) — exposes glossary-aligned labels to consumers
+- [Business Semantic Model](04_Business_Semantic_Model.md) — entity-relationship view of business concepts
+- [Semantic Standards](06_Semantic_Standards.md) — naming and definition conventions
+- [Business Definition Governance](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Business_Definition_Governance.md) — enterprise approval workflow
+- [Business Definitions](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Business_Definitions.md) — how analytics tools surface definitions
+
+## ADR reference
+
+- [ADR 009 Semantic Governance Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Governance_And_Metadata/ADR_009_Semantic_Governance_Strategy.md)

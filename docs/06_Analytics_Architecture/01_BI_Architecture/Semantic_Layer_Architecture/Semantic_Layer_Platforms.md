@@ -1,92 +1,78 @@
 ---
 title: Semantic Layer Platforms
 section: "08.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [analytics, semantics, platforms]
 canonical: true
 ---
+
 # Semantic Layer Platforms
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 05.07 Semantic Layer Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+The semantic layer pattern is implemented differently across BI and metrics platforms. This document compares **how analytics tools realize** the semantic layer—not the abstract modeling pattern.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical modeling reference:** [Semantic Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/03_Semantic_Layer.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Platform patterns
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
-
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
+| Platform | Semantic artifact | Strengths | Considerations |
 | --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+| **Looker (LookML)** | LookML models and explores | Git-based, reusable views, strong embedding | Looker-centric; multi-BI requires export or API |
+| **Power BI** | Dataset / semantic model (Tabular) | Microsoft ecosystem, DAX measures, wide adoption | Logic can fragment across workspaces without governance |
+| **Tableau** | Logical layer + relationships | Visual modeling, broad connector support | Less headless; metric logic in calculated fields risk |
+| **dbt + MetricFlow** | dbt models + YAML metrics | Warehouse-native, version-controlled, headless-ready | Requires SQL literacy; BI is downstream |
+| **AtScale** | Universal semantic layer | Multi-BI, OLAP acceleration, enterprise scale | Additional platform cost and ops |
+| **Cube** | Semantic layer + API | Headless, dev-friendly, open source option | Smaller enterprise support ecosystem |
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+## Selection criteria
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+| Criterion | Weight for most enterprises |
+| --- | --- |
+| Alignment with primary BI tool | High |
+| Headless / API consumption need | Medium–High (growing with AI) |
+| Multi-cloud / multi-warehouse support | Medium |
+| Git-based versioning and CI/CD | High |
+| Row-level security integration | High |
+| Total cost of ownership | Medium |
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+## Implementation patterns by platform
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+### Looker / LookML
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+- Define **views** mapped to warehouse tables; **explores** join views.
+- Certified measures in LookML; prohibit duplicate calculations in dashboards.
+- Use `description` fields linked to [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) term IDs.
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+### Power BI
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+- Centralize certified datasets in a **shared workspace** or Fabric semantic model.
+- Use **calculation groups** and named measures; avoid report-level DAX for enterprise KPIs.
+- Deploy via XMLA/TMSL pipelines for version control.
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+### dbt + MetricFlow
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+- Physical layer in dbt models; metrics in `metrics:` YAML referencing [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md) IDs.
+- Expose via MetricFlow API for headless and multi-BI consumption.
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+## Anti-patterns
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+| Anti-pattern | Platform symptom |
+| --- | --- |
+| Report-level calculations | DAX/LOD in individual Tableau workbooks or Power BI reports |
+| Unmanaged dataset sprawl | Hundreds of Power BI datasets with overlapping measures |
+| LookML fork per team | Duplicate `revenue` definitions across models |
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+## Related topics
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+- [Semantic Layer Strategy](Semantic_Layer_Strategy.md) — build vs buy and rollout
+- [Semantic Layer (modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/03_Semantic_Layer.md) — canonical pattern
+- [Headless BI Architecture](Headless_BI_Architecture.md) — API consumption
+- [Business Definitions](Business_Definitions.md) — surfacing glossary in BI tools
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+## ADR reference
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [ADR 002 Semantic Layer Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Analytics_Architecture/ADR_002_Semantic_Layer_Strategy.md)

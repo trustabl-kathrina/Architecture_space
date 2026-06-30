@@ -1,92 +1,43 @@
 ---
 title: KPI Standardization
-section: "00.10"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "00.10.01"
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
-canonical: true
+tags: [governance, semantics, kpi]
+canonical: false
 ---
+
 # KPI Standardization
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 08.20 Semantic Governance.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+This document defines **governance-side KPI standards**—enterprise rules for KPI registration, ownership, and certification. Analytics implementation patterns are documented separately.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical metric definitions:** [Metrics Layer](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+**Analytics implementation:** [KPI Standardization (Analytics)](../../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/KPI_Standardization.md)
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+## Governance rules
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
+1. Every enterprise KPI must register in the KPI catalog before appearing in executive reporting.
+2. Each KPI maps to exactly one **certified metric** in the metrics layer.
+3. KPI `tier` (executive / operational / exploratory) determines certification requirements.
+4. Business executive sponsors own KPI meaning; data stewards own catalog metadata quality.
+5. New KPI requests require duplicate check against existing catalog entries.
+
+## Certification requirements by tier
+
+| Tier | Business owner approval | Metric certification | Dashboard review |
 | --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+| **Executive** | Required | Required | Required before publish |
+| **Operational** | Required | Required | Recommended |
+| **Exploratory** | Optional | Not required | Sandbox only |
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+## Related topics
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
-
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
-
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
-
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
-
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
-
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
-
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
-
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
-
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
-
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
-
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
-
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
-
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
-
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [KPI Standardization (Analytics)](../../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/KPI_Standardization.md)
+- [Metrics Layer (modeling)](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+- [Business Definition Governance](Business_Definition_Governance.md)
+- [Semantic Governance Framework](Semantic_Governance_Framework.md)

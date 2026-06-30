@@ -1,92 +1,79 @@
 ---
 title: Semantic Layer Strategy
 section: "08.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [analytics, semantics, semantic-layer]
 canonical: true
 ---
+
 # Semantic Layer Strategy
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 05.07 Semantic Layer Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+Analytics teams need a deliberate strategy for where business logic lives, which tools own the semantic layer, and how domains federate models without fragmenting definitions. This document covers **analytics rollout and platform strategy**—not the semantic layer modeling pattern itself.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical modeling reference:** [Semantic Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/03_Semantic_Layer.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+**Semantic layer strategy** is the enterprise approach to building, governing, and consuming logical data models across BI platforms—covering centralization vs federation, build vs buy, and migration from spreadsheet logic.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Strategic decisions
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+| Decision | Options | Recommendation |
+| --- | --- | --- |
+| **Ownership** | Central analytics COE vs domain-owned models | Federated: domains own domain models; COE sets standards |
+| **Platform** | Native BI semantic model vs dedicated metrics/semantic platform | Match to primary BI estate; see [Semantic Layer Platforms](Semantic_Layer_Platforms.md) |
+| **Logic placement** | Semantic layer vs warehouse views vs dashboard calculations | Certified logic only in semantic/metrics layer |
+| **Consumption** | Tool-embedded vs headless API | Headless for apps and agents; embedded for self-service BI |
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Rollout phases
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+```mermaid
+flowchart LR
+  P1[Phase 1: Foundation] --> P2[Phase 2: Certified Metrics]
+  P2 --> P3[Phase 3: Domain Models]
+  P3 --> P4[Phase 4: Headless and AI]
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+  P1 --- P1a[Glossary plus 10 to 20 certified metrics]
+  P2 --- P2a[Enterprise metrics layer in primary BI tool]
+  P3 --- P3a[Domain semantic models with contracts]
+  P4 --- P4a[Semantic API and agent integration]
+```
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+| Phase | Deliverables | Success criteria |
+| --- | --- | --- |
+| **1 — Foundation** | Glossary, initial metric catalog | Top conflicting terms and metrics resolved |
+| **2 — Certified metrics** | [Enterprise Metrics Layer](Enterprise_Metrics_Layer.md) live | 90% of executive KPIs from certified sources |
+| **3 — Domain models** | Per-domain semantic models | Domains publish [semantic data products](Semantic_Data_Products.md) |
+| **4 — Headless / AI** | Metrics API, agent tools | Apps and agents consume governed semantics |
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+## Build vs buy matrix
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+| Approach | When to choose |
+| --- | --- |
+| **BI-native semantic layer** (Looker, Power BI, Tableau) | Primary consumption is self-service BI in one ecosystem |
+| **Dedicated metrics layer** (dbt Semantic Layer, MetricFlow, AtScale) | Multi-BI consumption; headless API required |
+| **Catalog-integrated** (Collibra, Alation + integrations) | Glossary and lineage are primary; BI is secondary |
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+## Governance integration
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+- Metric and term definitions: [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md)
+- Approval workflow: [Business Definition Governance](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Business_Definition_Governance.md)
+- Enterprise operating model: [Enterprise Semantics](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Enterprise_Semantics.md)
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+## Related topics
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+- [Semantic Layer (modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/03_Semantic_Layer.md) — canonical pattern definition
+- [Semantic Layer Platforms](Semantic_Layer_Platforms.md) — vendor and tool patterns
+- [Enterprise Metrics Layer](Enterprise_Metrics_Layer.md) — metrics rollout
+- [Headless BI Architecture](Headless_BI_Architecture.md) — API-driven consumption
+- [KPI Standardization](KPI_Standardization.md) — KPI catalog in analytics
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+## ADR reference
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
-
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
-
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [ADR 002 Semantic Layer Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Analytics_Architecture/ADR_002_Semantic_Layer_Strategy.md)
+- [ADR 007 Semantic Layer Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Data_Architecture/ADR_007_Semantic_Layer_Strategy.md)

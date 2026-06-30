@@ -14,6 +14,7 @@ Architecture-first documentation space for enterprise data, analytics, AI, cloud
 
 - [Data Mesh Hub](_hubs/Data_Mesh_Hub.md)
 - [FinOps Hub](_hubs/FinOps_Hub.md)
+- [Semantics Hub](_hubs/Semantics_Hub.md)
 - [Agentic AI Hub](_hubs/Agentic_AI_Hub.md)
 - [Pluto MIND Hub](_hubs/Pluto_MIND_Hub.md)
 

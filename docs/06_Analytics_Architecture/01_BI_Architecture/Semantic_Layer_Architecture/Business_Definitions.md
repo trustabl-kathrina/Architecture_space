@@ -1,92 +1,69 @@
 ---
 title: Business Definitions
 section: "08.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
-canonical: true
+tags: [analytics, semantics, glossary]
+canonical: false
 ---
+
 # Business Definitions
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 05.07 Semantic Layer Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+BI users encounter business terms and metric labels inside dashboards, semantic models, and self-service tools. **Business definitions in analytics** describes how approved glossary content is **surfaced at the point of consumption**—not where definitions are authored.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical source for term definitions:** [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+**Business definitions in analytics** is the practice of binding certified glossary terms and metric descriptions to semantic layer objects, catalog entries, and BI metadata so consumers see authoritative meaning without leaving their workflow.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Surfacing patterns
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+| Pattern | Where it appears | Implementation |
+| --- | --- | --- |
+| **Inline description** | Measure/dimension tooltip in BI tool | LookML `description`, Power BI measure description, Tableau field comments |
+| **Glossary link** | Catalog or data dictionary panel | Collibra/Alation integration; deep link to term ID |
+| **Contextual help** | Dashboard header or info icon | Embedded definition from glossary API |
+| **Certification badge** | Field list in self-service | Visual indicator for certified vs exploratory metrics |
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Integration architecture
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+```mermaid
+flowchart LR
+  Glossary[Business Glossary]
+  Metrics[Metrics Layer]
+  Catalog[Data Catalog]
+  Semantic[BI Semantic Model]
+  Dashboard[Dashboards]
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+  Glossary --> Catalog
+  Glossary --> Semantic
+  Metrics --> Semantic
+  Catalog --> Dashboard
+  Semantic --> Dashboard
+```
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+Definitions are **authored once** in the glossary and **referenced** in analytics metadata—never duplicated with conflicting text.
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+## Implementation checklist
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+1. Assign `term_id` from glossary to each dimension label in the semantic model.
+2. Copy approved `definition` text into platform description fields via CI/CD, not manual edits.
+3. Display certification status (`certified` / `exploratory`) on measures.
+4. Block publication of dashboards using uncertified measures for executive audiences.
+5. Sync catalog and BI metadata on glossary change events.
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+## Governance
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+Approval and stewardship workflow: [Business Definition Governance](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Business_Definition_Governance.md)
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+## Related topics
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
-
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
-
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
-
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
-
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) — canonical term definitions
+- [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md) — measure definitions
+- [Semantic Layer Platforms](Semantic_Layer_Platforms.md) — tool-specific metadata fields
+- [KPI Standardization](KPI_Standardization.md) — KPI catalog in analytics

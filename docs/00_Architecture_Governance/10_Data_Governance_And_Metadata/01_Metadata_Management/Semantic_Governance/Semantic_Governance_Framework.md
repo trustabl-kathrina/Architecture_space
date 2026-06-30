@@ -1,92 +1,88 @@
 ---
 title: Semantic Governance Framework
-section: "00.10"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "00.10.01"
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [governance, semantics]
 canonical: true
 ---
+
 # Semantic Governance Framework
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 08.20 Semantic Governance.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+Semantic artifacts—glossary terms, metrics, semantic models, and semantic data products—require lifecycle governance distinct from physical data governance. This framework defines **processes, quality gates, and versioning rules** for enterprise semantics.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical modeling references:** [Semantic Modeling README](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/README.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+The **semantic governance framework** is the set of intake, review, certification, publication, change management, and retirement processes applied to business glossary entries, certified metrics, semantic models, and semantic data products.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
+## Lifecycle stages
+
+| Stage | Actor | Activities | Exit criteria |
 | --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+| **Propose** | Business or analyst | Submit term, metric, or model request | Complete intake form with business justification |
+| **Draft** | Data steward | Author definition; link to physical sources | Draft in catalog; peer review scheduled |
+| **Review** | Steward + architect | Validate alignment with standards and glossary | No conflicts with existing approved terms |
+| **Approve** | Business owner | Sign off on meaning and calculation | Status set to `approved` or `certified` |
+| **Publish** | Analytics / domain team | Deploy to semantic layer and catalog | Consumption interface available |
+| **Change** | Steward | Version change; impact assessment | Consumers notified per SLA |
+| **Retire** | Business owner | Deprecate with migration path | Sunset date communicated; dashboards updated |
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+## Quality gates
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+| Artifact | Gate before `approved` |
+| --- | --- |
+| **Glossary term** | Unique preferred name; business owner assigned; no conflicting approved term |
+| **Certified metric** | Links to glossary terms; grain documented; formula validated against source |
+| **Semantic model** | All measures certified; relationships tested for fan-out; RLS defined |
+| **Semantic data product** | Contract complete; lineage to physical product; reconciliation passed |
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+Detailed quality dimensions: [Semantic Quality Framework](Semantic_Quality_Framework.md).
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+## Change management
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+| Change type | Notice period | Approval |
+| --- | --- | --- |
+| **Non-breaking** (description clarification) | None | Steward |
+| **Breaking** (formula, grain, or join change) | 30 days minimum | Business owner + analytics COE |
+| **Retirement** | 90 days minimum | Business owner + enterprise council |
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+Breaking changes require impact analysis listing affected dashboards, APIs, and semantic data products.
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+## Roles and RACI
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+| Activity | Business owner | Data steward | Data architect | Analytics COE |
+| --- | --- | --- | --- | --- |
+| Define term meaning | A | R | C | I |
+| Certify metric | A | R | C | C |
+| Approve semantic model | A | R | A | C |
+| Deploy to BI platform | I | C | C | R |
+| Resolve cross-domain conflict | A | C | R | I |
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+*R = Responsible, A = Accountable, C = Consulted, I = Informed*
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+## Tooling integration
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+| Tool | Role in framework |
+| --- | --- |
+| **Data catalog** | Glossary authoring, workflow, discovery |
+| **Git / CI** | Version control for semantic models (LookML, dbt, YAML) |
+| **BI platform** | Deployment target for certified semantic models |
+| **Lineage system** | Impact analysis for change management |
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+## Related topics
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+- [Enterprise Semantics](Enterprise_Semantics.md) — operating model
+- [Business Definition Governance](Business_Definition_Governance.md) — term-specific workflow
+- [Semantic Quality Framework](Semantic_Quality_Framework.md) — quality checks
+- [Semantic Governance (Modeling)](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/07_Semantic_Governance.md) — modeling-side ownership
+- [Semantics Hub](../../../../_hubs/Semantics_Hub.md) — navigation index
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+## ADR reference
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [ADR 009 Semantic Governance Strategy](../../../../03_Architecture_Decision_Records/Governance_And_Metadata/ADR_009_Semantic_Governance_Strategy.md)

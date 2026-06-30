@@ -1,92 +1,66 @@
 ---
 title: KPI Standardization
 section: "08.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
-canonical: true
+tags: [analytics, semantics, kpi]
+canonical: false
 ---
+
 # KPI Standardization
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 05.07 Semantic Layer Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+KPIs are the measures leadership tracks to run the business. **KPI standardization in analytics** ensures every published KPI maps to a certified metric, glossary term, and semantic model object—eliminating "KPI sprawl" across dashboards.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical metric definitions:** [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+**Governance-side KPI standards:** [KPI Standardization (Governance)](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/KPI_Standardization.md)
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+## Definition
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+**KPI standardization** is the analytics practice of maintaining a governed KPI catalog where each KPI has a unique ID, owner, target metric reference, dimensional context, refresh cadence, and approved visualization tier.
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+## KPI catalog structure
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+| Field | Description |
+| --- | --- |
+| `kpi_id` | Enterprise identifier (e.g., `KPI.CUSTOMER.NPS`) |
+| `display_name` | Executive-facing label |
+| `metric_ref` | Link to certified metric in metrics layer |
+| `glossary_refs` | Business terms used in the KPI name/definition |
+| `owner` | Business executive sponsor |
+| `frequency` | Daily, weekly, monthly, quarterly |
+| `dimensions` | Standard slices (region, product line, channel) |
+| `targets` | Thresholds, goals, RAG status rules |
+| `tier` | Executive / operational / exploratory |
+| `semantic_model_ref` | BI object exposing this KPI |
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+## Standardization rules
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+1. **One KPI, one metric** — KPIs reference exactly one certified metric; no dashboard-local calculations.
+2. **Naming alignment** — KPI display names use [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) preferred terms.
+3. **Tiered access** — Executive-tier KPIs require certification; exploratory KPIs are sandbox-only.
+4. **Version on change** — KPI definition changes trigger consumer notification and dashboard review.
+5. **No duplicate KPIs** — Catalog search before creating new entries; merge synonyms.
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+## Analytics workflow
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+```mermaid
+flowchart LR
+  Request[KPI Request] --> Review[Steward Review]
+  Review --> Map[Map to Metric and Glossary]
+  Map --> Certify[Certify in Metrics Layer]
+  Certify --> Publish[Publish in Semantic Model]
+  Publish --> Dashboard[Approve Dashboard Placement]
+```
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+## Related topics
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
-
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
-
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
-
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
-
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
-
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
-
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
-
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [Metrics Layer (modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+- [Enterprise Metrics Layer](Enterprise_Metrics_Layer.md) — deployment of certified metrics
+- [Metrics And KPI Architecture](../Metrics_And_KPI_Architecture/KPI_Catalog.md) — KPI catalog patterns
+- [Business Definitions](Business_Definitions.md) — surfacing definitions in BI
+- [KPI Standardization (Governance)](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/KPI_Standardization.md)

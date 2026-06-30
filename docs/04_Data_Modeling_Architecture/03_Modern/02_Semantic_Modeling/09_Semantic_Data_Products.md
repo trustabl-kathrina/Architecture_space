@@ -1,92 +1,146 @@
 ---
 title: Semantic Data Products
-section: "05.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "05.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [data-modeling, semantics, data-products]
 canonical: true
 ---
+
 # Semantic Data Products
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 03.10 Semantic Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+Domains need to share **governed business meaning**—not just tables and files—with other teams, analytics platforms, and AI applications. A **semantic data product** packages certified glossary terms, metrics, and semantic models as a discoverable, contract-bound offering with clear ownership, SLAs, and quality guarantees.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+This document defines semantic data products from a **modeling perspective**. General data product lifecycle patterns are in [Data Product Architecture](../../../06_Data_Product_Architecture/README.md); analytics-specific packaging is in [Semantic Data Products (Analytics)](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Semantic_Data_Products.md).
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+A **semantic data product** is a domain-owned, versioned package of governed business semantics—glossary terms, certified metrics, semantic models, and consumption interfaces—published with a data contract specifying schema, quality rules, ownership, and service levels.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Scope
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+| In scope | Out of scope |
+| --- | --- |
+| Semantic product composition and contracts | Raw dataset / table data products |
+| Ownership and lifecycle for semantics | Marketplace infrastructure |
+| Quality dimensions for semantic artifacts | Physical pipeline orchestration |
+| Discovery and versioning of semantic products | Industry reference model licensing |
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Core concepts
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+### Semantic product anatomy
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+| Artifact | Description |
+| --- | --- |
+| **Glossary slice** | Domain-approved business terms and definitions |
+| **Metric set** | Certified measures with calculation logic |
+| **Semantic model** | Logical entities, dimensions, relationships |
+| **Consumption interface** | Semantic API, BI model connection, or catalog entry |
+| **Data contract** | Schema, SLAs, quality rules, breaking-change policy |
+| **Lineage** | Traceability to physical sources |
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+### Relationship to other product types
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+```mermaid
+flowchart LR
+  subgraph physical [Physical Data Products]
+    Tables[Curated Tables]
+    Streams[Event Streams]
+  end
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+  subgraph semantic [Semantic Data Products]
+    Glossary[Glossary Terms]
+    Metrics[Certified Metrics]
+    Model[Semantic Model]
+  end
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+  subgraph consume [Consumers]
+    BI[BI and Analytics]
+    Apps[Applications]
+    Agents[AI Agents]
+  end
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+  Tables --> Model
+  Streams --> Model
+  Glossary --> Model
+  Metrics --> Model
+  Model --> BI
+  Model --> Apps
+  Model --> Agents
+```
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+Physical data products provide **data**; semantic data products provide **meaning** on top of that data. A domain may publish both—a curated fact table (physical) and a semantic model (logical)—as separate or bundled offerings.
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+### Data contract for semantics
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+Semantic contracts should specify:
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+| Element | Example |
+| --- | --- |
+| **Product ID** | `finance.revenue-semantics.v2` |
+| **Owner** | Finance data product team |
+| **Included metrics** | `FIN.REVENUE.NET`, `FIN.REVENUE.GROSS` |
+| **Semantic model version** | `revenue_model v2.1` |
+| **Quality rules** | 100% of certified metrics have glossary links |
+| **SLA** | Breaking changes announced 30 days in advance |
+| **Access** | Role-based; row-level security on Customer entity |
+| **Deprecation policy** | 90-day sunset for retired metric versions |
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+## Business use cases
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- **Domain self-service**: Marketing publishes a `Campaign Performance` semantic product; analytics teams consume without redefining metrics.
+- **Cross-domain composition**: Finance and Sales semantic products combine in an enterprise executive dashboard.
+- **Regulatory audit**: Auditors receive a versioned semantic product with immutable metric definitions for a reporting period.
+- **AI agent grounding**: Agents register semantic products as tools with governed measure definitions.
+- **Acquisition integration**: Acquired company's terms are mapped and published as a transitional semantic product.
+
+## Lifecycle
+
+| Phase | Activities |
+| --- | --- |
+| **Design** | Identify domain terms, metrics, and entities; assign owner |
+| **Build** | Implement semantic model; link glossary and metrics |
+| **Certify** | Steward review; quality gate on contract completeness |
+| **Publish** | Register in catalog/marketplace; expose consumption interface |
+| **Operate** | Monitor usage, quality, and SLA adherence |
+| **Evolve** | Version changes; communicate breaking updates |
+| **Retire** | Deprecate with migration path to successor product |
+
+Governance workflow: [Semantic Governance Framework](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Semantic_Governance_Framework.md).
+
+## Quality dimensions
+
+| Dimension | Check |
+| --- | --- |
+| **Completeness** | All measures have definitions, owners, and grain |
+| **Consistency** | Terms align with enterprise glossary or documented exceptions |
+| **Accuracy** | Semantic model totals reconcile with physical sources |
+| **Timeliness** | Semantic version published when underlying data product updates |
+| **Discoverability** | Catalog metadata, tags, and documentation complete |
+
+## Anti-patterns
+
+| Anti-pattern | Consequence |
+| --- | --- |
+| Semantic product without physical lineage | Consumers cannot trust or debug figures |
+| Bundling uncertified exploratory metrics | Quality guarantees become meaningless |
+| No versioning on breaking changes | Downstream dashboards break silently |
+| Domain silos without enterprise glossary alignment | Duplicate conflicting definitions across products |
+
+## Related topics
+
+- [Business Glossary](02_Business_Glossary.md) — terms included in semantic products
+- [Metrics Layer](01_Metrics_Layer.md) — certified measures in the product
+- [Semantic Layer](03_Semantic_Layer.md) — logical model exposed by the product
+- [Semantic Interoperability](08_Semantic_Interoperability.md) — cross-domain alignment
+- [Data Product Architecture](../../../06_Data_Product_Architecture/README.md) — general data product patterns
+- [Semantic Data Products (Analytics)](../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Semantic_Data_Products.md) — analytics consumption packaging
+- [Semantic Governance Framework](../../../00_Architecture_Governance/10_Data_Governance_And_Metadata/01_Metadata_Management/Semantic_Governance/Semantic_Governance_Framework.md) — enterprise governance
+
+## ADR reference
+
+- [ADR 009 Semantic Governance Strategy](../../../00_Architecture_Governance/03_Architecture_Decision_Records/Governance_And_Metadata/ADR_009_Semantic_Governance_Strategy.md)

@@ -1,92 +1,97 @@
 ---
 title: Business Definition Governance
-section: "00.10"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "00.10.01"
+status: complete
+template: concept
+last_reviewed: 2026-06-30
 owner: architecture-team
-tags: []
+tags: [governance, semantics, glossary]
 canonical: true
 ---
+
 # Business Definition Governance
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 08.20 Semantic Governance.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+Business definitions fail when IT writes them without business authority, or when every department maintains a local dictionary. **Business definition governance** establishes who may propose, approve, and change glossary terms—and how conflicts are resolved.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+**Canonical glossary structure:** [Business Glossary](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md)
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+**Analytics surfacing:** [Business Definitions](../../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Business_Definitions.md)
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+## Definition
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+**Business definition governance** is the approval workflow, stewardship rules, and conflict resolution process for enterprise business glossary terms and their linkage to metrics, data elements, and policies.
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+## Intake workflow
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+```mermaid
+flowchart LR
+  Submit[Submit Term Request] --> Triage[Steward Triage]
+  Triage --> DupCheck[Duplicate Check]
+  DupCheck --> Draft[Draft Definition]
+  Draft --> Review[Peer Review]
+  Review --> Approve[Business Owner Approval]
+  Approve --> Publish[Publish to Catalog]
+  Publish --> Sync[Sync to BI Metadata]
+```
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+## Request requirements
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+Every term intake must include:
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+| Field | Required |
+| --- | --- |
+| Proposed preferred name | Yes |
+| Draft definition | Yes |
+| Business domain | Yes |
+| Business owner (approver) | Yes |
+| Synonyms and related terms | If known |
+| Justification / use case | Yes |
+| Linked metrics or data elements | If applicable |
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+## Approval rules
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+1. **Business owner approval is mandatory** — IT cannot set status to `approved` unilaterally.
+2. **One preferred term per concept** — Synonyms are aliases, not separate approved entries.
+3. **Conflict escalation** — Overlapping definitions escalate to enterprise data council within 10 business days.
+4. **Deprecation over deletion** — Retired terms remain in catalog with `deprecated` status and successor link.
+5. **Quarterly review** — Stewards validate top 100 terms by usage; stale terms are reviewed or deprecated.
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+## Stewardship responsibilities
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+| Steward action | Frequency |
+| --- | --- |
+| Triage new term requests | Within 3 business days |
+| Resolve synonym proposals | Within 5 business days |
+| Link new certified metrics to terms | Before metric certification |
+| Sync definition changes to BI metadata | Within 1 business day of approval |
+| Report glossary health metrics | Monthly |
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+## Conflict resolution
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+| Scenario | Resolution |
+| --- | --- |
+| Two domains claim same term with different meanings | Enterprise council picks enterprise definition; domain-specific terms get qualified names |
+| Source system name conflicts with glossary | Synonym mapping; source name documented as alias |
+| Acquired company terminology | Mapping project; transitional synonyms for 12 months |
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+## Metrics
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+| Metric | Target |
+| --- | --- |
+| Term request triage SLA | ≤ 3 business days |
+| Approved terms with assigned owner | 100% |
+| Certified metrics linked to glossary | 100% |
+| Duplicate approved terms | 0 |
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+## Related topics
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+- [Business Glossary](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) — canonical glossary model
+- [Semantic Governance Framework](Semantic_Governance_Framework.md) — full semantic lifecycle
+- [Enterprise Semantics](Enterprise_Semantics.md) — operating model
+- [KPI Standardization](KPI_Standardization.md) — governance-side KPI standards
+
+## ADR reference
+
+- [ADR 009 Semantic Governance Strategy](../../../../03_Architecture_Decision_Records/Governance_And_Metadata/ADR_009_Semantic_Governance_Strategy.md)
