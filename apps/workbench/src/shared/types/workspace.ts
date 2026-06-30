@@ -1,5 +1,23 @@
 export type NodeType = "folder" | "file";
 
+export type TabKind = "file" | "folder";
+
+export interface WorkbenchTab {
+  kind: TabKind;
+  path: string;
+}
+
+export function tabKey(tab: WorkbenchTab): string {
+  return `${tab.kind}:${tab.path}`;
+}
+
+export function tabsEqual(a: WorkbenchTab | null, b: WorkbenchTab | null): boolean {
+  if (!a || !b) {
+    return a === b;
+  }
+  return a.kind === b.kind && a.path === b.path;
+}
+
 export interface TreeNode {
   id: string;
   name: string;

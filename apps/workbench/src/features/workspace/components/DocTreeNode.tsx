@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react";
+
 import { useDraggableNode, useDroppableFolder } from "@/features/workspace/hooks/useTreeDnD";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspaceStore";
 import type { TreeNode } from "@/shared/types/workspace";
@@ -7,7 +9,8 @@ interface DocTreeNodeProps {
   node: TreeNode;
   depth: number;
   onLoadChildren: (path: string) => Promise<void>;
-  onSelect: (node: TreeNode) => void;
+  onSelectFile: (node: TreeNode) => void;
+  onSelectFolder: (node: TreeNode) => void;
   onContextMenu: (node: TreeNode, x: number, y: number) => void;
 }
 
@@ -15,18 +18,38 @@ export function DocTreeNode({
   node,
   depth,
   onLoadChildren,
-  onSelect,
+  onSelectFile,
+  onSelectFolder,
   onContextMenu,
 }: DocTreeNodeProps) {
   const isExpanded = useWorkspaceStore((s) => s.isExpanded(node.path));
   const toggleExpanded = useWorkspaceStore((s) => s.toggleExpanded);
-  const selectedPath = useWorkspaceStore((s) => s.selectedPath);
-  const isSelected = selectedPath === node.path;
+  const expandPath = useWorkspaceStore((s) => s.expandPath);
+  const isTabActive = useWorkspaceStore((s) => s.isTabActive);
+  const isSelected = isTabActive({
+    kind: node.type === "folder" ? "folder" : "file",
+    path: node.path,
+  });
 
   const { attributes, listeners, setNodeRef, style, isDragging } = useDraggableNode(node);
   const { isOver, setNodeRef: setDropRef } = useDroppableFolder(node);
 
-  const activateFolder = async () => {
+  const ensureExpanded = async () => {
+    if (isExpanded) {
+      return;
+    }
+    if (node.hasChildren) {
+      await onLoadChildren(node.path);
+      return;
+    }
+    expandPath(node.path);
+  };
+
+  const handleChevronClick = async (event: MouseEvent) => {
+    event.stopPropagation();
+    if (node.type !== "folder") {
+      return;
+    }
     if (isExpanded) {
       toggleExpanded(node.path);
       return;
@@ -40,10 +63,11 @@ export function DocTreeNode({
 
   const handleRowClick = async () => {
     if (node.type === "folder") {
-      await activateFolder();
+      await ensureExpanded();
+      onSelectFolder(node);
       return;
     }
-    onSelect(node);
+    onSelectFile(node);
   };
 
   const setRefs = (element: HTMLDivElement | null) => {
@@ -79,12 +103,14 @@ export function DocTreeNode({
       >
         <span style={{ width: depth * 14 }} className="shrink-0" />
         {node.type === "folder" ? (
-          <span
-            className="flex h-4 w-4 shrink-0 items-center justify-center text-content-subtle"
-            aria-hidden
+          <button
+            type="button"
+            className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-content-subtle hover:bg-surface-overlay hover:text-content"
+            aria-label={isExpanded ? "Collapse folder" : "Expand folder"}
+            onClick={(event) => void handleChevronClick(event)}
           >
             <ChevronIcon open={isExpanded && node.hasChildren} />
-          </span>
+          </button>
         ) : (
           <span className="flex h-4 w-4 shrink-0 items-center justify-center text-content-subtle">
             <FileIcon />
@@ -103,7 +129,8 @@ export function DocTreeNode({
               node={child}
               depth={depth + 1}
               onLoadChildren={onLoadChildren}
-              onSelect={onSelect}
+              onSelectFile={onSelectFile}
+              onSelectFolder={onSelectFolder}
               onContextMenu={onContextMenu}
             />
           ))}

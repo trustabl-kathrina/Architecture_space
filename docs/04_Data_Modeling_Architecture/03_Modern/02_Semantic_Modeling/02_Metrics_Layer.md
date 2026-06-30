@@ -102,7 +102,7 @@ Each metric entry should capture at minimum:
 | --- | --- |
 | `metric_id` | Stable enterprise identifier (e.g., `FIN.REVENUE.NET`) |
 | `display_name` | Business-friendly label |
-| `definition` | Plain-language meaning; link to [Business Glossary](02_Business_Glossary.md) terms |
+| `definition` | Plain-language meaning; link to [Business Glossary](01_Business_Glossary.md) terms |
 | `formula` | Machine-readable expression or reference to semantic model measure |
 | `grain` | Dimensional context and time aggregation |
 | `owner` | Business owner and data steward |
@@ -120,14 +120,14 @@ Each metric entry should capture at minimum:
 ## Implementation guidance
 
 1. Start with a **small certified set** (10–20 metrics) covering the highest-conflict measures.
-2. Map each metric to glossary terms in [Business Glossary](02_Business_Glossary.md) before certifying.
+2. Map each metric to glossary terms in [Business Glossary](01_Business_Glossary.md) before certifying.
 3. Express calculation logic once—in the semantic layer or a metrics store—and prohibit duplicate definitions in downstream tools.
 4. Version metric changes; deprecate rather than silently alter certified definitions.
 5. Publish lineage from metric → semantic model → physical table for impact analysis.
 
 ## Related topics
 
-- [Business Glossary](02_Business_Glossary.md) — term definitions referenced by metrics
+- [Business Glossary](01_Business_Glossary.md) — term definitions referenced by metrics
 - [Semantic Layer](03_Semantic_Layer.md) — consumption abstraction over metrics and dimensions
 - [Semantic Data Products](09_Semantic_Data_Products.md) — packaging certified metrics for domains
 - [Semantic Governance](07_Semantic_Governance.md) — modeling-side ownership and change process

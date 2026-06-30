@@ -40,7 +40,7 @@ A **business glossary** is a curated, enterprise-managed dictionary of business 
 | **Business attribute** | Property of a concept | Customer Lifetime Value, Policy Effective Date |
 | **Business process** | Activity or workflow | Claims Adjudication, Order Fulfillment |
 | **Business rule** | Constraint or policy statement | "Active customer has transacted in last 90 days" |
-| **Metric term** | Named measure; links to [Metrics Layer](01_Metrics_Layer.md) | Net Revenue, Churn Rate |
+| **Metric term** | Named measure; links to [Metrics Layer](02_Metrics_Layer.md) | Net Revenue, Churn Rate |
 
 ### Term metadata model
 
@@ -138,7 +138,7 @@ Detailed enterprise workflow: [Business Definition Governance](../../../00_Archi
 
 ## Related topics
 
-- [Metrics Layer](01_Metrics_Layer.md) — measures that reference glossary terms
+- [Metrics Layer](02_Metrics_Layer.md) — measures that reference glossary terms
 - [Semantic Layer](03_Semantic_Layer.md) — exposes glossary-aligned labels to consumers
 - [Business Semantic Model](04_Business_Semantic_Model.md) — entity-relationship view of business concepts
 - [Semantic Standards](06_Semantic_Standards.md) — naming and definition conventions

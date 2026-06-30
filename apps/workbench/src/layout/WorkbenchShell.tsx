@@ -20,8 +20,11 @@ function ResizeHandle() {
 
 export function WorkbenchShell() {
   useWorkspaceBootstrap();
-  const selectedPath = useWorkspaceStore((s) => s.selectedPath);
-  const fileName = selectedPath?.split("/").pop();
+  const activeTab = useWorkspaceStore((s) => s.activeTab);
+  const tabTitle =
+    activeTab?.kind === "folder"
+      ? activeTab.path.split("/").pop() || "docs"
+      : activeTab?.path.split("/").pop();
 
   const { defaultLayout, onLayoutChanged } = useDefaultLayout({
     id: "kew-workbench-panels",
@@ -38,13 +41,15 @@ export function WorkbenchShell() {
           <span className="text-sm font-medium text-content">KEW</span>
         </div>
 
-        {fileName ? (
+        {tabTitle ? (
           <>
             <span className="text-content-subtle/40">/</span>
-            <p className="min-w-0 truncate text-sm text-content-muted">{fileName}</p>
+            <p className="min-w-0 truncate text-sm text-content-muted">
+              {activeTab?.kind === "folder" ? `${tabTitle} (section)` : tabTitle}
+            </p>
           </>
         ) : (
-          <p className="text-sm text-content-subtle">Select a document</p>
+          <p className="text-sm text-content-subtle">Select a document or folder</p>
         )}
       </header>
 

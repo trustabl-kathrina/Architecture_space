@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { ChangePlan } from "@/shared/types/chat";
+import type { ChangePlan, ChatMode } from "@/shared/types/chat";
 
 function defaultAcceptedHunks(plan: ChangePlan | null): Record<string, boolean> {
   if (!plan) {
@@ -12,9 +12,13 @@ function defaultAcceptedHunks(plan: ChangePlan | null): Record<string, boolean> 
 
 interface ChatState {
   conversationId: string | null;
+  conversationScope: string | null;
+  chatMode: ChatMode;
   pendingPlan: ChangePlan | null;
   acceptedHunkIds: Record<string, boolean>;
   setConversationId: (id: string | null) => void;
+  setConversationScope: (scope: string | null) => void;
+  setChatMode: (mode: ChatMode) => void;
   setPendingPlan: (plan: ChangePlan | null) => void;
   setHunkAccepted: (hunkId: string, accepted: boolean) => void;
   toggleHunk: (hunkId: string) => void;
@@ -26,9 +30,13 @@ interface ChatState {
 
 export const useChatStore = create<ChatState>((set, get) => ({
   conversationId: null,
+  conversationScope: null,
+  chatMode: "plan",
   pendingPlan: null,
   acceptedHunkIds: {},
   setConversationId: (conversationId) => set({ conversationId }),
+  setConversationScope: (conversationScope) => set({ conversationScope }),
+  setChatMode: (chatMode) => set({ chatMode }),
   setPendingPlan: (pendingPlan) =>
     set({
       pendingPlan,
@@ -69,5 +77,11 @@ export const useChatStore = create<ChatState>((set, get) => ({
     Object.entries(get().acceptedHunkIds)
       .filter(([, accepted]) => accepted)
       .map(([id]) => id),
-  reset: () => set({ conversationId: null, pendingPlan: null, acceptedHunkIds: {} }),
+  reset: () =>
+    set({
+      conversationId: null,
+      conversationScope: null,
+      pendingPlan: null,
+      acceptedHunkIds: {},
+    }),
 }));

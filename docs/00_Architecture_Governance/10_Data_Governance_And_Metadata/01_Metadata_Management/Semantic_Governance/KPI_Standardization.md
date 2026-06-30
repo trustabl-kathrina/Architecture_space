@@ -15,7 +15,7 @@ canonical: false
 
 This document defines **governance-side KPI standards**—enterprise rules for KPI registration, ownership, and certification. Analytics implementation patterns are documented separately.
 
-**Canonical metric definitions:** [Metrics Layer](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+**Canonical metric definitions:** [Metrics Layer](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md)
 
 **Analytics implementation:** [KPI Standardization (Analytics)](../../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/KPI_Standardization.md)
 
@@ -38,6 +38,6 @@ This document defines **governance-side KPI standards**—enterprise rules for K
 ## Related topics
 
 - [KPI Standardization (Analytics)](../../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/KPI_Standardization.md)
-- [Metrics Layer (modeling)](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+- [Metrics Layer (modeling)](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md)
 - [Business Definition Governance](Business_Definition_Governance.md)
 - [Semantic Governance Framework](Semantic_Governance_Framework.md)

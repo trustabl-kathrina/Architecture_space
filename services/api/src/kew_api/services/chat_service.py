@@ -7,13 +7,18 @@ import uuid
 from collections.abc import AsyncIterator, Callable
 from datetime import UTC, datetime
 
+from kew_api.ai.folder_plan_runner import (
+    format_folder_plan_message,
+    render_tree_text,
+    run_folder_plan_pipeline,
+)
 from kew_api.ai.agents import build_advisor_agent, build_orchestrator_agent
 from kew_api.ai.editor_runner import run_editor_plan
 from kew_api.ai.errors import AiRunnerError
 from kew_api.ai.prompts import load_prompt
 from kew_api.ai.runner import run_structured_agent
 from kew_api.config.settings import ApiSettings
-from kew_api.exceptions import NodeConflictError, NodeNotFoundError
+from kew_api.exceptions import InvalidChatOperationError, NodeConflictError, NodeNotFoundError
 from kew_api.schemas.chat import (
     AdvisorOutput,
     AgentName,
@@ -21,18 +26,22 @@ from kew_api.schemas.chat import (
     ChangePlan,
     ChatIntent,
     ChatMessageRecord,
+    ChatMode,
     ChatStreamEvent,
     ChatStreamEventType,
     Conversation,
+    FolderPlanResult,
     IntentResult,
     SendMessageResponse,
 )
 from kew_api.services.markdown_normalize import normalize_document_body, normalize_markdown_text
 from kew_api.services.chat_repository import ChangePlanRepository, ConversationRepository
+from kew_api.services.section_context_repository import SectionContextRepository
 from kew_api.services.chat_streaming import stream_text_chunks
 from kew_api.services.diff_service import build_change_hunks
 from kew_api.services.section_diff import apply_section_changes, build_section_changes
 from kew_api.services.document_service import DocumentService
+from kew_api.services.workspace_service import WorkspaceService
 from kew_api.services.execution_trail import (
     STEP_CLASSIFY_INTENT,
     STEP_READ_CONTEXT,
@@ -53,21 +62,141 @@ class ChatService:
         self,
         settings: ApiSettings,
         document_service: DocumentService,
+        workspace_service: WorkspaceService,
     ) -> None:
         self._settings = settings
         self._documents = document_service
+        self._workspace = workspace_service
         self._conversations = ConversationRepository(settings)
         self._plans = ChangePlanRepository(settings)
+        self._section_context = SectionContextRepository(settings)
 
-    def create_conversation(self, document_path: str | None = None) -> Conversation:
+    def create_conversation(
+        self,
+        document_path: str | None = None,
+        folder_path: str | None = None,
+    ) -> Conversation:
         conversation = Conversation(
             id=str(uuid.uuid4()),
-            document_path=document_path,
+            document_path=document_path or folder_path,
         )
         return self._conversations.save(conversation)
 
+    def resolve_conversation(
+        self,
+        *,
+        scope_kind: str,
+        scope_path: str,
+        chat_mode: ChatMode,
+    ) -> Conversation:
+        """Return existing conversation for tab scope or create and index a new one."""
+        existing = self._conversations.find_by_scope(scope_kind, scope_path)
+        if existing is not None:
+            if existing.chat_mode != chat_mode:
+                existing = existing.model_copy(update={"chat_mode": chat_mode})
+                return self._conversations.save(existing)
+            return existing
+
+        conversation = Conversation(
+            id=str(uuid.uuid4()),
+            scope_kind=scope_kind,  # type: ignore[arg-type]
+            scope_path=scope_path,
+            chat_mode=chat_mode,
+            document_path=scope_path if scope_kind == "file" else scope_path or None,
+        )
+        return self._conversations.save(conversation)
+
+    def clear_conversation(self, conversation_id: str) -> Conversation:
+        conversation = self.get_conversation(conversation_id)
+        cleared = conversation.model_copy(
+            update={"messages": [], "updated_at": datetime.now(UTC)},
+        )
+        return self._conversations.save(cleared)
+
+    def delete_conversation(self, conversation_id: str) -> None:
+        self._conversations.delete(conversation_id)
+
+    @staticmethod
+    def _message_index(conversation: Conversation, message_id: str) -> int:
+        for index, message in enumerate(conversation.messages):
+            if message.id == message_id:
+                return index
+        raise NodeNotFoundError(message_id)
+
+    def edit_user_message(
+        self,
+        conversation_id: str,
+        message_id: str,
+        content: str,
+    ) -> Conversation:
+        """Edit a user message and truncate all messages after it."""
+        conversation = self.get_conversation(conversation_id)
+        index = self._message_index(conversation, message_id)
+        message = conversation.messages[index]
+        if message.role != "user":
+            raise InvalidChatOperationError("Only user messages can be edited")
+
+        updated_message = message.model_copy(
+            update={"content": content.strip(), "timestamp": datetime.now(UTC)},
+        )
+        truncated = conversation.messages[: index + 1]
+        truncated[index] = updated_message
+        updated = conversation.model_copy(
+            update={"messages": truncated, "updated_at": datetime.now(UTC)},
+        )
+        return self._conversations.save(updated)
+
+    def delete_from_message(self, conversation_id: str, message_id: str) -> Conversation:
+        """Remove a message and all messages after it (branch reset)."""
+        conversation = self.get_conversation(conversation_id)
+        index = self._message_index(conversation, message_id)
+        truncated = conversation.messages[:index]
+        updated = conversation.model_copy(
+            update={"messages": truncated, "updated_at": datetime.now(UTC)},
+        )
+        return self._conversations.save(updated)
+
     def get_conversation(self, conversation_id: str) -> Conversation:
         return self._conversations.get(conversation_id)
+
+    async def iter_regenerate_events(
+        self,
+        conversation_id: str,
+        message_id: str,
+        *,
+        document_path: str | None = None,
+        folder_path: str | None = None,
+        folder_plan: str | None = None,
+        folder_contents: list[str] | None = None,
+        chat_mode: ChatMode | None = None,
+        selection: str | None = None,
+        open_paths: list[str] | None = None,
+        active_section: str | None = None,
+        document_outline: list[str] | None = None,
+        stream_text: bool = True,
+    ) -> AsyncIterator[ChatStreamEvent]:
+        conversation = self.get_conversation(conversation_id)
+        index = self._message_index(conversation, message_id)
+        message = conversation.messages[index]
+        if message.role != "user":
+            raise InvalidChatOperationError("Only user messages can be regenerated")
+
+        async for event in self.iter_message_events(
+            conversation_id,
+            content=message.content,
+            document_path=document_path,
+            folder_path=folder_path,
+            folder_plan=folder_plan,
+            folder_contents=folder_contents,
+            chat_mode=chat_mode,
+            selection=selection,
+            open_paths=open_paths,
+            active_section=active_section,
+            document_outline=document_outline,
+            stream_text=stream_text,
+            append_user_message=False,
+        ):
+            yield event
 
     async def send_message(
         self,
@@ -75,6 +204,10 @@ class ChatService:
         *,
         content: str,
         document_path: str | None = None,
+        folder_path: str | None = None,
+        folder_plan: str | None = None,
+        folder_contents: list[str] | None = None,
+        chat_mode: ChatMode | None = None,
         selection: str | None = None,
         open_paths: list[str] | None = None,
         active_section: str | None = None,
@@ -85,6 +218,10 @@ class ChatService:
             conversation_id,
             content=content,
             document_path=document_path,
+            folder_path=folder_path,
+            folder_plan=folder_plan,
+            folder_contents=folder_contents,
+            chat_mode=chat_mode,
             selection=selection,
             open_paths=open_paths,
             active_section=active_section,
@@ -105,23 +242,37 @@ class ChatService:
         *,
         content: str,
         document_path: str | None = None,
+        folder_path: str | None = None,
+        folder_plan: str | None = None,
+        folder_contents: list[str] | None = None,
+        chat_mode: ChatMode | None = None,
         selection: str | None = None,
         open_paths: list[str] | None = None,
         active_section: str | None = None,
         document_outline: list[str] | None = None,
         stream_text: bool = True,
+        append_user_message: bool = True,
     ) -> AsyncIterator[ChatStreamEvent]:
         conversation = self.get_conversation(conversation_id)
-        doc_path = document_path or conversation.document_path
+        doc_path = document_path or (conversation.document_path if folder_path is None else None)
+        if not doc_path and folder_path is not None and open_paths:
+            for path in open_paths:
+                if path.lower().endswith(".md"):
+                    doc_path = path
+                    break
         open_files = open_paths or ([doc_path] if doc_path else [])
         trail = ExecutionTrailBuilder()
 
-        user_message = ChatMessageRecord(
-            id=str(uuid.uuid4()),
-            role="user",
-            content=content,
-        )
-        conversation.messages.append(user_message)
+        user_message: ChatMessageRecord | None = None
+        active_chat_mode = chat_mode or conversation.chat_mode or ChatMode.AGENT
+        if append_user_message:
+            user_message = ChatMessageRecord(
+                id=str(uuid.uuid4()),
+                role="user",
+                content=content,
+                chat_mode=active_chat_mode,
+            )
+            conversation.messages.append(user_message)
 
         try:
             plan = trail.init_default_plan()
@@ -138,20 +289,33 @@ class ChatService:
                     detail="Loading open tabs and document context…",
                 ),
             )
-            context = self._build_context(
+            base_context = self._build_context(
                 doc_path,
+                folder_path=folder_path,
+                folder_plan=folder_plan,
+                folder_contents=folder_contents or [],
                 selection=selection,
                 open_paths=open_files,
                 active_section=active_section,
                 document_outline=document_outline or [],
             )
+            conversation_history = self._format_conversation_history(conversation)
+            intent_context = base_context
+            if conversation_history:
+                intent_context = f"{intent_context}\n\n## Conversation history\n{conversation_history}"
             workspace_detail = self._workspace_summary(
-                doc_path, open_files, active_section, document_outline
+                doc_path,
+                open_files,
+                active_section,
+                document_outline,
+                folder_path=folder_path,
             )
             yield ChatStreamEvent(
                 type=ChatStreamEventType.TRAIL_STEP,
                 step=trail.complete(STEP_READ_CONTEXT, detail=workspace_detail),
             )
+
+            folder_plan_scope = folder_path is not None and active_chat_mode == ChatMode.PLAN
 
             yield ChatStreamEvent(
                 type=ChatStreamEventType.STATUS,
@@ -159,9 +323,49 @@ class ChatService:
             )
             yield ChatStreamEvent(
                 type=ChatStreamEventType.TRAIL_STEP,
-                step=trail.start(STEP_CLASSIFY_INTENT, detail="Routing to advisor or editor…"),
+                step=trail.start(
+                    STEP_CLASSIFY_INTENT,
+                    detail="Coordinator routing to the right workflow…",
+                ),
             )
-            intent = await self._detect_intent(content, context)
+            intent = await self._detect_intent(
+                content,
+                intent_context,
+                folder_plan_scope=folder_plan_scope,
+            )
+            if active_chat_mode == ChatMode.PLAN and folder_path is None:
+                intent = intent.model_copy(
+                    update={
+                        "requires_change_plan": False,
+                        "requires_folder_plan": False,
+                        "rationale": f"{intent.rationale} (Plan mode: advisory only)",
+                    }
+                )
+            elif active_chat_mode == ChatMode.PLAN and folder_path is not None:
+                intent = intent.model_copy(update={"requires_change_plan": False})
+            elif active_chat_mode == ChatMode.AGENT:
+                intent = intent.model_copy(
+                    update={
+                        "requires_folder_plan": False,
+                        "rationale": (
+                            f"{intent.rationale} (Agent mode on folder scope)"
+                            if not doc_path and folder_path is not None
+                            else intent.rationale
+                        ),
+                    }
+                )
+
+            run_folder_plan = folder_plan_scope and intent.requires_folder_plan
+            cross_mode_context = self._build_cross_mode_context(
+                conversation,
+                chat_mode=active_chat_mode,
+                include_plan_details=run_folder_plan or active_chat_mode == ChatMode.AGENT,
+            )
+            context = base_context
+            if cross_mode_context:
+                context = f"{context}\n\n{cross_mode_context}"
+            if conversation_history:
+                context = f"{context}\n\n## Conversation history\n{conversation_history}"
             intent_detail = (
                 f"{intent.intent.value.replace('_', ' ')} "
                 f"({int(intent.confidence * 100)}% confidence). {intent.rationale}"
@@ -175,14 +379,20 @@ class ChatService:
                 ),
             )
             respond_step = trail.set_respond_step(
-                agent=AgentName.PLANNER if intent.requires_change_plan else AgentName.ADVISOR,
+                agent=AgentName.PLANNER
+                if intent.requires_change_plan or run_folder_plan
+                else AgentName.ADVISOR,
                 label=(
-                    "Plan and draft document changes"
+                    "Multi-agent folder planning"
+                    if run_folder_plan
+                    else "Plan and draft document changes"
                     if intent.requires_change_plan
                     else "Draft advisory answer"
                 ),
                 detail=(
-                    "Planner and editor will propose an approval-gated change plan"
+                    "Research → analyze → expert → synthesize"
+                    if run_folder_plan
+                    else "Planner and editor will propose an approval-gated change plan"
                     if intent.requires_change_plan
                     else "Advisor will answer using document context"
                 ),
@@ -196,9 +406,67 @@ class ChatService:
                 )
 
             change_plan: ChangePlan | None = None
+            folder_plan_result: FolderPlanResult | None = None
             assistant_content = ""
 
-            if intent.requires_change_plan:
+            if run_folder_plan:
+                queued_folder_events: list[ChatStreamEvent] = []
+
+                def queue_folder_event(event: ChatStreamEvent) -> None:
+                    queued_folder_events.append(event)
+
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.TRAIL_STEP,
+                    step=trail.start(STEP_RESPOND, detail="Starting folder planning pipeline…"),
+                )
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.STATUS,
+                    message="Planner: researching topic, analyzing structure, drafting plan…",
+                )
+
+                disk_context, current_tree_text = self._build_folder_disk_context(folder_path)
+                enriched_context = f"{context}\n\n{disk_context}"
+
+                folder_plan_result = await run_folder_plan_pipeline(
+                    user_message=content,
+                    folder_path=folder_path,
+                    workspace_context=enriched_context,
+                    current_tree_text=current_tree_text,
+                    existing_plan=folder_plan,
+                    conversation_history=conversation_history,
+                    settings=self._settings,
+                    trail=trail,
+                    queue_event=queue_folder_event,
+                )
+                for event in queued_folder_events:
+                    yield event
+
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.TRAIL_STEP,
+                    step=trail.complete(
+                        STEP_RESPOND,
+                        label="Folder plan complete",
+                        detail=folder_plan_result.summary,
+                        target_path=folder_path,
+                    ),
+                )
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.STATUS,
+                    message="Planner: finalizing structure recommendation…",
+                )
+                thought = (
+                    f"**{folder_plan_result.summary}**\n\n"
+                    f"{folder_plan_result.explanation[:1200]}"
+                )
+                async for chunk in stream_text_chunks(thought):
+                    yield ChatStreamEvent(
+                        type=ChatStreamEventType.AGENT_THOUGHT,
+                        agent=AgentName.PLANNER,
+                        content=chunk,
+                    )
+                assistant_content = format_folder_plan_message(folder_plan_result)
+
+            elif intent.requires_change_plan:
                 queued_events: list[ChatStreamEvent] = []
 
                 def queue_event(event: ChatStreamEvent) -> None:
@@ -269,7 +537,10 @@ class ChatService:
                     step=trail.start(STEP_RESPOND, detail="Generating response…"),
                 )
                 advisory, respond_detail, respond_label = await self._run_advisor(
-                    content, context, intent
+                    content,
+                    context,
+                    intent,
+                    folder_plan_scope=folder_plan_scope,
                 )
                 yield ChatStreamEvent(
                     type=ChatStreamEventType.TRAIL_STEP,
@@ -301,20 +572,34 @@ class ChatService:
                 id=str(uuid.uuid4()),
                 role="assistant",
                 content=assistant_content,
+                chat_mode=active_chat_mode,
                 intent=intent.intent,
                 change_plan_id=change_plan.edit_id if change_plan else None,
                 execution_trail=trail.steps,
             )
 
+            conversation = conversation.model_copy(
+                update={
+                    "messages": conversation.messages,
+                    "updated_at": datetime.now(UTC),
+                    "chat_mode": active_chat_mode,
+                    "document_path": doc_path or conversation.document_path,
+                }
+            )
             conversation.messages.append(assistant)
-            conversation.updated_at = datetime.now(UTC)
-            if doc_path:
-                conversation.document_path = doc_path
             self._conversations.save(conversation)
+            self._record_section_lineage(
+                conversation=conversation,
+                chat_mode=active_chat_mode,
+                assistant_content=assistant_content,
+                folder_plan_result=folder_plan_result,
+                change_plan=change_plan,
+            )
 
             response = SendMessageResponse(
                 message=assistant,
                 change_plan=change_plan,
+                folder_plan_result=folder_plan_result,
                 user_message=user_message,
             )
             yield ChatStreamEvent(type=ChatStreamEventType.DONE, response=response)
@@ -402,12 +687,20 @@ class ChatService:
         self,
         content: str,
         context: str,
+        *,
+        folder_plan_scope: bool = False,
     ) -> IntentResult:
         if self._settings.ai_mock_mode:
-            return classify_intent_heuristic(content)
+            return classify_intent_heuristic(content, folder_plan_scope=folder_plan_scope)
 
         agent = build_orchestrator_agent(self._settings)
-        prompt = f"Document context:\n{context}\n\nUser message:\n{content}"
+        scope_hint = ""
+        if folder_plan_scope:
+            scope_hint = (
+                "\n\nScope: Plan mode on an active folder tab. "
+                "Set requires_folder_plan=true only for explicit structure planning requests."
+            )
+        prompt = f"Document context:\n{context}{scope_hint}\n\nUser message:\n{content}"
         try:
             return await run_structured_agent(
                 agent,
@@ -419,7 +712,7 @@ class ChatService:
             )
         except AiRunnerError as exc:
             logger.warning("Orchestrator structured output failed, using heuristics: %s", exc)
-            result = classify_intent_heuristic(content)
+            result = classify_intent_heuristic(content, folder_plan_scope=folder_plan_scope)
             result = result.model_copy(
                 update={"rationale": f"{result.rationale} (LLM parse fallback: {exc})"}
             )
@@ -430,9 +723,25 @@ class ChatService:
         content: str,
         context: str,
         intent: IntentResult,
+        *,
+        folder_plan_scope: bool = False,
     ) -> tuple[AdvisorOutput, str, str]:
         if self._settings.ai_mock_mode:
             excerpt = self._mock_context_excerpt(context)
+            if folder_plan_scope and not intent.requires_folder_plan:
+                return (
+                    AdvisorOutput(
+                        response=(
+                            f"Hello! I'm your planning assistant for this section"
+                            f"{f' ({excerpt})' if excerpt else ''}. "
+                            "Ask me to **design or reorganize** the folder structure when you're ready — "
+                            "I'll put the full plan in **Planned structure** on the left. "
+                            "For now, what would you like to explore?"
+                        )
+                    ),
+                    "Conversational reply in Plan mode. No structure planning triggered.",
+                    "Drafted advisory answer",
+                )
             return (
                 AdvisorOutput(
                     response=(
@@ -449,10 +758,20 @@ class ChatService:
             )
 
         agent = build_advisor_agent(self._settings)
+        plan_mode_guidance = ""
+        if folder_plan_scope and not intent.requires_folder_plan:
+            plan_mode_guidance = (
+                "\n\nPlan mode guidance: respond conversationally. Do not propose folder structures, "
+                "target trees, or reorganization lists unless the user explicitly asked for structure "
+                "planning. Mention that structure plans appear in the section planner panel when relevant."
+            )
         prompt = (
             f"Document context:\n{context}\n\n"
             f"Classified intent: {intent.intent}\n\n"
-            f"User message:\n{content}"
+            f"User message:\n{content}\n\n"
+            "If shared section context includes a folder plan from Plan mode, "
+            "explain how to implement it when the user asks for execution."
+            f"{plan_mode_guidance}"
         )
         try:
             output = await run_structured_agent(
@@ -678,16 +997,208 @@ class ChatService:
         )
         return result.checksum, disk_path
 
+    def get_section_context(self, scope_kind: str, scope_path: str):
+        return self._section_context.get_or_create(scope_kind, scope_path)
+
+    def _record_section_lineage(
+        self,
+        *,
+        conversation: Conversation,
+        chat_mode: ChatMode | None,
+        assistant_content: str,
+        folder_plan_result: FolderPlanResult | None,
+        change_plan: ChangePlan | None,
+    ) -> None:
+        if conversation.scope_kind is None or conversation.scope_path is None:
+            return
+        mode = chat_mode or conversation.chat_mode or ChatMode.PLAN
+        scope_kind = conversation.scope_kind
+        scope_path = conversation.scope_path
+
+        if folder_plan_result is not None:
+            self._section_context.record_folder_plan(
+                scope_kind=scope_kind,
+                scope_path=scope_path,
+                chat_mode=mode,
+                result=folder_plan_result,
+            )
+            return
+
+        if change_plan is not None:
+            self._section_context.append_event(
+                scope_kind=scope_kind,
+                scope_path=scope_path,
+                chat_mode=mode,
+                event_type="change_plan",
+                agent=AgentName.EDITOR,
+                summary=change_plan.summary,
+                detail=change_plan.explanation[:2000],
+            )
+            return
+
+        summary_line = next(
+            (line.strip().lstrip("#").strip() for line in assistant_content.splitlines() if line.strip()),
+            "Assistant response",
+        )
+        self._section_context.append_event(
+            scope_kind=scope_kind,
+            scope_path=scope_path,
+            chat_mode=mode,
+            event_type="advisory",
+            agent=AgentName.ADVISOR if mode == ChatMode.AGENT else AgentName.PLANNER,
+            summary=summary_line[:500],
+            detail=assistant_content[:2000],
+        )
+
+    def _build_cross_mode_context(
+        self,
+        conversation: Conversation,
+        *,
+        chat_mode: ChatMode | None,
+        include_plan_details: bool = True,
+    ) -> str:
+        if conversation.scope_kind is None or conversation.scope_path is None:
+            return ""
+
+        scope_kind = conversation.scope_kind
+        scope_path = conversation.scope_path
+        current_mode = chat_mode or conversation.chat_mode or ChatMode.PLAN
+
+        parts: list[str] = [
+            "## Shared section context",
+            f"Current mode: **{current_mode.value}**. "
+            "Plan and Agent share this chat thread — prior messages from both modes are in conversation history.",
+            "Plan mode designs structure; Agent mode implements it on disk.",
+        ]
+
+        section = self._section_context.get(scope_kind, scope_path)
+        if section and include_plan_details:
+            if section.last_plan_summary:
+                parts.append(f"### Last folder plan\n{section.last_plan_summary}")
+            if section.last_target_structure:
+                parts.append(
+                    f"### Target structure\n```\n{section.last_target_structure.strip()}\n```"
+                )
+            if section.lineage:
+                parts.append("### Recent lineage")
+                for event in section.lineage[-8:]:
+                    parts.append(
+                        f"- [{event.chat_mode.value}] {event.event_type}: {event.summary}"
+                    )
+        elif section and section.last_plan_summary:
+            parts.append(
+                "### Note\nA folder plan exists for this section (see Planned structure panel). "
+                "Reference it only if the user asks about structure or implementation."
+            )
+
+        if current_mode == ChatMode.AGENT:
+            parts.append(
+                "### Agent mode directive\n"
+                "Implement recommendations from Plan mode: apply reorganization items, "
+                "create missing files/folders, and edit open documents when the user requests execution."
+            )
+
+        return "\n\n".join(parts)
+
+    def _build_folder_disk_context(self, folder_path: str) -> tuple[str, str]:
+        """Load recursive tree and sample file metadata for folder planning."""
+        try:
+            tree_response = self._workspace.list_tree(folder_path, depth=6)
+        except NodeNotFoundError:
+            return "Folder not found on disk.", "(missing)"
+
+        tree_lines = render_tree_text(tree_response.nodes)
+        current_tree_text = "\n".join(tree_lines) if tree_lines else "(empty)"
+
+        samples: list[str] = []
+        self._collect_file_samples(tree_response.nodes, samples, limit=24)
+        sample_block = "\n".join(samples) if samples else "(no markdown files)"
+        disk_context = (
+            f"On-disk tree (depth 6):\n{current_tree_text}\n\n"
+            f"Sample files in section (title, status, excerpt):\n{sample_block}"
+        )
+        return disk_context, current_tree_text
+
+    @staticmethod
+    def _format_conversation_history(
+        conversation: Conversation,
+        *,
+        max_turns: int = 12,
+    ) -> str:
+        """Format prior turns so follow-up recommendations are not lost."""
+        lines: list[str] = []
+        for message in conversation.messages[:-1]:
+            role = "User" if message.role == "user" else "Assistant"
+            mode_suffix = f" [{message.chat_mode.value}]" if message.chat_mode else ""
+            text = message.content.strip()
+            if not text:
+                continue
+            if len(text) > 2500:
+                text = f"{text[:2500]}…"
+            lines.append(f"{role}{mode_suffix}: {text}")
+        return "\n\n".join(lines[-max_turns:])
+
+    def _collect_file_samples(
+        self,
+        nodes: list,
+        samples: list[str],
+        *,
+        limit: int,
+    ) -> None:
+        if len(samples) >= limit:
+            return
+        for node in nodes:
+            if len(samples) >= limit:
+                return
+            if node.type == "file" and node.path.lower().endswith(".md"):
+                try:
+                    document = self._documents.get_document(node.path)
+                    _front, body = split_front_matter(document.content)
+                    title_line = next(
+                        (line.strip() for line in body.splitlines() if line.strip().startswith("#")),
+                        node.name,
+                    )
+                    status = "unknown"
+                    for line in document.content.splitlines()[:12]:
+                        if line.strip().startswith("status:"):
+                            status = line.split(":", 1)[1].strip()
+                            break
+                    excerpt = " ".join(
+                        line.strip()
+                        for line in body.splitlines()
+                        if line.strip() and not line.strip().startswith("#")
+                    )[:240]
+                    samples.append(
+                        f"- {node.path} | {title_line} | status={status}\n  excerpt: {excerpt}"
+                    )
+                except NodeNotFoundError:
+                    samples.append(f"- {node.path} | (unreadable)")
+            if node.children:
+                self._collect_file_samples(node.children, samples, limit=limit)
+
     def _build_context(
         self,
         document_path: str | None,
         *,
+        folder_path: str | None = None,
+        folder_plan: str | None = None,
+        folder_contents: list[str],
         selection: str | None,
         open_paths: list[str],
         active_section: str | None,
         document_outline: list[str],
     ) -> str:
         parts: list[str] = []
+
+        if folder_path is not None:
+            label = folder_path or "(docs root)"
+            parts.append(f"Active folder / section: {label}")
+            if folder_contents:
+                parts.append("Folder contents on disk:")
+                for entry in folder_contents[:80]:
+                    parts.append(f"- {entry}")
+            if folder_plan and folder_plan.strip():
+                parts.append(f"User's planned folder structure:\n{folder_plan.strip()[:8000]}")
 
         if open_paths:
             parts.append("Open editor tabs (only these files may be edited):")
@@ -706,8 +1217,9 @@ class ChatService:
                 parts.append(f"- {heading}")
 
         if not document_path:
-            parts.append("No document is currently active in the editor.")
-            return "\n".join(parts)
+            if folder_path is None:
+                parts.append("No document is currently active in the editor.")
+            return "\n\n".join(parts)
 
         try:
             document = self._documents.get_document(document_path)
@@ -729,13 +1241,17 @@ class ChatService:
         open_paths: list[str],
         active_section: str | None,
         document_outline: list[str] | None,
+        folder_path: str | None = None,
     ) -> str:
         open_count = len(open_paths)
         section = active_section or "not specified"
         active = doc_path or "none"
+        folder = folder_path if folder_path is not None else "none"
+        if folder == "":
+            folder = "(docs root)"
         outline_count = len(document_outline or [])
         return (
-            f"Active file: {active}. Open tabs: {open_count}. "
+            f"Active file: {active}. Active folder: {folder}. Open tabs: {open_count}. "
             f"Section: {section}. Outline headings: {outline_count}."
         )
 

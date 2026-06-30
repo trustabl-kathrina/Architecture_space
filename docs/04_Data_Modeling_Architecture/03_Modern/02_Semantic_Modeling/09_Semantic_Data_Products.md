@@ -133,8 +133,8 @@ Governance workflow: [Semantic Governance Framework](../../../00_Architecture_Go
 
 ## Related topics
 
-- [Business Glossary](02_Business_Glossary.md) — terms included in semantic products
-- [Metrics Layer](01_Metrics_Layer.md) — certified measures in the product
+- [Business Glossary](01_Business_Glossary.md) — terms included in semantic products
+- [Metrics Layer](02_Metrics_Layer.md) — certified measures in the product
 - [Semantic Layer](03_Semantic_Layer.md) — logical model exposed by the product
 - [Semantic Interoperability](08_Semantic_Interoperability.md) — cross-domain alignment
 - [Data Product Architecture](../../../06_Data_Product_Architecture/README.md) — general data product patterns

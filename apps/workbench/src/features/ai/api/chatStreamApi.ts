@@ -1,7 +1,7 @@
 import { mapExecutionStep, mapSendMessageResponse } from "@/features/ai/api/chatMappers";
 import { env } from "@/shared/config/env";
 import { ApiError } from "@/shared/api/client";
-import type { ChatStreamEvent, SendMessageRequest } from "@/shared/types/chat";
+import type { ChatStreamEvent, RegenerateMessageRequest, SendMessageRequest } from "@/shared/types/chat";
 
 function mapStreamEvent(raw: Record<string, unknown>): ChatStreamEvent {
   const type = raw.type as ChatStreamEvent["type"];
@@ -20,27 +20,26 @@ function mapStreamEvent(raw: Record<string, unknown>): ChatStreamEvent {
   };
 }
 
-export async function streamChatMessage(
-  conversationId: string,
-  request: SendMessageRequest,
+function buildMessagePayload(
+  request: SendMessageRequest | RegenerateMessageRequest,
+): Record<string, unknown> {
+  return {
+    document_path: request.documentPath ?? null,
+    folder_path: request.folderPath ?? null,
+    folder_plan: request.folderPlan ?? null,
+    folder_contents: request.folderContents ?? [],
+    chat_mode: request.chatMode ?? null,
+    selection: "selection" in request ? (request.selection ?? null) : null,
+    open_paths: request.openPaths ?? [],
+    active_section: request.activeSection ?? null,
+    document_outline: request.documentOutline ?? [],
+  };
+}
+
+async function consumeSseStream(
+  response: Response,
   onEvent: (event: ChatStreamEvent) => void,
 ): Promise<void> {
-  const response = await fetch(
-    `${env.apiBaseUrl}/chat/conversations/${conversationId}/messages/stream`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
-      body: JSON.stringify({
-        content: request.content,
-        document_path: request.documentPath ?? null,
-        selection: request.selection ?? null,
-        open_paths: request.openPaths ?? [],
-        active_section: request.activeSection ?? null,
-        document_outline: request.documentOutline ?? [],
-      }),
-    },
-  );
-
   if (!response.ok) {
     const text = await response.text();
     try {
@@ -112,3 +111,42 @@ export async function streamChatMessage(
     throw new Error("The assistant stopped responding before finishing. Please try again.");
   }
 }
+
+export async function streamChatMessage(
+  conversationId: string,
+  request: SendMessageRequest,
+  onEvent: (event: ChatStreamEvent) => void,
+): Promise<void> {
+  const response = await fetch(
+    `${env.apiBaseUrl}/chat/conversations/${conversationId}/messages/stream`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
+      body: JSON.stringify({
+        content: request.content,
+        ...buildMessagePayload(request),
+      }),
+    },
+  );
+
+  await consumeSseStream(response, onEvent);
+}
+
+export async function streamRegenerateMessage(
+  conversationId: string,
+  messageId: string,
+  request: RegenerateMessageRequest,
+  onEvent: (event: ChatStreamEvent) => void,
+): Promise<void> {
+  const response = await fetch(
+    `${env.apiBaseUrl}/chat/conversations/${conversationId}/messages/${messageId}/regenerate/stream`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
+      body: JSON.stringify(buildMessagePayload(request)),
+    },
+  );
+
+  await consumeSseStream(response, onEvent);
+}
+

@@ -2,14 +2,24 @@ import { useEffect, useRef } from "react";
 
 import { AssistantMessage } from "@/features/ai/components/AssistantMessage";
 import { ExecutionTrailPanel } from "@/features/ai/components/ExecutionTrailPanel";
+import { UserMessageBubble } from "@/features/ai/components/UserMessageBubble";
 import type { ChatMessage, StreamingTurn } from "@/shared/types/chat";
 
 interface ChatMessageListProps {
   messages: ChatMessage[];
   streamingTurn?: StreamingTurn | null;
+  isSending?: boolean;
+  onEditMessage?: (messageId: string, content: string) => void;
+  onDeleteMessage?: (messageId: string) => void;
 }
 
-export function ChatMessageList({ messages, streamingTurn }: ChatMessageListProps) {
+export function ChatMessageList({
+  messages,
+  streamingTurn,
+  isSending = false,
+  onEditMessage,
+  onDeleteMessage,
+}: ChatMessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
   const isStreaming = Boolean(streamingTurn);
 
@@ -31,9 +41,9 @@ export function ChatMessageList({ messages, streamingTurn }: ChatMessageListProp
           </svg>
         </div>
         <p className="mb-1 text-sm font-medium text-content">How can I help?</p>
-        <p className="max-w-[240px] text-xs leading-relaxed text-content-subtle">
-          Ask about this document, request improvements, or draft new sections. Edits apply only to
-          open tabs and require your approval.
+        <p className="max-w-[260px] text-xs leading-relaxed text-content-subtle">
+          Plan and Agent mode share one chat per file or folder. Edit or delete a message to reset
+          context from that point.
         </p>
       </div>
     );
@@ -46,9 +56,12 @@ export function ChatMessageList({ messages, streamingTurn }: ChatMessageListProp
           if (message.role === "user") {
             return (
               <div key={message.id} className="flex justify-end">
-                <div className="max-w-[85%] rounded-2xl bg-surface-overlay px-4 py-2.5 text-sm leading-relaxed text-content">
-                  <p className="whitespace-pre-wrap">{message.content}</p>
-                </div>
+                <UserMessageBubble
+                  message={message}
+                  disabled={isSending || !onEditMessage || !onDeleteMessage}
+                  onEdit={onEditMessage ?? (() => undefined)}
+                  onDelete={onDeleteMessage ?? (() => undefined)}
+                />
               </div>
             );
           }

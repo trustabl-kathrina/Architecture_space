@@ -148,9 +148,9 @@ foreach ($pillar in $tree.Keys | Sort-Object) {
 Write-Host "Relocating legacy fundamentals..."
 $oldFund = Join-Path $Root "05.01_Fundamentals"
 $moves = @(
-    @{ S = "Business_Glossary_Model.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.02_Business_Glossary.md" }
+    @{ S = "Business_Glossary_Model.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.01_Business_Glossary.md" }
     @{ S = "Business_Semantic_Model.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.04_Business_Semantic_Model.md" }
-    @{ S = "Metrics_Layer.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.01_Metrics_Layer.md" }
+    @{ S = "Metrics_Layer.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.02_Metrics_Layer.md" }
     @{ S = "Semantic_Layer.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.03_Semantic_Layer.md" }
     @{ S = "Semantic_Model.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.05_Semantic_Model.md" }
     @{ S = "Semantic_Standards.md"; D = "05.03_Modern\05.03.02_Semantic_Modeling\05.03.02.06_Semantic_Standards.md" }

@@ -3,39 +3,38 @@ import { useEffect, useRef, useState } from "react";
 
 import { workspaceKeys } from "@/features/workspace/api/workspaceApi";
 import { workspacePathExists } from "@/features/workspace/lib/pathValidation";
-import {
-  normalizeWorkspacePath,
-  normalizeWorkspacePaths,
-} from "@/features/workspace/lib/pathMigration";
+import { normalizeWorkspacePaths } from "@/features/workspace/lib/pathMigration";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspaceStore";
+import { tabKey, type WorkbenchTab } from "@/shared/types/workspace";
 
-async function reconcilePersistedPaths(): Promise<void> {
+async function reconcilePersistedTabs(): Promise<void> {
   const state = useWorkspaceStore.getState();
 
-  const selectedPath = state.selectedPath ? normalizeWorkspacePath(state.selectedPath) : null;
-  const openPaths = normalizeWorkspacePaths(state.openPaths);
+  const activeTab = state.activeTab;
+  const openTabs = state.openTabs;
   const expandedPaths = normalizeWorkspacePaths(state.expandedPaths);
 
-  const validOpen: string[] = [];
-  for (const path of openPaths) {
-    if (await workspacePathExists(path)) {
-      validOpen.push(path);
+  const validOpen: WorkbenchTab[] = [];
+  for (const tab of openTabs) {
+    if (await workspacePathExists(tab.path)) {
+      validOpen.push(tab);
     }
   }
 
-  let validSelected = selectedPath;
-  if (selectedPath) {
-    const selectedExists = await workspacePathExists(selectedPath);
-    if (selectedExists) {
-      if (!validOpen.includes(selectedPath)) {
-        validOpen.unshift(selectedPath);
+  let validActive = activeTab;
+  if (activeTab) {
+    const activeExists = await workspacePathExists(activeTab.path);
+    if (activeExists) {
+      const key = tabKey(activeTab);
+      if (!validOpen.some((tab) => tabKey(tab) === key)) {
+        validOpen.unshift(activeTab);
       }
-      validSelected = selectedPath;
+      validActive = activeTab;
     } else {
-      validSelected = validOpen[0] ?? null;
+      validActive = validOpen[0] ?? null;
     }
   } else {
-    validSelected = validOpen[0] ?? null;
+    validActive = validOpen[0] ?? null;
   }
 
   const validExpanded: string[] = [];
@@ -46,8 +45,8 @@ async function reconcilePersistedPaths(): Promise<void> {
   }
 
   useWorkspaceStore.setState({
-    selectedPath: validSelected,
-    openPaths: validOpen,
+    activeTab: validActive,
+    openTabs: validOpen,
     expandedPaths: validExpanded,
   });
 }
@@ -63,7 +62,7 @@ export function useWorkspaceBootstrap(): boolean {
     }
     started.current = true;
 
-    void reconcilePersistedPaths()
+    void reconcilePersistedTabs()
       .then(() => {
         void queryClient.invalidateQueries({ queryKey: workspaceKeys.all });
       })

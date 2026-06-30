@@ -45,7 +45,7 @@ The semantic layer pattern is implemented differently across BI and metrics plat
 
 - Define **views** mapped to warehouse tables; **explores** join views.
 - Certified measures in LookML; prohibit duplicate calculations in dashboards.
-- Use `description` fields linked to [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) term IDs.
+- Use `description` fields linked to [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Business_Glossary.md) term IDs.
 
 ### Power BI
 
@@ -55,7 +55,7 @@ The semantic layer pattern is implemented differently across BI and metrics plat
 
 ### dbt + MetricFlow
 
-- Physical layer in dbt models; metrics in `metrics:` YAML referencing [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md) IDs.
+- Physical layer in dbt models; metrics in `metrics:` YAML referencing [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md) IDs.
 - Expose via MetricFlow API for headless and multi-BI consumption.
 
 ## Anti-patterns

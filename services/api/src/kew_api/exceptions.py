@@ -44,3 +44,8 @@ class InvalidNameError(KewApiError):
 class AiServiceError(KewApiError):
     def __init__(self, message: str) -> None:
         super().__init__(message, code="ai_unavailable")
+
+
+class InvalidChatOperationError(KewApiError):
+    def __init__(self, message: str) -> None:
+        super().__init__(message, code="invalid_chat_operation")

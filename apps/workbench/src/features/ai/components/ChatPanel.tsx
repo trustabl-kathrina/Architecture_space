@@ -1,11 +1,15 @@
 import { ChangePlanCard } from "@/features/ai/components/ChangePlanCard";
 import { ChatComposer } from "@/features/ai/components/ChatComposer";
 import { ChatMessageList } from "@/features/ai/components/ChatMessageList";
+import { ChatModeToggle } from "@/features/ai/components/ChatModeToggle";
 import { useChat } from "@/features/ai/hooks/useChat";
+import { useChatStore } from "@/features/ai/stores/chatStore";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspaceStore";
 
 export function ChatPanel() {
-  const selectedPath = useWorkspaceStore((s) => s.selectedPath);
+  const activeTab = useWorkspaceStore((s) => s.activeTab);
+  const chatMode = useChatStore((s) => s.chatMode);
+  const setChatMode = useChatStore((s) => s.setChatMode);
   const {
     enabled,
     conversationId,
@@ -17,8 +21,11 @@ export function ChatPanel() {
     initError,
     sendError,
     sendMessage,
+    editMessageAndRegenerate,
+    deleteMessageAndAfter,
+    clearChat,
     changeReview,
-  } = useChat(selectedPath);
+  } = useChat(activeTab);
 
   const handleSend = (content: string) => {
     void sendMessage(content);
@@ -26,8 +33,26 @@ export function ChatPanel() {
 
   return (
     <aside className="flex h-full w-full flex-col bg-surface-raised">
-      <header className="panel-header">
+      <header className="panel-header justify-between gap-3">
         <h2 className="panel-title">Assistant</h2>
+        <div className="flex items-center gap-2">
+          {messages.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => void clearChat()}
+              disabled={!conversationId || isSending}
+              className="rounded-lg px-2 py-1 text-[11px] text-content-subtle hover:bg-surface-overlay hover:text-content disabled:opacity-40"
+              title="Clear chat history for this section"
+            >
+              Clear chat
+            </button>
+          ) : null}
+          <ChatModeToggle
+            mode={chatMode}
+            onChange={setChatMode}
+            disabled={!enabled || isSending}
+          />
+        </div>
       </header>
 
       <div className="relative flex min-h-0 flex-1 flex-col">
@@ -36,7 +61,13 @@ export function ChatPanel() {
             Starting conversation…
           </div>
         ) : (
-          <ChatMessageList messages={messages} streamingTurn={streamingTurn} />
+          <ChatMessageList
+            messages={messages}
+            streamingTurn={streamingTurn}
+            isSending={isSending}
+            onEditMessage={(messageId, content) => void editMessageAndRegenerate(messageId, content)}
+            onDeleteMessage={(messageId) => void deleteMessageAndAfter(messageId)}
+          />
         )}
 
         {pendingPlan && changeReview.isActive ? (
@@ -72,6 +103,8 @@ export function ChatPanel() {
         <ChatComposer
           disabled={!enabled || !conversationId || isLoadingConversation}
           isSending={isSending}
+          chatMode={chatMode}
+          activeTabKind={activeTab?.kind ?? null}
           onSend={handleSend}
         />
       </div>

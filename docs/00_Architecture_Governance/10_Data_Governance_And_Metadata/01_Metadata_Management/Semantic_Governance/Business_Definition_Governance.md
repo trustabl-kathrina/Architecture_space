@@ -15,7 +15,7 @@ canonical: true
 
 Business definitions fail when IT writes them without business authority, or when every department maintains a local dictionary. **Business definition governance** establishes who may propose, approve, and change glossary terms—and how conflicts are resolved.
 
-**Canonical glossary structure:** [Business Glossary](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md)
+**Canonical glossary structure:** [Business Glossary](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Business_Glossary.md)
 
 **Analytics surfacing:** [Business Definitions](../../../../06_Analytics_Architecture/01_BI_Architecture/Semantic_Layer_Architecture/Business_Definitions.md)
 
@@ -87,7 +87,7 @@ Every term intake must include:
 
 ## Related topics
 
-- [Business Glossary](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) — canonical glossary model
+- [Business Glossary](../../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Business_Glossary.md) — canonical glossary model
 - [Semantic Governance Framework](Semantic_Governance_Framework.md) — full semantic lifecycle
 - [Enterprise Semantics](Enterprise_Semantics.md) — operating model
 - [KPI Standardization](KPI_Standardization.md) — governance-side KPI standards

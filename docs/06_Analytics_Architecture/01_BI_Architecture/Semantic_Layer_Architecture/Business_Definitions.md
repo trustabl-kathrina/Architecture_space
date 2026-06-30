@@ -15,7 +15,7 @@ canonical: false
 
 BI users encounter business terms and metric labels inside dashboards, semantic models, and self-service tools. **Business definitions in analytics** describes how approved glossary content is **surfaced at the point of consumption**—not where definitions are authored.
 
-**Canonical source for term definitions:** [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md)
+**Canonical source for term definitions:** [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Business_Glossary.md)
 
 ## Definition
 
@@ -63,7 +63,7 @@ Approval and stewardship workflow: [Business Definition Governance](../../../00_
 
 ## Related topics
 
-- [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) — canonical term definitions
-- [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md) — measure definitions
+- [Business Glossary](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Business_Glossary.md) — canonical term definitions
+- [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md) — measure definitions
 - [Semantic Layer Platforms](Semantic_Layer_Platforms.md) — tool-specific metadata fields
 - [KPI Standardization](KPI_Standardization.md) — KPI catalog in analytics

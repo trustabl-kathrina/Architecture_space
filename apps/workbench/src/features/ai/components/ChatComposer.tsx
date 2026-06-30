@@ -1,14 +1,38 @@
 import { useState, type CSSProperties, type FormEvent, type KeyboardEvent } from "react";
 
+import type { ChatMode } from "@/shared/types/chat";
+import type { TabKind } from "@/shared/types/workspace";
 import { cn } from "@/shared/utils/cn";
 
 interface ChatComposerProps {
   disabled: boolean;
   isSending: boolean;
+  chatMode: ChatMode;
+  activeTabKind: TabKind | null;
   onSend: (content: string) => void;
 }
 
-export function ChatComposer({ disabled, isSending, onSend }: ChatComposerProps) {
+function placeholderFor(chatMode: ChatMode, activeTabKind: TabKind | null, disabled: boolean): string {
+  if (disabled) {
+    return "Open a document or folder to chat";
+  }
+  if (activeTabKind === "folder") {
+    return chatMode === "plan"
+      ? "Plan folder structure, topics, and gaps…"
+      : "Implement the plan — reorganize, scaffold files, or edit open docs…";
+  }
+  return chatMode === "plan"
+    ? "Plan structure, outline, or strategy…"
+    : "Message assistant — agent can propose edits…";
+}
+
+export function ChatComposer({
+  disabled,
+  isSending,
+  chatMode,
+  activeTabKind,
+  onSend,
+}: ChatComposerProps) {
   const [draft, setDraft] = useState("");
 
   const submit = () => {
@@ -47,9 +71,7 @@ export function ChatComposer({ disabled, isSending, onSend }: ChatComposerProps)
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={
-            disabled ? "Open a Markdown document to chat" : "Message assistant…"
-          }
+          placeholder={placeholderFor(chatMode, activeTabKind, disabled)}
           disabled={disabled || isSending}
           rows={1}
           className="max-h-32 min-h-[24px] flex-1 resize-none bg-transparent py-1.5 text-sm leading-relaxed text-content placeholder:text-content-subtle focus:outline-none disabled:cursor-not-allowed"
@@ -82,7 +104,7 @@ export function ChatComposer({ disabled, isSending, onSend }: ChatComposerProps)
         </button>
       </div>
       <p className="mt-2 text-center text-[11px] text-content-subtle">
-        Enter to send · Shift+Enter for new line
+        {chatMode === "plan" ? "Plan mode — structure & lineage" : "Agent mode — implement with approval"} · Enter to send
       </p>
     </form>
   );

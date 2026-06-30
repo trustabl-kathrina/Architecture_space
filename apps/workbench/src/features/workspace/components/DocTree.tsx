@@ -25,7 +25,8 @@ export function DocTree() {
   } = useDocTree();
 
   const pathsReconciled = useWorkspaceStore((s) => s.pathsReconciled);
-  const setSelectedPath = useWorkspaceStore((s) => s.openFile);
+  const openFile = useWorkspaceStore((s) => s.openFile);
+  const openFolder = useWorkspaceStore((s) => s.openFolder);
   const [menu, setMenu] = useState<{ node: TreeNode; x: number; y: number } | null>(null);
 
   const handleMove = async (path: string, newParentPath: string) => {
@@ -90,11 +91,13 @@ export function DocTree() {
                 node={node}
                 depth={0}
                 onLoadChildren={loadChildren}
-                onSelect={(selected) => {
-                  if (selected.type === "file") {
-                    void refreshTree();
-                    setSelectedPath(selected.path);
-                  }
+                onSelectFile={(selected) => {
+                  void refreshTree();
+                  openFile(selected.path);
+                }}
+                onSelectFolder={(selected) => {
+                  void refreshTree();
+                  openFolder(selected.path);
                 }}
                 onContextMenu={(node, x, y) => setMenu({ node, x, y })}
               />

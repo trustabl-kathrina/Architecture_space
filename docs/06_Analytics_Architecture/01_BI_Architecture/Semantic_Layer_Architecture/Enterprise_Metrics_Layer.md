@@ -15,7 +15,7 @@ canonical: false
 
 An enterprise metrics layer is the **analytics rollout** of governed business measures—making certified metrics available through semantic models, APIs, and dashboards. This document covers implementation and adoption; metric definitions are maintained in the modeling pillar.
 
-**Canonical source for metric definitions:** [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+**Canonical source for metric definitions:** [Metrics Layer](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md)
 
 ## Definition
 
@@ -79,7 +79,7 @@ See [Semantic Layer Platforms](Semantic_Layer_Platforms.md) for detailed pattern
 
 ## Related topics
 
-- [Metrics Layer (modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md) — canonical definitions
+- [Metrics Layer (modeling)](../../../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md) — canonical definitions
 - [Semantic Layer Strategy](Semantic_Layer_Strategy.md) — overall rollout strategy
 - [KPI Standardization](KPI_Standardization.md) — KPI catalog practices
 - [Universal Metrics Framework](Universal_Metrics_Framework.md) — cross-domain metric framework

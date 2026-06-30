@@ -338,6 +338,7 @@ class ApiSettings(BaseSettings):
             self.resolved_output_dir,
             self.resolved_conversations_dir,
             self.resolved_edits_dir,
+            self.resolved_data_root / "section_context",
         ):
             path.mkdir(parents=True, exist_ok=True)
         log_target = self.resolved_log_file

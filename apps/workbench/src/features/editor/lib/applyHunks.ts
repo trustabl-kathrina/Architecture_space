@@ -70,10 +70,6 @@ function parseSections(body: string): ParsedSection[] {
   return sections;
 }
 
-function sectionText(section: ParsedSection): string {
-  return section.lines.join("\n").trim();
-}
-
 function orderedPaths(original: string, proposed: string): string[] {
   const seen = new Set<string>();
   const ordered: string[] = [];

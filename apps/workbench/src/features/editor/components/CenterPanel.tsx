@@ -9,6 +9,7 @@ import { TiptapEditor } from "@/features/editor/components/TiptapEditor";
 import { ViewModeToggle } from "@/features/editor/components/ViewModeToggle";
 import { useDocument } from "@/features/editor/hooks/useDocument";
 import { useEditorStore } from "@/features/editor/stores/editorStore";
+import { FolderPlanningPanel } from "@/features/workspace/components/FolderPlanningPanel";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspaceStore";
 import { cn } from "@/shared/utils/cn";
 
@@ -20,12 +21,10 @@ function EmptyState({ children }: { children: ReactNode }) {
   );
 }
 
-export function CenterPanel() {
-  const selectedPath = useWorkspaceStore((s) => s.selectedPath);
+function FileEditorPanel({ path }: { path: string }) {
   const viewMode = useEditorStore((s) => s.viewMode);
-  const changeReview = useChangeReview(selectedPath);
+  const changeReview = useChangeReview(path);
   const {
-    isMarkdownFile,
     isLoading,
     isError,
     error,
@@ -37,15 +36,7 @@ export function CenterPanel() {
     onContentChange,
     saveNow,
     reloadFromDisk,
-  } = useDocument(selectedPath);
-
-  if (!selectedPath) {
-    return <EmptyState>Select a document from the sidebar to begin editing.</EmptyState>;
-  }
-
-  if (!isMarkdownFile) {
-    return <EmptyState>Only Markdown (.md) files can be edited in this workbench.</EmptyState>;
-  }
+  } = useDocument(path);
 
   if (isLoading) {
     return <EmptyState>Loading from disk…</EmptyState>;
@@ -63,24 +54,21 @@ export function CenterPanel() {
     const baseBody = changeReview.pendingPlan.baseBody || body;
     const previewBody = changeReview.getPreviewBody(baseBody);
     return (
-      <div className="flex h-full min-w-0 flex-col">
-        <EditorTabBar />
-        <DocumentChangeReview
-          plan={changeReview.pendingPlan}
-          originalBody={baseBody}
-          previewBody={previewBody}
-          acceptedChangeIds={changeReview.acceptedChangeIds}
-          acceptedCount={changeReview.acceptedCount}
-          isCommitting={changeReview.isCommitting}
-          isRestoring={changeReview.isRestoring}
-          error={changeReview.commitError instanceof Error ? changeReview.commitError : null}
-          onToggleAccept={changeReview.toggleAccept}
-          onAcceptAll={changeReview.acceptAll}
-          onRejectAll={changeReview.rejectAll}
-          onCommit={() => void changeReview.commitToDisk()}
-          onRestore={() => void changeReview.restoreWorkingTree()}
-        />
-      </div>
+      <DocumentChangeReview
+        plan={changeReview.pendingPlan}
+        originalBody={baseBody}
+        previewBody={previewBody}
+        acceptedChangeIds={changeReview.acceptedChangeIds}
+        acceptedCount={changeReview.acceptedCount}
+        isCommitting={changeReview.isCommitting}
+        isRestoring={changeReview.isRestoring}
+        error={changeReview.commitError instanceof Error ? changeReview.commitError : null}
+        onToggleAccept={changeReview.toggleAccept}
+        onAcceptAll={changeReview.acceptAll}
+        onRejectAll={changeReview.rejectAll}
+        onCommit={() => void changeReview.commitToDisk()}
+        onRestore={() => void changeReview.restoreWorkingTree()}
+      />
     );
   }
 
@@ -88,8 +76,7 @@ export function CenterPanel() {
   const showPreview = viewMode === "preview" || viewMode === "split";
 
   return (
-    <div className="flex h-full min-w-0 flex-col">
-      <EditorTabBar />
+    <>
       <header className="flex h-11 shrink-0 items-center justify-between gap-4 border-b border-border/50 px-4">
         <ViewModeToggle />
         <div className="flex flex-wrap items-center gap-2">
@@ -138,7 +125,7 @@ export function CenterPanel() {
             aria-label="Markdown editor"
           >
             <TiptapEditor
-              key={`${selectedPath}:${savedChecksum ?? "loading"}`}
+              key={`${path}:${savedChecksum ?? "loading"}`}
               content={body}
               onChange={onContentChange}
             />
@@ -161,6 +148,41 @@ export function CenterPanel() {
             </div>
           </section>
         ) : null}
+      </div>
+    </>
+  );
+}
+
+export function CenterPanel() {
+  const activeTab = useWorkspaceStore((s) => s.activeTab);
+
+  if (!activeTab) {
+    return <EmptyState>Select a document or folder from the sidebar to begin.</EmptyState>;
+  }
+
+  if (activeTab.kind === "folder") {
+    return (
+      <div className="flex h-full min-w-0 flex-col">
+        <EditorTabBar />
+        <FolderPlanningPanel folderPath={activeTab.path} />
+      </div>
+    );
+  }
+
+  if (!activeTab.path.toLowerCase().endsWith(".md")) {
+    return (
+      <div className="flex h-full min-w-0 flex-col">
+        <EditorTabBar />
+        <EmptyState>Only Markdown (.md) files can be edited in this workbench.</EmptyState>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-full min-w-0 flex-col">
+      <EditorTabBar />
+      <div className="flex min-h-0 flex-1 flex-col">
+        <FileEditorPanel path={activeTab.path} />
       </div>
     </div>
   );

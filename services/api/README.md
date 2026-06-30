@@ -54,3 +54,5 @@ src/kew_api/
 ├── prompts/          # Agent prompt templates
 └── config/           # Settings + logging
 ```
+
+Chat agent architecture (Plan vs Agent modes, multi-agent folder pipeline, lineage): see [`docs/KEW_CHAT_AGENT_FLOW.md`](../../docs/KEW_CHAT_AGENT_FLOW.md).

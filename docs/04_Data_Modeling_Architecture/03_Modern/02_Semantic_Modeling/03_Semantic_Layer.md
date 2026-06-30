@@ -38,7 +38,7 @@ A **semantic layer** is a governed logical data model that exposes business-frie
 | --- | --- |
 | **Entity** | Business object (Customer, Order, Product) |
 | **Dimension** | Descriptive attribute for slicing (Region, Product Category, Time) |
-| **Measure** | Quantitative value; references [Metrics Layer](01_Metrics_Layer.md) definitions |
+| **Measure** | Quantitative value; references [Metrics Layer](02_Metrics_Layer.md) definitions |
 | **Hierarchy** | Ordered dimension levels (Year → Quarter → Month) |
 | **Filter** | Reusable predicate (e.g., `status = 'Active'`) |
 | **Relationship** | Join logic between entities (one-to-many, many-to-many with bridge) |
@@ -106,7 +106,7 @@ See also [Semantic Model](05_Semantic_Model.md) and [Business Semantic Model](04
 
 | Principle | Rationale |
 | --- | --- |
-| **Glossary-aligned labels** | Dimension and measure names match [Business Glossary](02_Business_Glossary.md) preferred terms |
+| **Glossary-aligned labels** | Dimension and measure names match [Business Glossary](01_Business_Glossary.md) preferred terms |
 | **Certified measures only** | Exploratory calculations stay in sandbox models |
 | **Explicit grain** | Every entity declares its grain to prevent fan-out |
 | **Versioned changes** | Breaking changes require migration plan and consumer notification |
@@ -123,8 +123,8 @@ See also [Semantic Model](05_Semantic_Model.md) and [Business Semantic Model](04
 
 ## Related topics
 
-- [Metrics Layer](01_Metrics_Layer.md) — upstream measure definitions
-- [Business Glossary](02_Business_Glossary.md) — term definitions for labels
+- [Metrics Layer](02_Metrics_Layer.md) — upstream measure definitions
+- [Business Glossary](01_Business_Glossary.md) — term definitions for labels
 - [Business Semantic Model](04_Business_Semantic_Model.md) — enterprise entity-relationship view
 - [Semantic Model](05_Semantic_Model.md) — detailed model structure
 - [Semantic Data Products](09_Semantic_Data_Products.md) — packaging semantics for domains

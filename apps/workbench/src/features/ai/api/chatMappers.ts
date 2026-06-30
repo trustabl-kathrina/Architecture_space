@@ -4,6 +4,8 @@ import type {
   ChangePlanHunk,
   ChatMessage,
   Conversation,
+  FolderPlanResult,
+  FolderReorganizationItem,
   SectionChange,
   SendMessageResponse,
 } from "@/shared/types/chat";
@@ -72,6 +74,7 @@ export function mapChatMessage(raw: Record<string, unknown>): ChatMessage {
     role: raw.role as ChatMessage["role"],
     content: String(raw.content),
     timestamp: String(raw.timestamp),
+    chatMode: raw.chat_mode ? (raw.chat_mode as ChatMessage["chatMode"]) : null,
     intent: (raw.intent as ChatMessage["intent"]) ?? null,
     changePlanId: raw.change_plan_id ? String(raw.change_plan_id) : null,
     executionTrail: Array.isArray(raw.execution_trail)
@@ -83,6 +86,9 @@ export function mapChatMessage(raw: Record<string, unknown>): ChatMessage {
 export function mapConversation(raw: Record<string, unknown>): Conversation {
   return {
     id: String(raw.id),
+    scopeKind: raw.scope_kind ? (raw.scope_kind as Conversation["scopeKind"]) : null,
+    scopePath: raw.scope_path != null ? String(raw.scope_path) : null,
+    chatMode: raw.chat_mode ? (raw.chat_mode as Conversation["chatMode"]) : null,
     documentPath: raw.document_path ? String(raw.document_path) : null,
     createdAt: String(raw.created_at),
     updatedAt: String(raw.updated_at),
@@ -92,11 +98,37 @@ export function mapConversation(raw: Record<string, unknown>): Conversation {
   };
 }
 
+function mapFolderReorganizationItem(raw: Record<string, unknown>): FolderReorganizationItem {
+  return {
+    action: raw.action as FolderReorganizationItem["action"],
+    path: String(raw.path ?? ""),
+    targetPath: raw.target_path ? String(raw.target_path) : null,
+    rationale: String(raw.rationale ?? ""),
+  };
+}
+
+export function mapFolderPlanResult(raw: Record<string, unknown>): FolderPlanResult {
+  return {
+    summary: String(raw.summary ?? ""),
+    explanation: String(raw.explanation ?? ""),
+    targetStructure: String(raw.target_structure ?? ""),
+    reorganization: Array.isArray(raw.reorganization)
+      ? raw.reorganization.map((item) =>
+          mapFolderReorganizationItem(item as Record<string, unknown>),
+        )
+      : [],
+    confidence: Number(raw.confidence ?? 0),
+  };
+}
+
 export function mapSendMessageResponse(raw: Record<string, unknown>): SendMessageResponse {
   return {
     message: mapChatMessage(raw.message as Record<string, unknown>),
     changePlan: raw.change_plan
       ? mapChangePlan(raw.change_plan as Record<string, unknown>)
+      : null,
+    folderPlanResult: raw.folder_plan_result
+      ? mapFolderPlanResult(raw.folder_plan_result as Record<string, unknown>)
       : null,
     userMessage: raw.user_message
       ? mapChatMessage(raw.user_message as Record<string, unknown>)

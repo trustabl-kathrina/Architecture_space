@@ -5,39 +5,94 @@ import {
   normalizeWorkspacePath,
   normalizeWorkspacePaths,
 } from "@/features/workspace/lib/pathMigration";
+import {
+  tabKey,
+  tabsEqual,
+  type TabKind,
+  type WorkbenchTab,
+} from "@/shared/types/workspace";
 
 interface WorkspaceUiState {
-  selectedPath: string | null;
-  openPaths: string[];
+  activeTab: WorkbenchTab | null;
+  openTabs: WorkbenchTab[];
   expandedPaths: string[];
   treeFilter: string;
   pathsReconciled: boolean;
   setPathsReconciled: (ready: boolean) => void;
+  openTab: (tab: WorkbenchTab) => void;
   openFile: (path: string) => void;
-  closeFile: (path: string) => void;
-  setSelectedPath: (path: string | null) => void;
+  openFolder: (path: string) => void;
+  closeTab: (tab: WorkbenchTab) => void;
+  selectTab: (tab: WorkbenchTab) => void;
   toggleExpanded: (path: string) => void;
   expandPath: (path: string) => void;
   collapsePath: (path: string) => void;
   setTreeFilter: (filter: string) => void;
   isExpanded: (path: string) => boolean;
+  isTabActive: (tab: WorkbenchTab) => boolean;
 }
 
-function normalizeOpenPaths(openPaths: string[], selectedPath: string | null): string[] {
-  if (selectedPath && !openPaths.includes(selectedPath)) {
-    return [selectedPath, ...openPaths];
+function makeTab(kind: TabKind, path: string): WorkbenchTab {
+  return { kind, path: normalizeWorkspacePath(path) };
+}
+
+function normalizeOpenTabs(
+  openTabs: WorkbenchTab[],
+  activeTab: WorkbenchTab | null,
+): WorkbenchTab[] {
+  const seen = new Set<string>();
+  const normalized: WorkbenchTab[] = [];
+  for (const tab of openTabs) {
+    const next = makeTab(tab.kind, tab.path);
+    const key = tabKey(next);
+    if (!seen.has(key)) {
+      seen.add(key);
+      normalized.push(next);
+    }
   }
-  return openPaths;
+  if (activeTab) {
+    const active = makeTab(activeTab.kind, activeTab.path);
+    const key = tabKey(active);
+    if (!seen.has(key)) {
+      return [active, ...normalized];
+    }
+  }
+  return normalized;
 }
 
-function normalizePersistedState(state: Partial<WorkspaceUiState>): Partial<WorkspaceUiState> {
-  const selectedPath = state.selectedPath ? normalizeWorkspacePath(state.selectedPath) : null;
-  const openPaths = normalizeWorkspacePaths(state.openPaths ?? []);
+interface LegacyPersistedState {
+  selectedPath?: string | null;
+  openPaths?: string[];
+  activeTab?: WorkbenchTab | null;
+  openTabs?: WorkbenchTab[];
+  expandedPaths?: string[];
+}
+
+function normalizePersistedState(state: LegacyPersistedState): Partial<WorkspaceUiState> {
+  let openTabs = state.openTabs ?? [];
+  let activeTab = state.activeTab ?? null;
+
+  if (openTabs.length === 0 && state.openPaths?.length) {
+    openTabs = state.openPaths.map((path) => makeTab("file", path));
+  }
+  if (!activeTab && state.selectedPath) {
+    activeTab = makeTab("file", state.selectedPath);
+  }
+
   const expandedPaths = normalizeWorkspacePaths(state.expandedPaths ?? []);
+  openTabs = normalizeOpenTabs(openTabs, activeTab);
+
+  if (activeTab) {
+    const normalizedActive = makeTab(activeTab.kind, activeTab.path);
+    if (!openTabs.some((tab) => tabsEqual(tab, normalizedActive))) {
+      openTabs = [normalizedActive, ...openTabs];
+    }
+    activeTab = normalizedActive;
+  }
+
   return {
-    ...state,
-    selectedPath,
-    openPaths: normalizeOpenPaths(openPaths, selectedPath),
+    activeTab,
+    openTabs,
     expandedPaths,
   };
 }
@@ -45,40 +100,45 @@ function normalizePersistedState(state: Partial<WorkspaceUiState>): Partial<Work
 export const useWorkspaceStore = create<WorkspaceUiState>()(
   persist(
     (set, get) => ({
-      selectedPath: null,
-      openPaths: [],
+      activeTab: null,
+      openTabs: [],
       expandedPaths: [],
       treeFilter: "",
       pathsReconciled: false,
       setPathsReconciled: (ready) => set({ pathsReconciled: ready }),
 
-      openFile: (path) => {
-        const normalized = normalizeWorkspacePath(path);
-        const { openPaths } = get();
+      openTab: (tab) => {
+        const normalized = makeTab(tab.kind, tab.path);
+        const { openTabs } = get();
+        const exists = openTabs.some((item) => tabsEqual(item, normalized));
         set({
-          selectedPath: normalized,
-          openPaths: openPaths.includes(normalized) ? openPaths : [...openPaths, normalized],
+          activeTab: normalized,
+          openTabs: exists ? openTabs : [...openTabs, normalized],
         });
       },
 
-      closeFile: (path) => {
-        const normalized = normalizeWorkspacePath(path);
-        const { openPaths, selectedPath } = get();
-        const nextOpen = openPaths.filter((item) => item !== normalized);
-        let nextSelected = selectedPath;
-        if (selectedPath === normalized) {
-          const closedIndex = openPaths.indexOf(normalized);
-          nextSelected = nextOpen[Math.min(closedIndex, nextOpen.length - 1)] ?? null;
-        }
-        set({ openPaths: nextOpen, selectedPath: nextSelected });
+      openFile: (path) => {
+        get().openTab(makeTab("file", path));
       },
 
-      setSelectedPath: (path) => {
-        if (path) {
-          get().openFile(path);
-          return;
+      openFolder: (path) => {
+        get().openTab(makeTab("folder", path));
+      },
+
+      closeTab: (tab) => {
+        const normalized = makeTab(tab.kind, tab.path);
+        const { openTabs, activeTab } = get();
+        const nextOpen = openTabs.filter((item) => !tabsEqual(item, normalized));
+        let nextActive = activeTab;
+        if (activeTab && tabsEqual(activeTab, normalized)) {
+          const closedIndex = openTabs.findIndex((item) => tabsEqual(item, normalized));
+          nextActive = nextOpen[Math.min(closedIndex, nextOpen.length - 1)] ?? null;
         }
-        set({ selectedPath: null });
+        set({ openTabs: nextOpen, activeTab: nextActive });
+      },
+
+      selectTab: (tab) => {
+        get().openTab(tab);
       },
 
       toggleExpanded: (path) => {
@@ -107,27 +167,32 @@ export const useWorkspaceStore = create<WorkspaceUiState>()(
       setTreeFilter: (filter) => set({ treeFilter: filter }),
 
       isExpanded: (path) => get().expandedPaths.includes(normalizeWorkspacePath(path)),
+
+      isTabActive: (tab) => tabsEqual(get().activeTab, makeTab(tab.kind, tab.path)),
     }),
     {
       name: "kew-workspace-ui",
-      version: 2,
+      version: 3,
       partialize: (state) => ({
         expandedPaths: state.expandedPaths,
-        selectedPath: state.selectedPath,
-        openPaths: state.openPaths,
+        activeTab: state.activeTab,
+        openTabs: state.openTabs,
       }),
       migrate: (persisted, version) => {
-        if (version < 2) {
-          return normalizePersistedState(persisted as Partial<WorkspaceUiState>);
+        if (version < 3) {
+          return {
+            ...(persisted as object),
+            ...normalizePersistedState(persisted as LegacyPersistedState),
+          };
         }
         return persisted;
       },
       merge: (persisted, current) => {
         const merged = {
           ...current,
-          ...normalizePersistedState(persisted as Partial<WorkspaceUiState>),
+          ...normalizePersistedState(persisted as LegacyPersistedState),
         };
-        merged.openPaths = normalizeOpenPaths(merged.openPaths ?? [], merged.selectedPath);
+        merged.openTabs = normalizeOpenTabs(merged.openTabs ?? [], merged.activeTab ?? null);
         return merged;
       },
     },

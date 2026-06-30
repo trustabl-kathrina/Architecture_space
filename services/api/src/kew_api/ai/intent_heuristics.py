@@ -73,6 +73,50 @@ _EDIT_VERB_RE = re.compile(
 )
 _SECTION_NOUN_RE = re.compile(r"\b(section|paragraph|heading|subsection|content)\b", re.IGNORECASE)
 
+_GREETING_RE = re.compile(
+    r"^\s*(hi|hello|hey|yo|howdy|greetings|good\s+(morning|afternoon|evening)|thanks|thank\s+you)\s*[!?.]*\s*$",
+    re.IGNORECASE,
+)
+
+_FOLDER_PLAN_HINTS = (
+    "design a folder",
+    "design the folder",
+    "design a structure",
+    "design the structure",
+    "design a simple folder",
+    "folder structure",
+    "section structure",
+    "documentation structure",
+    "reorganize",
+    "reorganise",
+    "reorganisation",
+    "reorganization",
+    "structure plan",
+    "plan the structure",
+    "propose structure",
+    "proposed structure",
+    "target structure",
+    "update structure",
+    "recommend structure",
+    "recommend alternative",
+    "refine structure",
+    "restructure",
+    "layout for this",
+    "folder layout",
+    "plan this folder",
+    "plan the folder",
+    "organize this folder",
+    "organise this folder",
+    "subfolder",
+    "sub-folder",
+    "add a folder",
+    "add folder",
+    "governance folder",
+    "keep my",
+    "move ",
+    "rename ",
+)
+
 
 def _requests_document_edit(content: str) -> bool:
     lowered = content.lower()
@@ -91,9 +135,50 @@ def _requests_document_edit(content: str) -> bool:
     return False
 
 
-def classify_intent_heuristic(content: str) -> IntentResult:
+def _requests_folder_plan(content: str) -> bool:
+    lowered = content.lower()
+    if any(hint in lowered for hint in _FOLDER_PLAN_HINTS):
+        return True
+    if "structure" in lowered and any(
+        word in lowered
+        for word in ("design", "propose", "recommend", "update", "refine", "reorganize", "reorganise", "plan")
+    ):
+        return True
+    return False
+
+
+def classify_intent_heuristic(
+    content: str,
+    *,
+    folder_plan_scope: bool = False,
+) -> IntentResult:
     """Classify user intent from message text without calling the LLM."""
     lowered = content.lower()
+
+    if folder_plan_scope:
+        if _GREETING_RE.match(content.strip()):
+            return IntentResult(
+                intent=ChatIntent.ADVISE,
+                confidence=0.95,
+                rationale="Heuristic: greeting or small talk in Plan mode",
+                requires_change_plan=False,
+                requires_folder_plan=False,
+            )
+        if _requests_folder_plan(content):
+            return IntentResult(
+                intent=ChatIntent.SUGGEST,
+                confidence=0.85,
+                rationale="Heuristic: message requests folder/section structure planning",
+                requires_change_plan=False,
+                requires_folder_plan=True,
+            )
+        return IntentResult(
+            intent=ChatIntent.ADVISE,
+            confidence=0.8,
+            rationale="Heuristic: conversational or advisory message in Plan mode",
+            requires_change_plan=False,
+            requires_folder_plan=False,
+        )
 
     if _requests_document_edit(content):
         if any(hint in lowered for hint in IMPROVE_HINTS) or (
@@ -105,6 +190,7 @@ def classify_intent_heuristic(content: str) -> IntentResult:
                 confidence=0.8,
                 rationale="Heuristic: message requests document quality improvements",
                 requires_change_plan=True,
+                requires_folder_plan=False,
             )
 
         if "generate" in lowered and "section" in lowered:
@@ -113,6 +199,7 @@ def classify_intent_heuristic(content: str) -> IntentResult:
                 confidence=0.8,
                 rationale="Heuristic: message requests new section content",
                 requires_change_plan=True,
+                requires_folder_plan=False,
             )
 
         if any(word in lowered for word in ("expand", "elaborate", "add detail", "add more")):
@@ -121,6 +208,7 @@ def classify_intent_heuristic(content: str) -> IntentResult:
                 confidence=0.78,
                 rationale="Heuristic: message requests expanding existing content",
                 requires_change_plan=True,
+                requires_folder_plan=False,
             )
 
         return IntentResult(
@@ -128,6 +216,7 @@ def classify_intent_heuristic(content: str) -> IntentResult:
             confidence=0.78,
             rationale="Heuristic: message requests a document change",
             requires_change_plan=True,
+            requires_folder_plan=False,
         )
 
     if any(hint in lowered for hint in _DIAGRAM_ONLY_HINTS):
@@ -136,6 +225,7 @@ def classify_intent_heuristic(content: str) -> IntentResult:
             confidence=0.7,
             rationale="Heuristic: diagram or explanation request (no file edit)",
             requires_change_plan=False,
+            requires_folder_plan=False,
         )
 
     return IntentResult(
@@ -143,4 +233,5 @@ def classify_intent_heuristic(content: str) -> IntentResult:
         confidence=0.75,
         rationale="Heuristic: advisory question or explanation",
         requires_change_plan=False,
+        requires_folder_plan=False,
     )

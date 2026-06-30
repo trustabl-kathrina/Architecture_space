@@ -6,6 +6,9 @@ const AGENT_LABELS: Record<AgentExecutionStep["agent"], string> = {
   planner: "Planner",
   advisor: "Advisor",
   editor: "Editor",
+  researcher: "Researcher",
+  analyst: "Analyst",
+  domain_expert: "Domain expert",
 };
 
 const AGENT_STYLES: Record<AgentExecutionStep["agent"], string> = {
@@ -13,6 +16,9 @@ const AGENT_STYLES: Record<AgentExecutionStep["agent"], string> = {
   planner: "bg-violet-500/15 text-violet-300",
   advisor: "bg-emerald-500/15 text-emerald-300",
   editor: "bg-amber-500/15 text-amber-300",
+  researcher: "bg-cyan-500/15 text-cyan-300",
+  analyst: "bg-indigo-500/15 text-indigo-300",
+  domain_expert: "bg-fuchsia-500/15 text-fuchsia-300",
 };
 
 function StepStatusIcon({ status }: { status: AgentExecutionStep["status"] }) {
@@ -49,7 +55,7 @@ export function ExecutionTrailPanel({
   agentThoughts = [],
   statusLine = null,
   error = null,
-  defaultOpen = false,
+  defaultOpen: _defaultOpen = false,
   isLive = false,
 }: ExecutionTrailPanelProps) {
   if (trail.length === 0 && !isLive && !statusLine && !error && agentThoughts.length === 0) {
@@ -119,7 +125,16 @@ export function ExecutionTrailPanel({
                 >
                   {step.label}
                 </p>
-                {step.detail ? (
+                {step.detail && step.status === "completed" && step.detail.length > 80 ? (
+                  <details className="mt-1.5 rounded-lg border border-border/30 bg-surface/40 p-2">
+                    <summary className="cursor-pointer text-[10px] font-medium text-content-subtle">
+                      Agent reasoning
+                    </summary>
+                    <p className="mt-1 whitespace-pre-wrap leading-relaxed text-content-muted">
+                      {step.detail}
+                    </p>
+                  </details>
+                ) : step.detail ? (
                   <p className="mt-0.5 whitespace-pre-wrap leading-relaxed text-content-muted">
                     {step.detail}
                   </p>

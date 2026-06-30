@@ -2,10 +2,12 @@ import { useCallback } from "react";
 
 import { useEditorStore } from "@/features/editor/stores/editorStore";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspaceStore";
+import { useFolderPlanStore } from "@/features/workspace/stores/folderPlanStore";
+import type { WorkbenchTab } from "@/shared/types/workspace";
 
 export function useEditorTabs() {
-  const openPaths = useWorkspaceStore((s) => s.openPaths);
-  const closeFile = useWorkspaceStore((s) => s.closeFile);
+  const openTabs = useWorkspaceStore((s) => s.openTabs);
+  const closeTabInStore = useWorkspaceStore((s) => s.closeTab);
   const clearDraft = useEditorStore((s) => s.clearDraft);
   const draftsByPath = useEditorStore((s) => s.draftsByPath);
 
@@ -16,25 +18,35 @@ export function useEditorTabs() {
   );
 
   const closeTab = useCallback(
-    (path: string) => {
-      const draft = useEditorStore.getState().getDraft(path);
-      if (draft?.isDirty) {
-        const confirmed = window.confirm(
-          `You have unsaved edits in ${path.split("/").pop()}. Close without saving?`,
-        );
-        if (!confirmed) {
-          return;
+    (tab: WorkbenchTab) => {
+      if (tab.kind === "file") {
+        const draft = useEditorStore.getState().getDraft(tab.path);
+        if (draft?.isDirty) {
+          const confirmed = window.confirm(
+            `You have unsaved edits in ${tab.path.split("/").pop()}. Close without saving?`,
+          );
+          if (!confirmed) {
+            return;
+          }
         }
+        clearDraft(tab.path);
       }
-      clearDraft(path);
-      closeFile(path);
+      closeTabInStore(tab);
     },
-    [clearDraft, closeFile],
+    [clearDraft, closeTabInStore],
   );
 
   return {
-    openPaths,
+    openTabs,
     dirtyPaths,
     closeTab,
   };
+}
+
+export function useActiveFolderPlan(): string {
+  const activeTab = useWorkspaceStore((s) => s.activeTab);
+  const plan = useFolderPlanStore((s) =>
+    activeTab?.kind === "folder" ? s.getPlan(activeTab.path) : "",
+  );
+  return plan;
 }

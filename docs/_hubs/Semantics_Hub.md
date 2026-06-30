@@ -29,8 +29,8 @@ Section **05.03.02** — [Semantic Modeling](../04_Data_Modeling_Architecture/03
 
 | Topic | Status | Description |
 | --- | --- | --- |
-| [Metrics Layer](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md) | complete | Certified measure definitions and calculation logic |
-| [Business Glossary](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Business_Glossary.md) | complete | Enterprise business term catalog |
+| [Business Glossary](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/01_Business_Glossary.md) | complete | Enterprise business term catalog |
+| [Metrics Layer](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md) | complete | Certified measure definitions and calculation logic |
 | [Semantic Layer](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/03_Semantic_Layer.md) | complete | Logical consumption abstraction |
 | [Business Semantic Model](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/04_Business_Semantic_Model.md) | stub | Entity-relationship business view |
 | [Semantic Model](../04_Data_Modeling_Architecture/03_Modern/02_Semantic_Modeling/05_Semantic_Model.md) | stub | Detailed model structure |

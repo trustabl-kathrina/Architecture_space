@@ -9,6 +9,11 @@ from typing import Literal
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 
+class ChatMode(StrEnum):
+    PLAN = "plan"
+    AGENT = "agent"
+
+
 class ChatIntent(StrEnum):
     ADVISE = "advise"
     SUGGEST = "suggest"
@@ -22,6 +27,9 @@ class AgentName(StrEnum):
     PLANNER = "planner"
     ADVISOR = "advisor"
     EDITOR = "editor"
+    RESEARCHER = "researcher"
+    ANALYST = "analyst"
+    DOMAIN_EXPERT = "domain_expert"
 
 
 class AgentStepStatus(StrEnum):
@@ -37,6 +45,7 @@ class IntentResult(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0)
     rationale: str
     requires_change_plan: bool
+    requires_folder_plan: bool = False
 
     @field_validator("intent", mode="before")
     @classmethod
@@ -151,6 +160,7 @@ class ChatMessageRecord(BaseModel):
     role: Literal["user", "assistant"]
     content: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    chat_mode: ChatMode | None = None
     intent: ChatIntent | None = None
     change_plan_id: str | None = None
     execution_trail: list[AgentExecutionStep] = Field(default_factory=list)
@@ -158,19 +168,49 @@ class ChatMessageRecord(BaseModel):
 
 class Conversation(BaseModel):
     id: str
+    scope_kind: Literal["file", "folder"] | None = None
+    scope_path: str | None = None
+    chat_mode: ChatMode | None = None
     document_path: str | None = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     messages: list[ChatMessageRecord] = Field(default_factory=list)
 
 
+class ResolveConversationRequest(BaseModel):
+    scope_kind: Literal["file", "folder"]
+    scope_path: str = ""
+    chat_mode: ChatMode = ChatMode.PLAN
+
+
+class EditMessageRequest(BaseModel):
+    content: str = Field(min_length=1, max_length=8000)
+
+
+class RegenerateMessageRequest(BaseModel):
+    document_path: str | None = None
+    folder_path: str | None = None
+    folder_plan: str | None = Field(default=None, max_length=16000)
+    folder_contents: list[str] = Field(default_factory=list)
+    chat_mode: ChatMode | None = None
+    selection: str | None = Field(default=None, max_length=4000)
+    open_paths: list[str] = Field(default_factory=list)
+    active_section: str | None = Field(default=None, max_length=500)
+    document_outline: list[str] = Field(default_factory=list)
+
+
 class CreateConversationRequest(BaseModel):
     document_path: str | None = None
+    folder_path: str | None = None
 
 
 class SendMessageRequest(BaseModel):
     content: str = Field(min_length=1, max_length=8000)
     document_path: str | None = None
+    folder_path: str | None = None
+    folder_plan: str | None = Field(default=None, max_length=16000)
+    folder_contents: list[str] = Field(default_factory=list)
+    chat_mode: ChatMode | None = None
     selection: str | None = Field(default=None, max_length=4000)
     open_paths: list[str] = Field(default_factory=list)
     active_section: str | None = Field(default=None, max_length=500)
@@ -180,7 +220,45 @@ class SendMessageRequest(BaseModel):
 class SendMessageResponse(BaseModel):
     message: ChatMessageRecord
     change_plan: ChangePlan | None = None
+    folder_plan_result: "FolderPlanResult | None" = None
     user_message: ChatMessageRecord | None = None
+
+
+class FolderReorganizationItem(BaseModel):
+    action: Literal["keep", "rename", "move", "merge", "split", "create", "archive", "delete"]
+    path: str
+    target_path: str | None = None
+    rationale: str = ""
+
+
+class TopicResearchOutput(BaseModel):
+    topic_summary: str = Field(min_length=1)
+    key_concepts: list[str] = Field(default_factory=list)
+    industry_standards: list[str] = Field(default_factory=list)
+    recommended_depth: str = ""
+
+
+class FolderAnalysisOutput(BaseModel):
+    current_structure_summary: str = Field(min_length=1)
+    strengths: list[str] = Field(default_factory=list)
+    gaps: list[str] = Field(default_factory=list)
+    redundancies: list[str] = Field(default_factory=list)
+    naming_issues: list[str] = Field(default_factory=list)
+
+
+class FolderExpertOutput(BaseModel):
+    domain_perspective: str = Field(min_length=1)
+    recommended_pillars: list[str] = Field(default_factory=list)
+    critical_topics: list[str] = Field(default_factory=list)
+    anti_patterns: list[str] = Field(default_factory=list)
+
+
+class FolderPlanResult(BaseModel):
+    summary: str = Field(min_length=1)
+    explanation: str = Field(min_length=1)
+    target_structure: str = Field(min_length=1, description="ASCII folder tree for the section")
+    reorganization: list[FolderReorganizationItem] = Field(default_factory=list)
+    confidence: float = Field(ge=0.0, le=1.0, default=0.85)
 
 
 class ChatStreamEventType(StrEnum):

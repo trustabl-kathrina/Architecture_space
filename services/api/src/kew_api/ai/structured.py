@@ -126,12 +126,20 @@ def _coerce_for_model(data: Any, output_model: type[BaseModel]) -> Any:
         merged = {**data, "intent": intent}
         if "requires_change_plan" not in merged:
             merged["requires_change_plan"] = False
+        if "requires_folder_plan" not in merged:
+            merged["requires_folder_plan"] = False
         if "confidence" not in merged:
             merged["confidence"] = 0.7
         if "rationale" not in merged:
             merged["rationale"] = "Inferred from model output"
         if isinstance(merged.get("requires_change_plan"), str):
             merged["requires_change_plan"] = merged["requires_change_plan"].lower() in {
+                "true",
+                "1",
+                "yes",
+            }
+        if isinstance(merged.get("requires_folder_plan"), str):
+            merged["requires_folder_plan"] = merged["requires_folder_plan"].lower() in {
                 "true",
                 "1",
                 "yes",
@@ -273,6 +281,14 @@ def _fallback_intent_result(raw: str) -> BaseModel | None:
             "requires_change_plan: true",
         )
     )
+    requires_folder_plan = any(
+        token in text
+        for token in (
+            '"requires_folder_plan": true',
+            '"requires_folder_plan":true',
+            "requires_folder_plan: true",
+        )
+    )
     intent = ChatIntent.EXPAND if requires_plan else ChatIntent.ADVISE
     for candidate in ChatIntent:
         if candidate.value in text:
@@ -284,6 +300,7 @@ def _fallback_intent_result(raw: str) -> BaseModel | None:
         confidence=0.65,
         rationale="Inferred from unstructured model output",
         requires_change_plan=requires_plan,
+        requires_folder_plan=requires_folder_plan,
     )
 
 

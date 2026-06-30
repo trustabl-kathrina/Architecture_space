@@ -1,3 +1,7 @@
+export type ChatMode = "plan" | "agent";
+
+export type ScopeKind = "file" | "folder";
+
 export type ChatIntent =
   | "advise"
   | "suggest"
@@ -5,7 +9,14 @@ export type ChatIntent =
   | "expand"
   | "improve";
 
-export type AgentName = "orchestrator" | "planner" | "advisor" | "editor";
+export type AgentName =
+  | "orchestrator"
+  | "planner"
+  | "advisor"
+  | "editor"
+  | "researcher"
+  | "analyst"
+  | "domain_expert";
 
 export type AgentStepStatus = "pending" | "running" | "completed" | "skipped" | "failed";
 
@@ -66,6 +77,7 @@ export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
   timestamp: string;
+  chatMode?: ChatMode | null;
   intent?: ChatIntent | null;
   changePlanId?: string | null;
   executionTrail?: AgentExecutionStep[];
@@ -73,24 +85,96 @@ export interface ChatMessage {
 
 export interface Conversation {
   id: string;
+  scopeKind?: ScopeKind | null;
+  scopePath?: string | null;
+  chatMode?: ChatMode | null;
   documentPath: string | null;
   createdAt: string;
   updatedAt: string;
   messages: ChatMessage[];
 }
 
+export interface ResolveConversationRequest {
+  scopeKind: ScopeKind;
+  scopePath: string;
+  chatMode: ChatMode;
+}
+
+export interface EditMessageRequest {
+  content: string;
+}
+
+export interface SectionLineageEvent {
+  id: string;
+  chatMode: ChatMode;
+  eventType: "folder_plan" | "advisory" | "change_plan" | "user_message";
+  agent?: AgentName | null;
+  summary: string;
+  detail: string;
+  timestamp: string;
+}
+
+export interface SectionContext {
+  scopeKind: ScopeKind;
+  scopePath: string;
+  updatedAt: string;
+  lastPlanSummary?: string | null;
+  lastPlanExplanation?: string | null;
+  lastTargetStructure?: string | null;
+  lineage: SectionLineageEvent[];
+}
+
+export interface RegenerateMessageRequest {
+  documentPath?: string | null;
+  folderPath?: string | null;
+  folderPlan?: string | null;
+  folderContents?: string[];
+  chatMode?: ChatMode;
+  openPaths?: string[];
+  activeSection?: string | null;
+  documentOutline?: string[];
+}
+
 export interface SendMessageRequest {
   content: string;
   documentPath?: string | null;
+  folderPath?: string | null;
+  folderPlan?: string | null;
+  folderContents?: string[];
+  chatMode?: ChatMode;
   selection?: string | null;
   openPaths?: string[];
   activeSection?: string | null;
   documentOutline?: string[];
 }
 
+export interface FolderReorganizationItem {
+  action:
+    | "keep"
+    | "rename"
+    | "move"
+    | "merge"
+    | "split"
+    | "create"
+    | "archive"
+    | "delete";
+  path: string;
+  targetPath?: string | null;
+  rationale: string;
+}
+
+export interface FolderPlanResult {
+  summary: string;
+  explanation: string;
+  targetStructure: string;
+  reorganization: FolderReorganizationItem[];
+  confidence: number;
+}
+
 export interface SendMessageResponse {
   message: ChatMessage;
   changePlan: ChangePlan | null;
+  folderPlanResult?: FolderPlanResult | null;
   userMessage?: ChatMessage | null;
 }
 

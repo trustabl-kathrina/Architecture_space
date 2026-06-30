@@ -64,7 +64,7 @@ Data Modeling
 - [ER Modeling](01_Traditional/01_Relational/01_ER_Modeling.md)
 - [Star Schema](01_Traditional/02_Kimball_Dimensional/01_Star_Schema.md)
 - [Enterprise Data Model](02_Enterprise/02_Canonical/01_Enterprise_Data_Model.md)
-- [Metrics Layer](03_Modern/02_Semantic_Modeling/01_Metrics_Layer.md)
+- [Metrics Layer](03_Modern/02_Semantic_Modeling/02_Metrics_Layer.md)
 - [TM Forum SID](04_Industry_Reference_Models/01_TM_Forum_SID.md)
 
 ## Related
