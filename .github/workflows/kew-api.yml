@@ -20,7 +20,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install kew-api
-        run: pip install -e "services/api[dev]"
+        run: pip install -e "backend/api[dev]"
 
       - name: Run API tests
-        run: pytest services/api/tests -q
+        run: pytest backend/api/tests -q
