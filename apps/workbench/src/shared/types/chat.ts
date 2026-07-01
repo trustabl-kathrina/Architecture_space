@@ -114,6 +114,13 @@ export interface SectionLineageEvent {
   timestamp: string;
 }
 
+export interface FolderPlanAgentInputs {
+  pipelineMode?: string | null;
+  researcher?: string | null;
+  analyst?: string | null;
+  domainExpert?: string | null;
+}
+
 export interface SectionContext {
   scopeKind: ScopeKind;
   scopePath: string;
@@ -121,6 +128,7 @@ export interface SectionContext {
   lastPlanSummary?: string | null;
   lastPlanExplanation?: string | null;
   lastTargetStructure?: string | null;
+  lastAgentInputs?: FolderPlanAgentInputs | null;
   lineage: SectionLineageEvent[];
 }
 

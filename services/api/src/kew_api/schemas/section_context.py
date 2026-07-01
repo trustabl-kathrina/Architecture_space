@@ -10,6 +10,13 @@ from pydantic import BaseModel, Field
 from kew_api.schemas.chat import AgentName, ChatMode
 
 
+class FolderPlanAgentInputs(BaseModel):
+    pipeline_mode: str | None = None
+    researcher: str | None = None
+    analyst: str | None = None
+    domain_expert: str | None = None
+
+
 class SectionLineageEvent(BaseModel):
     id: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
@@ -27,4 +34,5 @@ class SectionContext(BaseModel):
     last_plan_summary: str | None = None
     last_plan_explanation: str | None = None
     last_target_structure: str | None = None
+    last_agent_inputs: FolderPlanAgentInputs | None = None
     lineage: list[SectionLineageEvent] = Field(default_factory=list)

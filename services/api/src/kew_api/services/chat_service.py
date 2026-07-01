@@ -36,6 +36,7 @@ from kew_api.schemas.chat import (
 )
 from kew_api.services.markdown_normalize import normalize_document_body, normalize_markdown_text
 from kew_api.services.chat_repository import ChangePlanRepository, ConversationRepository
+from kew_api.schemas.section_context import FolderPlanAgentInputs
 from kew_api.services.section_context_repository import SectionContextRepository
 from kew_api.services.chat_streaming import stream_text_chunks
 from kew_api.services.diff_service import build_change_hunks
@@ -299,7 +300,11 @@ class ChatService:
                 active_section=active_section,
                 document_outline=document_outline or [],
             )
-            conversation_history = self._format_conversation_history(conversation)
+            conversation_history = self._format_conversation_history(
+                conversation,
+                max_turns=20 if folder_path is not None else 12,
+                max_chars_per_message=6000 if folder_path is not None else 2500,
+            )
             intent_context = base_context
             if conversation_history:
                 intent_context = f"{intent_context}\n\n## Conversation history\n{conversation_history}"
@@ -407,6 +412,7 @@ class ChatService:
 
             change_plan: ChangePlan | None = None
             folder_plan_result: FolderPlanResult | None = None
+            plan_agent_inputs: FolderPlanAgentInputs | None = None
             assistant_content = ""
 
             if run_folder_plan:
@@ -427,7 +433,7 @@ class ChatService:
                 disk_context, current_tree_text = self._build_folder_disk_context(folder_path)
                 enriched_context = f"{context}\n\n{disk_context}"
 
-                folder_plan_result = await run_folder_plan_pipeline(
+                folder_plan_result, plan_agent_inputs = await run_folder_plan_pipeline(
                     user_message=content,
                     folder_path=folder_path,
                     workspace_context=enriched_context,
@@ -594,6 +600,7 @@ class ChatService:
                 assistant_content=assistant_content,
                 folder_plan_result=folder_plan_result,
                 change_plan=change_plan,
+                agent_inputs=plan_agent_inputs if run_folder_plan else None,
             )
 
             response = SendMessageResponse(
@@ -1008,6 +1015,7 @@ class ChatService:
         assistant_content: str,
         folder_plan_result: FolderPlanResult | None,
         change_plan: ChangePlan | None,
+        agent_inputs: FolderPlanAgentInputs | None = None,
     ) -> None:
         if conversation.scope_kind is None or conversation.scope_path is None:
             return
@@ -1021,6 +1029,7 @@ class ChatService:
                 scope_path=scope_path,
                 chat_mode=mode,
                 result=folder_plan_result,
+                agent_inputs=agent_inputs,
             )
             return
 
@@ -1101,7 +1110,7 @@ class ChatService:
         return "\n\n".join(parts)
 
     def _build_folder_disk_context(self, folder_path: str) -> tuple[str, str]:
-        """Load recursive tree and sample file metadata for folder planning."""
+        """Load recursive tree, sibling patterns, parent README, and file samples."""
         try:
             tree_response = self._workspace.list_tree(folder_path, depth=6)
         except NodeNotFoundError:
@@ -1111,19 +1120,63 @@ class ChatService:
         current_tree_text = "\n".join(tree_lines) if tree_lines else "(empty)"
 
         samples: list[str] = []
-        self._collect_file_samples(tree_response.nodes, samples, limit=24)
+        self._collect_file_samples(tree_response.nodes, samples, limit=48)
         sample_block = "\n".join(samples) if samples else "(no markdown files)"
         disk_context = (
             f"On-disk tree (depth 6):\n{current_tree_text}\n\n"
             f"Sample files in section (title, status, excerpt):\n{sample_block}"
         )
+
+        sibling_context = self._build_sibling_reference_context(folder_path)
+        if sibling_context:
+            disk_context = f"{disk_context}\n\n{sibling_context}"
+
+        parent_readme = self._load_parent_readme_excerpt(folder_path)
+        if parent_readme:
+            disk_context = f"{disk_context}\n\n## Parent section README excerpt\n{parent_readme}"
+
         return disk_context, current_tree_text
+
+    def _build_sibling_reference_context(self, folder_path: str) -> str:
+        if not folder_path or "/" not in folder_path:
+            return ""
+        parent = folder_path.rsplit("/", 1)[0]
+        try:
+            tree_response = self._workspace.list_tree(parent, depth=1)
+        except NodeNotFoundError:
+            return ""
+
+        parts = ["## Corpus reference patterns (sibling sections)"]
+        for node in tree_response.nodes:
+            if node.type != "folder" or node.path == folder_path:
+                continue
+            try:
+                sub = self._workspace.list_tree(node.path, depth=2)
+                lines = render_tree_text(sub.nodes)
+                tree_preview = "\n".join(lines[:30]) if lines else "(empty)"
+                parts.append(f"### {node.name}\n```\n{tree_preview}\n```")
+            except NodeNotFoundError:
+                continue
+        return "\n\n".join(parts) if len(parts) > 1 else ""
+
+    def _load_parent_readme_excerpt(self, folder_path: str) -> str:
+        if not folder_path or "/" not in folder_path:
+            return ""
+        parent = folder_path.rsplit("/", 1)[0]
+        readme_path = f"{parent}/README.md"
+        try:
+            document = self._documents.get_document(readme_path)
+            _front, body = split_front_matter(document.content)
+            return body[:3000].strip()
+        except NodeNotFoundError:
+            return ""
 
     @staticmethod
     def _format_conversation_history(
         conversation: Conversation,
         *,
         max_turns: int = 12,
+        max_chars_per_message: int = 2500,
     ) -> str:
         """Format prior turns so follow-up recommendations are not lost."""
         lines: list[str] = []
@@ -1133,8 +1186,8 @@ class ChatService:
             text = message.content.strip()
             if not text:
                 continue
-            if len(text) > 2500:
-                text = f"{text[:2500]}…"
+            if len(text) > max_chars_per_message:
+                text = f"{text[:max_chars_per_message]}…"
             lines.append(f"{role}{mode_suffix}: {text}")
         return "\n\n".join(lines[-max_turns:])
 

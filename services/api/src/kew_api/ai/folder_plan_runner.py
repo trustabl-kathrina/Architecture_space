@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import re
 from collections.abc import Callable
+from enum import StrEnum
 from typing import TYPE_CHECKING
 
 from kew_api.ai.agents import (
@@ -14,6 +15,7 @@ from kew_api.ai.agents import (
     build_folder_researcher_agent,
 )
 from kew_api.ai.errors import AiRunnerError
+from kew_api.ai.folder_plan_validator import build_repair_prompt, find_missing_directives
 from kew_api.ai.prompts import load_prompt
 from kew_api.ai.runner import run_structured_agent
 from kew_api.config.settings import ApiSettings
@@ -28,12 +30,46 @@ from kew_api.schemas.chat import (
     FolderReorganizationItem,
     TopicResearchOutput,
 )
+from kew_api.schemas.section_context import FolderPlanAgentInputs
 from kew_api.schemas.workspace import TreeNode
 
 if TYPE_CHECKING:
     from kew_api.services.execution_trail import ExecutionTrailBuilder
 
 logger = logging.getLogger(__name__)
+
+
+class FolderPlanPipelineMode(StrEnum):
+    FULL = "full"
+    REFINE_DRAFT = "refine_draft"
+    QUICK = "quick"
+
+
+_DEEP_RESEARCH_HINTS = (
+    "research",
+    "greenfield",
+    "comprehensive",
+    "deep dive",
+    "from scratch",
+    "industry standard",
+    "multi-agent",
+)
+
+
+def resolve_pipeline_mode(*, user_message: str, existing_plan: str | None) -> FolderPlanPipelineMode:
+    draft = (existing_plan or "").strip()
+    if draft and (len(draft) > 80 or "# target structure" in draft.lower()):
+        return FolderPlanPipelineMode.REFINE_DRAFT
+
+    lowered = user_message.lower()
+    if any(hint in lowered for hint in _DEEP_RESEARCH_HINTS):
+        return FolderPlanPipelineMode.FULL
+
+    simple_hints = ("design", "structure", "organize", "organise", "layout", "propose", "recommend")
+    if any(hint in lowered for hint in simple_hints):
+        return FolderPlanPipelineMode.QUICK
+
+    return FolderPlanPipelineMode.FULL
 
 
 def render_tree_text(nodes: list[TreeNode], prefix: str = "") -> list[str]:
@@ -255,6 +291,82 @@ def _format_expert_thought(expert: FolderExpertOutput) -> str:
     )
 
 
+async def _run_planner_stage(
+    *,
+    synthesis_context: str,
+    user_message: str,
+    existing_plan: str | None,
+    folder_path: str,
+    settings: ApiSettings,
+    trail: ExecutionTrailBuilder,
+    emit: Callable[[ChatStreamEvent], None],
+    pipeline_mode: FolderPlanPipelineMode,
+) -> FolderPlanResult:
+    planner_step = trail.add(
+        agent=AgentName.PLANNER,
+        label="Planner — structure author",
+        detail=f"Producing target tree ({pipeline_mode.value} mode)",
+        status=AgentStepStatus.RUNNING,
+        target_path=folder_path,
+    )
+    emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=planner_step))
+
+    mode_hint = ""
+    if pipeline_mode == FolderPlanPipelineMode.REFINE_DRAFT:
+        mode_hint = (
+            "\n\nREFINE_DRAFT MODE: The user draft plan is authoritative. "
+            "Apply their edits and chat requests; do not replace with a generic template."
+        )
+    elif pipeline_mode == FolderPlanPipelineMode.QUICK:
+        mode_hint = (
+            "\n\nQUICK PLAN MODE: Produce a premium folder structure in one pass "
+            "using workspace context and corpus reference patterns."
+        )
+
+    prompt_context = f"{synthesis_context}{mode_hint}"
+    plan = await _run_stage(
+        agent_builder=build_folder_planner_agent,
+        output_key="plan_output",
+        output_model=FolderPlanResult,
+        prompt_name="folder_planner",
+        user_message=prompt_context,
+        settings=settings,
+    )
+    assert isinstance(plan, FolderPlanResult)
+
+    missing = find_missing_directives(
+        user_message=user_message,
+        existing_plan=existing_plan,
+        result=plan,
+    )
+    if missing:
+        logger.info("Folder plan missing directives %s — running repair pass", missing)
+        repair_context = f"{prompt_context}{build_repair_prompt(missing)}"
+        plan = await _run_stage(
+            agent_builder=build_folder_planner_agent,
+            output_key="plan_output",
+            output_model=FolderPlanResult,
+            prompt_name="folder_planner",
+            user_message=repair_context,
+            settings=settings,
+        )
+        assert isinstance(plan, FolderPlanResult)
+
+    _emit_agent_thought(
+        emit,
+        agent=AgentName.PLANNER,
+        content=f"**{plan.summary}**\n\n{plan.explanation[:1200]}",
+    )
+    planner_step = trail.complete(
+        planner_step.id,
+        label="Planner — structure ready",
+        detail=plan.summary,
+        target_path=folder_path,
+    )
+    emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=planner_step))
+    return plan
+
+
 async def run_folder_plan_pipeline(
     *,
     user_message: str,
@@ -266,17 +378,23 @@ async def run_folder_plan_pipeline(
     settings: ApiSettings,
     trail: ExecutionTrailBuilder,
     queue_event: Callable[[ChatStreamEvent], None] | None = None,
-) -> FolderPlanResult:
-    """Execute research → analyze → expert → synthesize folder planning pipeline."""
+) -> tuple[FolderPlanResult, FolderPlanAgentInputs]:
+    """Execute folder planning pipeline; returns plan and per-agent inputs for UI."""
 
     def emit(event: ChatStreamEvent) -> None:
         if queue_event:
             queue_event(event)
 
+    pipeline_mode = resolve_pipeline_mode(
+        user_message=user_message,
+        existing_plan=existing_plan,
+    )
+    agent_inputs = FolderPlanAgentInputs(pipeline_mode=pipeline_mode.value)
+
     if settings.ai_mock_mode:
         step = trail.add(
             agent=AgentName.PLANNER,
-            label="Mock folder planning",
+            label="Planner — structure author",
             detail="Generating sample structure (mock mode)",
             status=AgentStepStatus.RUNNING,
         )
@@ -293,9 +411,9 @@ async def run_folder_plan_pipeline(
             agent=AgentName.PLANNER,
             content=f"**{result.summary}**\n\n{result.explanation[:800]}",
         )
-        step = trail.complete(step.id, label="Mock folder plan ready", detail=result.summary)
+        step = trail.complete(step.id, label="Planner — structure ready", detail=result.summary)
         emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=step))
-        return result
+        return result, agent_inputs
 
     user_directives = build_user_directives_block(
         user_message=user_message,
@@ -305,6 +423,7 @@ async def run_folder_plan_pipeline(
 
     base_context = (
         f"Folder path: {folder_path or '(docs root)'}\n\n"
+        f"Pipeline mode: {pipeline_mode.value}\n\n"
         f"Workspace context:\n{workspace_context}\n\n"
         f"Current on-disk tree:\n{current_tree_text or '(empty)'}\n\n"
         f"{user_directives}\n"
@@ -313,175 +432,174 @@ async def run_folder_plan_pipeline(
     def with_directives(stage_context: str) -> str:
         return f"{stage_context}\n\n{user_directives}"
 
-    # Stage 1: Research
-    research_step = trail.add(
-        agent=AgentName.RESEARCHER,
-        label="Research domain topic",
-        detail="Analyzing subject matter and standards",
-        status=AgentStepStatus.RUNNING,
+    research = TopicResearchOutput(
+        topic_summary=f"Skipped for {pipeline_mode.value} mode",
+        key_concepts=[],
+        industry_standards=[],
+        recommended_depth="",
     )
-    emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=research_step))
-    try:
-        research = await _run_stage(
-            agent_builder=build_folder_researcher_agent,
-            output_key="research_output",
-            output_model=TopicResearchOutput,
-            prompt_name="folder_researcher",
-            user_message=base_context,
-            settings=settings,
-        )
-        assert isinstance(research, TopicResearchOutput)
-        thought = _format_research_thought(research)
-        _emit_agent_thought(emit, agent=AgentName.RESEARCHER, content=thought)
-        research_step = trail.complete(
-            research_step.id,
-            label="Research complete",
-            detail=research.topic_summary[:500],
+    analysis = FolderAnalysisOutput(
+        current_structure_summary=current_tree_text or "(empty)",
+        strengths=[],
+        gaps=[],
+    )
+    expert = FolderExpertOutput(
+        domain_perspective="Draft-first or quick planning",
+        recommended_pillars=[],
+        critical_topics=[],
+    )
+
+    if pipeline_mode == FolderPlanPipelineMode.FULL:
+        research_step = trail.add(
+            agent=AgentName.RESEARCHER,
+            label="Research domain topic",
+            detail="Analyzing subject matter and standards",
+            status=AgentStepStatus.RUNNING,
         )
         emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=research_step))
-    except AiRunnerError as exc:
-        logger.warning("Folder research failed: %s", exc)
-        trail.fail(research_step.id, str(exc))
-        emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(research_step.id)))
-        research = TopicResearchOutput(
-            topic_summary=f"Research fallback for {folder_path}",
-            key_concepts=["overview", "patterns", "governance"],
-            industry_standards=["DAMA", "TOGAF"],
-            recommended_depth="2-3 levels",
+        try:
+            research = await _run_stage(
+                agent_builder=build_folder_researcher_agent,
+                output_key="research_output",
+                output_model=TopicResearchOutput,
+                prompt_name="folder_researcher",
+                user_message=base_context,
+                settings=settings,
+            )
+            assert isinstance(research, TopicResearchOutput)
+            thought = _format_research_thought(research)
+            agent_inputs = agent_inputs.model_copy(update={"researcher": thought})
+            _emit_agent_thought(emit, agent=AgentName.RESEARCHER, content=thought)
+            research_step = trail.complete(
+                research_step.id,
+                label="Research complete",
+                detail=research.topic_summary[:500],
+            )
+            emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=research_step))
+        except AiRunnerError as exc:
+            logger.warning("Folder research failed: %s", exc)
+            trail.fail(research_step.id, str(exc))
+            emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(research_step.id)))
+            research = TopicResearchOutput(
+                topic_summary=f"Research fallback for {folder_path}",
+                key_concepts=["overview", "patterns", "governance"],
+                industry_standards=["DAMA", "TOGAF"],
+                recommended_depth="2-3 levels",
+            )
+
+        research_context = (
+            f"{base_context}\n\n## Research findings\n"
+            f"Summary: {research.topic_summary}\n"
+            f"Key concepts: {', '.join(research.key_concepts)}\n"
+            f"Standards: {', '.join(research.industry_standards)}\n"
+            f"Depth: {research.recommended_depth}\n"
         )
 
-    research_context = (
-        f"{base_context}\n\n## Research findings\n"
-        f"Summary: {research.topic_summary}\n"
-        f"Key concepts: {', '.join(research.key_concepts)}\n"
-        f"Standards: {', '.join(research.industry_standards)}\n"
-        f"Depth: {research.recommended_depth}\n"
-    )
-
-    # Stage 2: Analyze current structure
-    analysis_step = trail.add(
-        agent=AgentName.ANALYST,
-        label="Analyze current structure",
-        detail="Reviewing existing folders and files",
-        status=AgentStepStatus.RUNNING,
-    )
-    emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=analysis_step))
-    try:
-        analysis = await _run_stage(
-            agent_builder=build_folder_analyzer_agent,
-            output_key="analysis_output",
-            output_model=FolderAnalysisOutput,
-            prompt_name="folder_analyzer",
-            user_message=research_context,
-            settings=settings,
-        )
-        assert isinstance(analysis, FolderAnalysisOutput)
-        thought = _format_analysis_thought(analysis)
-        _emit_agent_thought(emit, agent=AgentName.ANALYST, content=thought)
-        analysis_step = trail.complete(
-            analysis_step.id,
-            label="Structure analysis complete",
-            detail=analysis.current_structure_summary[:500],
+        analysis_step = trail.add(
+            agent=AgentName.ANALYST,
+            label="Analyze current structure",
+            detail="Reviewing existing folders and files",
+            status=AgentStepStatus.RUNNING,
         )
         emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=analysis_step))
-    except AiRunnerError as exc:
-        logger.warning("Folder analysis failed: %s", exc)
-        trail.fail(analysis_step.id, str(exc))
-        emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(analysis_step.id)))
-        analysis = FolderAnalysisOutput(
-            current_structure_summary="Could not fully analyze structure; using tree snapshot.",
-            gaps=["Missing section README"],
-            strengths=["Existing topic files present"],
+        try:
+            analysis = await _run_stage(
+                agent_builder=build_folder_analyzer_agent,
+                output_key="analysis_output",
+                output_model=FolderAnalysisOutput,
+                prompt_name="folder_analyzer",
+                user_message=research_context,
+                settings=settings,
+            )
+            assert isinstance(analysis, FolderAnalysisOutput)
+            thought = _format_analysis_thought(analysis)
+            agent_inputs = agent_inputs.model_copy(update={"analyst": thought})
+            _emit_agent_thought(emit, agent=AgentName.ANALYST, content=thought)
+            analysis_step = trail.complete(
+                analysis_step.id,
+                label="Structure analysis complete",
+                detail=analysis.current_structure_summary[:500],
+            )
+            emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=analysis_step))
+        except AiRunnerError as exc:
+            logger.warning("Folder analysis failed: %s", exc)
+            trail.fail(analysis_step.id, str(exc))
+            emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(analysis_step.id)))
+            analysis = FolderAnalysisOutput(
+                current_structure_summary="Could not fully analyze structure; using tree snapshot.",
+                gaps=["Missing section README"],
+                strengths=["Existing topic files present"],
+            )
+
+        analysis_context = (
+            f"{research_context}\n\n## Structure analysis\n"
+            f"Summary: {analysis.current_structure_summary}\n"
+            f"Strengths: {', '.join(analysis.strengths)}\n"
+            f"Gaps: {', '.join(analysis.gaps)}\n"
+            f"Redundancies: {', '.join(analysis.redundancies)}\n"
+            f"Naming issues: {', '.join(analysis.naming_issues)}\n"
         )
 
-    analysis_context = (
-        f"{research_context}\n\n## Structure analysis\n"
-        f"Summary: {analysis.current_structure_summary}\n"
-        f"Strengths: {', '.join(analysis.strengths)}\n"
-        f"Gaps: {', '.join(analysis.gaps)}\n"
-        f"Redundancies: {', '.join(analysis.redundancies)}\n"
-        f"Naming issues: {', '.join(analysis.naming_issues)}\n"
-    )
-
-    # Stage 3: Domain expert
-    expert_step = trail.add(
-        agent=AgentName.DOMAIN_EXPERT,
-        label="Apply domain expertise",
-        detail="Recommending pillars and critical topics",
-        status=AgentStepStatus.RUNNING,
-    )
-    emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=expert_step))
-    try:
-        expert = await _run_stage(
-            agent_builder=build_folder_expert_agent,
-            output_key="expert_output",
-            output_model=FolderExpertOutput,
-            prompt_name="folder_domain_expert",
-            user_message=analysis_context,
-            settings=settings,
-        )
-        assert isinstance(expert, FolderExpertOutput)
-        thought = _format_expert_thought(expert)
-        _emit_agent_thought(emit, agent=AgentName.DOMAIN_EXPERT, content=thought)
-        expert_step = trail.complete(
-            expert_step.id,
-            label="Domain recommendations ready",
-            detail=expert.domain_perspective[:500],
+        expert_step = trail.add(
+            agent=AgentName.DOMAIN_EXPERT,
+            label="Apply domain expertise",
+            detail="Recommending pillars and critical topics",
+            status=AgentStepStatus.RUNNING,
         )
         emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=expert_step))
-    except AiRunnerError as exc:
-        logger.warning("Folder expert failed: %s", exc)
-        trail.fail(expert_step.id, str(exc))
-        emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(expert_step.id)))
-        expert = FolderExpertOutput(
-            domain_perspective="Enterprise architecture documentation section",
-            recommended_pillars=["Fundamentals", "Patterns", "Governance"],
-            critical_topics=["Overview", "Standards", "Reference architectures"],
+        try:
+            expert = await _run_stage(
+                agent_builder=build_folder_expert_agent,
+                output_key="expert_output",
+                output_model=FolderExpertOutput,
+                prompt_name="folder_domain_expert",
+                user_message=analysis_context,
+                settings=settings,
+            )
+            assert isinstance(expert, FolderExpertOutput)
+            thought = _format_expert_thought(expert)
+            agent_inputs = agent_inputs.model_copy(update={"domain_expert": thought})
+            _emit_agent_thought(emit, agent=AgentName.DOMAIN_EXPERT, content=thought)
+            expert_step = trail.complete(
+                expert_step.id,
+                label="Domain recommendations ready",
+                detail=expert.domain_perspective[:500],
+            )
+            emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=expert_step))
+        except AiRunnerError as exc:
+            logger.warning("Folder expert failed: %s", exc)
+            trail.fail(expert_step.id, str(exc))
+            emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(expert_step.id)))
+            expert = FolderExpertOutput(
+                domain_perspective="Enterprise architecture documentation section",
+                recommended_pillars=["Fundamentals", "Patterns", "Governance"],
+                critical_topics=["Overview", "Standards", "Reference architectures"],
+            )
+
+        synthesis_context = with_directives(
+            f"{analysis_context}\n\n## Domain expert view\n"
+            f"Perspective: {expert.domain_perspective}\n"
+            f"Pillars: {', '.join(expert.recommended_pillars)}\n"
+            f"Critical topics: {', '.join(expert.critical_topics)}\n"
+            f"Anti-patterns: {', '.join(expert.anti_patterns)}\n"
         )
+    else:
+        synthesis_context = with_directives(base_context)
 
-    synthesis_context = with_directives(
-        f"{analysis_context}\n\n## Domain expert view\n"
-        f"Perspective: {expert.domain_perspective}\n"
-        f"Pillars: {', '.join(expert.recommended_pillars)}\n"
-        f"Critical topics: {', '.join(expert.critical_topics)}\n"
-        f"Anti-patterns: {', '.join(expert.anti_patterns)}\n"
-    )
-
-    # Stage 4: Synthesize plan
-    planner_step = trail.add(
-        agent=AgentName.PLANNER,
-        label="Synthesize folder plan",
-        detail="Producing target tree and reorganization",
-        status=AgentStepStatus.RUNNING,
-    )
-    emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=planner_step))
     try:
-        plan = await _run_stage(
-            agent_builder=build_folder_planner_agent,
-            output_key="plan_output",
-            output_model=FolderPlanResult,
-            prompt_name="folder_planner",
-            user_message=synthesis_context,
+        plan = await _run_planner_stage(
+            synthesis_context=synthesis_context,
+            user_message=user_message,
+            existing_plan=existing_plan,
+            folder_path=folder_path,
             settings=settings,
+            trail=trail,
+            emit=emit,
+            pipeline_mode=pipeline_mode,
         )
-        assert isinstance(plan, FolderPlanResult)
-        _emit_agent_thought(
-            emit,
-            agent=AgentName.PLANNER,
-            content=f"**{plan.summary}**\n\n{plan.explanation[:1200]}",
-        )
-        planner_step = trail.complete(
-            planner_step.id,
-            label="Folder plan ready",
-            detail=plan.summary,
-            target_path=folder_path,
-        )
-        emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=planner_step))
-        return plan
+        return plan, agent_inputs
     except AiRunnerError as exc:
         logger.warning("Folder planner failed: %s", exc)
-        trail.fail(planner_step.id, str(exc))
-        emit(ChatStreamEvent(type=ChatStreamEventType.TRAIL_STEP, step=trail.get(planner_step.id)))
         raise
 
 

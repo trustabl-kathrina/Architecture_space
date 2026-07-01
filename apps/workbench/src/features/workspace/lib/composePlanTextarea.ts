@@ -18,6 +18,8 @@ export function composePlanTextarea(result: FolderPlanResult): string {
   return `${lines.join("\n").trim()}\n`;
 }
 
+const AI_REVISION_SPLIT = /\n---\n\n# AI revision\n\n/;
+
 /** Merge AI output into the user's draft without discarding manual edits. */
 export function mergeAiPlanIntoDraft(
   currentPlan: string,
@@ -26,11 +28,24 @@ export function mergeAiPlanIntoDraft(
 ): { merged: string; lastAiPlan: string } {
   const trimmedCurrent = currentPlan.trim();
   const trimmedLastAi = lastAiPlan.trim();
+
   if (!trimmedCurrent || trimmedCurrent === trimmedLastAi) {
     return { merged: newAiPlan, lastAiPlan: newAiPlan };
   }
+
+  const userBase = trimmedCurrent.split(AI_REVISION_SPLIT)[0]?.trim() ?? trimmedCurrent;
+  const hasAiRevisionBlock = AI_REVISION_SPLIT.test(trimmedCurrent);
+
+  if (!hasAiRevisionBlock && trimmedCurrent !== trimmedLastAi) {
+    return { merged: newAiPlan, lastAiPlan: newAiPlan };
+  }
+
+  if (userBase && userBase !== trimmedLastAi) {
+    return { merged: newAiPlan, lastAiPlan: newAiPlan };
+  }
+
   return {
-    merged: `${trimmedCurrent}\n\n---\n\n# AI revision\n\n${newAiPlan}`,
+    merged: `${userBase}\n\n---\n\n# AI revision\n\n${newAiPlan}`,
     lastAiPlan: newAiPlan,
   };
 }

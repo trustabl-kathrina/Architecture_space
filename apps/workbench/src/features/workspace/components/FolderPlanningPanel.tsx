@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+import { chatKeys, fetchSectionContext } from "@/features/ai/api/chatApi";
 import { FolderContentsList } from "@/features/workspace/components/FolderContentsList";
 import { useFolderPlanStore } from "@/features/workspace/stores/folderPlanStore";
 import { cn } from "@/shared/utils/cn";
@@ -13,11 +17,36 @@ function formatBreadcrumb(path: string): string[] {
   return ["docs", ...path.split("/").filter(Boolean)];
 }
 
+function pipelineModeLabel(mode: string | null | undefined): string {
+  switch (mode) {
+    case "refine_draft":
+      return "Refine draft (Planner only)";
+    case "quick":
+      return "Quick plan (Planner only)";
+    case "full":
+      return "Full pipeline (Researcher → Analyst → Domain expert → Planner)";
+    default:
+      return "Planner — structure author";
+  }
+}
+
 export function FolderPlanningPanel({ folderPath }: FolderPlanningPanelProps) {
   const plan = useFolderPlanStore((s) => s.getPlan(folderPath));
   const setPlan = useFolderPlanStore((s) => s.setPlan);
+  const [agentInputsOpen, setAgentInputsOpen] = useState(false);
   const crumbs = formatBreadcrumb(folderPath);
   const displayName = folderPath.split("/").pop() || "docs";
+
+  const sectionContextQuery = useQuery({
+    queryKey: chatKeys.sectionContext("folder", folderPath),
+    queryFn: () => fetchSectionContext("folder", folderPath),
+    staleTime: 15_000,
+  });
+
+  const agentInputs = sectionContextQuery.data?.lastAgentInputs;
+  const hasAgentInputs = Boolean(
+    agentInputs?.researcher || agentInputs?.analyst || agentInputs?.domainExpert,
+  );
 
   return (
     <div className="flex h-full min-w-0 flex-col">
@@ -48,10 +77,50 @@ export function FolderPlanningPanel({ folderPath }: FolderPlanningPanelProps) {
               Planned structure
             </h2>
             <p className="mt-0.5 text-[11px] leading-relaxed text-content-muted">
-              Draft your target structure here first, then use Plan mode chat to refine it.
-              Your edits and chat recommendations are sent to every planning agent.
+              Structure is authored by the <strong className="font-medium text-content">Planner</strong>{" "}
+              agent (synthesis of Researcher, Analyst, and Domain expert when full pipeline runs).
+              Draft here first, then refine in Plan mode chat.
             </p>
+            {agentInputs?.pipelineMode ? (
+              <p className="mt-1 text-[10px] uppercase tracking-wide text-content-subtle">
+                Last run: {pipelineModeLabel(agentInputs.pipelineMode)}
+              </p>
+            ) : null}
           </header>
+
+          {hasAgentInputs ? (
+            <div className="shrink-0 border-b border-border/40 px-4 py-2">
+              <button
+                type="button"
+                onClick={() => setAgentInputsOpen((open) => !open)}
+                className="text-[11px] font-medium text-content-muted hover:text-content"
+              >
+                {agentInputsOpen ? "Hide" : "Show"} agent inputs
+              </button>
+              {agentInputsOpen ? (
+                <div className="mt-2 max-h-40 space-y-2 overflow-y-auto text-[11px] leading-relaxed text-content-muted">
+                  {agentInputs?.researcher ? (
+                    <div>
+                      <p className="font-medium text-content-subtle">Researcher</p>
+                      <p className="whitespace-pre-wrap">{agentInputs.researcher}</p>
+                    </div>
+                  ) : null}
+                  {agentInputs?.analyst ? (
+                    <div>
+                      <p className="font-medium text-content-subtle">Analyst</p>
+                      <p className="whitespace-pre-wrap">{agentInputs.analyst}</p>
+                    </div>
+                  ) : null}
+                  {agentInputs?.domainExpert ? (
+                    <div>
+                      <p className="font-medium text-content-subtle">Domain expert</p>
+                      <p className="whitespace-pre-wrap">{agentInputs.domainExpert}</p>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="relative min-h-0 flex-1">
             <textarea

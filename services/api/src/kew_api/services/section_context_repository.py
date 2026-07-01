@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 
 from kew_api.config.settings import ApiSettings
 from kew_api.schemas.chat import AgentName, ChatMode, FolderPlanResult
-from kew_api.schemas.section_context import SectionContext, SectionLineageEvent
+from kew_api.schemas.section_context import FolderPlanAgentInputs, SectionContext, SectionLineageEvent
 from kew_api.services.chat_repository import JsonStore
 
 
@@ -76,6 +76,7 @@ class SectionContextRepository:
         scope_path: str,
         chat_mode: ChatMode,
         result: FolderPlanResult,
+        agent_inputs: FolderPlanAgentInputs | None = None,
     ) -> SectionContext:
         context = self.get_or_create(scope_kind, scope_path)
         event = SectionLineageEvent(
@@ -93,6 +94,7 @@ class SectionContextRepository:
                     "last_plan_summary": result.summary,
                     "last_plan_explanation": result.explanation[:8000],
                     "last_target_structure": result.target_structure[:12000],
+                    "last_agent_inputs": agent_inputs,
                     "lineage": lineage,
                 }
             )

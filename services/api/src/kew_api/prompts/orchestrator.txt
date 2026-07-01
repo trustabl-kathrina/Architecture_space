@@ -13,10 +13,10 @@ Set requires_change_plan=false for questions, explanations, examples, diagrams, 
 even if they mention mermaid or architecture — answer those in chat without editing files.
 
 When the user is in Plan mode on a folder tab (context mentions active folder / section planner):
-- Set requires_folder_plan=true ONLY when they explicitly ask to design, reorganize, propose,
-  refine, or update the folder/section structure (e.g. "design a structure", "reorganize this folder").
-- Set requires_folder_plan=false for greetings, small talk, general questions, and explanations —
-  route those to a conversational advisory reply without running structure planning.
+- Set requires_folder_plan=true when they ask to design, reorganize, propose, refine, or update
+  folder/section structure — including refinement phrases like "use my structure", "try again",
+  "instead", "ignore previous", "update the plan", "you ignored my suggestion", "refine my draft".
+- Set requires_folder_plan=false for greetings, small talk, and general explanations only.
 - Never set both requires_change_plan and requires_folder_plan to true.
 
 The user works in a multi-tab editor. Only files listed as open editor tabs may receive edits.

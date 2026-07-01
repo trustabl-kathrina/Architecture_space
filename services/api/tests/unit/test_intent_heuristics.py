@@ -43,3 +43,11 @@ def test_plan_mode_structure_request_triggers_folder_plan() -> None:
     )
     assert result.requires_folder_plan is True
     assert result.requires_change_plan is False
+
+
+def test_plan_mode_refinement_phrases_trigger_folder_plan() -> None:
+    result = classify_intent_heuristic(
+        "Use my structure instead — you ignored my suggestion",
+        folder_plan_scope=True,
+    )
+    assert result.requires_folder_plan is True

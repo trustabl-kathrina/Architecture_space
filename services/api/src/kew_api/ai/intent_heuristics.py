@@ -115,6 +115,22 @@ _FOLDER_PLAN_HINTS = (
     "keep my",
     "move ",
     "rename ",
+    "refine my",
+    "refine the",
+    "use my",
+    "use the",
+    "try again",
+    "instead of",
+    "instead,",
+    "ignore previous",
+    "ignore the previous",
+    "update the plan",
+    "update my plan",
+    "you ignored",
+    "wrong structure",
+    "not what i asked",
+    "follow my",
+    "apply my",
 )
 
 
