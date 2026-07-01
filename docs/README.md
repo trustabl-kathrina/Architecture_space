@@ -2,6 +2,10 @@
 
 Architecture-first documentation space for enterprise data, analytics, AI, cloud data platforms, governance, security, POCs, and Pluto MIND.
 
+## KEW Workbench
+
+Developer documentation for the Knowledge Engineering Workbench lives in [`product/`](product/).
+
 ## Start Here
 
 - [Architecture Governance](00_Architecture_Governance/README.md)

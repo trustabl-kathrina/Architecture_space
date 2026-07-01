@@ -2,26 +2,28 @@
 
 Local-first AI workbench for enterprise architecture documentation. Edit Markdown in `docs/`, browse the corpus in a React UI, and use Cursor-powered chat with **approval-gated** document changes.
 
-## Monorepo layout
+## Four-folder layout
 
 ```
 Architecture_space/
-├── apps/
-│   └── workbench/              # React 19 + Vite + Tailwind UI
-├── services/
-│   └── api/                    # FastAPI gateway (package: kew-api)
-├── documentation_ai_factory/   # doc_factory CLI + batch doc generation
-├── docs/                       # Markdown corpus (canonical content)
-├── tools/
-│   └── docs/                   # MkDocs, templates, corpus maintenance
-├── archive/                    # Legacy section snapshots
-├── .data/                      # Runtime state (conversations, edits, logs)
-├── scripts/                    # Setup and dev helpers
+├── frontend/                   # React workbench (Vite + Tailwind)
+├── backend/
+│   ├── api/                    # FastAPI gateway (kew-api)
+│   └── doc-factory/            # Batch documentation engine (CLI)
+├── deployment/
+│   ├── scripts/                # Setup + dev helpers
+│   └── mkdocs/                 # Site build + corpus validators
+├── docs/
+│   ├── product/                # KEW application documentation
+│   ├── archive/                # Legacy section snapshots
+│   └── …                       # Architecture corpus (pillars, hubs, meta)
+├── .data/                      # Runtime state (gitignored)
+├── .github/workflows/          # CI (see deployment/README.md)
 ├── package.json                # pnpm workspace root
-└── pnpm-workspace.yaml
+└── .env                        # Secrets + API config
 ```
 
-See [docs/KEW_PROJECT_STRUCTURE.md](docs/KEW_PROJECT_STRUCTURE.md) for the full tree.
+See [docs/product/KEW_PROJECT_STRUCTURE.md](docs/product/KEW_PROJECT_STRUCTURE.md) for the full tree.
 
 ## Prerequisites
 
@@ -43,26 +45,22 @@ copy .env.example .env
 ### 2. Install dependencies
 
 ```powershell
-scripts\setup.cmd
+deployment\scripts\setup.cmd
+# or: pnpm setup
 ```
-
-Installs Python packages (`kew-api`, `doc_factory`) and frontend deps (`pnpm install`).  
-Requires **Python 3.12** and **Node.js 20+** ([nodejs.org](https://nodejs.org/)).
-
-> After installing Node.js for the first time, **close and reopen PowerShell** so `node`/`npm` are on PATH.
 
 ### 3. Run the stack
 
 **Terminal A — API** (port 8000):
 
 ```powershell
-scripts\dev-api.cmd
+deployment\scripts\dev-api.cmd
 ```
 
 **Terminal B — Workbench** (port 5173):
 
 ```powershell
-scripts\dev-web.cmd
+deployment\scripts\dev-web.cmd
 ```
 
 Open http://127.0.0.1:5173 — select a `.md` file, edit in the center panel, chat in the right panel.
@@ -71,60 +69,20 @@ Open http://127.0.0.1:5173 — select a `.md` file, edit in the center panel, ch
 
 | Script | Description |
 |--------|-------------|
-| `pnpm setup` | Run `scripts/setup.cmd` |
+| `pnpm setup` | Run `deployment/scripts/setup.cmd` |
 | `pnpm dev` | Start Vite dev server |
 | `pnpm dev:api` | Start FastAPI via `kew-api` |
 | `pnpm test:api` | Run API pytest suite |
 | `pnpm build` | Production build of workbench |
-| `pnpm typecheck` | TypeScript check |
 
-## API endpoints
+## AI providers
 
-Base URL: `http://127.0.0.1:8000/api/v1`
+| Variable | Purpose |
+|----------|---------|
+| `CURSOR_API_KEY` | Primary agent provider (Cursor SDK) |
+| `GEMINI_API_KEY` | Optional fallback / doc-factory |
+| `KEW_API_AI_MOCK_MODE=true` | Offline deterministic responses |
 
-| Area | Endpoints |
-|------|-----------|
-| Health | `GET /health`, `GET /ready` |
-| Workspace | `GET/POST/PATCH/DELETE /workspace/*` |
-| Documents | `GET/PUT /documents` |
-| Chat | `POST /chat/conversations`, `POST .../messages`, `POST .../messages/stream` |
-| Edits | `GET/POST/DELETE /edits/{id}` |
+## License
 
-Interactive docs (development): http://127.0.0.1:8000/docs
-
-## AI chat flow
-
-```
-User prompt → Intent detection → Advisory OR change plan → User approval → Apply
-```
-
-The AI never writes files directly. Proposed edits are stored in `.data/edits/` until approved. Chat streams SSE events including execution trail steps.
-
-## Documentation factory (CLI)
-
-Batch documentation generation (separate from the workbench UI):
-
-```powershell
-.\documentation_ai_factory\.venv\Scripts\Activate.ps1
-doc-factory --help
-```
-
-## Corpus tooling
-
-MkDocs site and validation scripts:
-
-```powershell
-pip install -r tools\docs\requirements-docs.txt
-python tools\docs\scripts\validate_front_matter.py
-mkdocs serve -f tools\docs\mkdocs.yml
-```
-
-See [tools/docs/README.md](tools/docs/README.md).
-
-## Tests
-
-```powershell
-scripts\test-api.cmd
-```
-
-API tests run in mock AI mode by default (no API key required).
+Internal enterprise architecture knowledge base — see corpus governance in `docs/product/CONTRIBUTING.md`.

@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "description": "Architecture Space monorepo — KEW workbench + documentation engine",
   "scripts": {
-    "setup": "scripts\\setup.cmd",
+    "setup": "deployment\\scripts\\setup.cmd",
     "dev": "pnpm --filter @kew/workbench dev",
-    "dev:web": "scripts\\dev-web.cmd",
-    "dev:api": "scripts\\dev-api.cmd",
-    "dev:all": "start scripts\\dev-api.cmd && scripts\\dev-web.cmd",
+    "dev:web": "deployment\\scripts\\dev-web.cmd",
+    "dev:api": "deployment\\scripts\\dev-api.cmd",
+    "dev:all": "start deployment\\scripts\\dev-api.cmd && deployment\\scripts\\dev-web.cmd",
     "build": "pnpm --filter @kew/workbench build",
     "lint": "pnpm --filter @kew/workbench lint",
     "typecheck": "pnpm --filter @kew/workbench typecheck",
     "preview": "pnpm --filter @kew/workbench preview",
-    "test:api": "scripts\\test-api.cmd"
+    "test:api": "deployment\\scripts\\test-api.cmd"
   },
   "engines": {
     "node": ">=20.0.0"
