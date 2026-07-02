@@ -107,7 +107,7 @@ export interface EditMessageRequest {
 export interface SectionLineageEvent {
   id: string;
   chatMode: ChatMode;
-  eventType: "folder_plan" | "advisory" | "change_plan" | "user_message";
+  eventType: "folder_plan" | "folder_implement" | "advisory" | "change_plan" | "user_message";
   agent?: AgentName | null;
   summary: string;
   detail: string;
@@ -179,10 +179,20 @@ export interface FolderPlanResult {
   confidence: number;
 }
 
+export interface FolderImplementResult {
+  summary: string;
+  explanation: string;
+  appliedCount: number;
+  skippedCount: number;
+  failedCount: number;
+  details: string[];
+}
+
 export interface SendMessageResponse {
   message: ChatMessage;
   changePlan: ChangePlan | null;
   folderPlanResult?: FolderPlanResult | null;
+  folderImplementResult?: FolderImplementResult | null;
   userMessage?: ChatMessage | null;
 }
 

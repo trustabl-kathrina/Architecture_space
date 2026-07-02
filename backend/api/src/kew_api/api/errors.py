@@ -25,6 +25,18 @@ from kew_api.schemas.common import ApiErrorResponse
 logger = logging.getLogger(__name__)
 
 
+def _format_validation_errors(errors: list[dict[str, object]]) -> str:
+    parts: list[str] = []
+    for error in errors:
+        loc = error.get("loc", ())
+        field = ".".join(str(part) for part in loc if part != "body") or "request"
+        msg = str(error.get("msg", "invalid value"))
+        parts.append(f"{field}: {msg}")
+    if not parts:
+        return "Request validation failed"
+    return f"Request validation failed — {'; '.join(parts)}"
+
+
 def _error_payload(code: str, message: str, details: dict[str, Any] | None = None) -> dict[str, Any]:
     return ApiErrorResponse(code=code, message=message, details=details or {}).model_dump()
 
@@ -80,7 +92,7 @@ def register_exception_handlers(app: FastAPI) -> None:
             status_code=422,
             content=_error_payload(
                 "validation_error",
-                "Request validation failed",
+                _format_validation_errors(exc.errors()),
                 {"errors": exc.errors()},
             ),
         )

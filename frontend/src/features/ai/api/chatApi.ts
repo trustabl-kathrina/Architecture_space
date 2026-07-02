@@ -10,6 +10,7 @@ import type {
 } from "@/shared/types/chat";
 
 import { mapConversation, mapSendMessageResponse } from "@/features/ai/api/chatMappers";
+import { normalizeSendMessageRequest } from "@/features/ai/lib/normalizeChatRequest";
 import { mapSectionContext } from "@/features/ai/api/sectionContextMappers";
 
 const BASE = env.apiBaseUrl;
@@ -119,22 +120,23 @@ export async function sendChatMessage(
   conversationId: string,
   request: SendMessageRequest,
 ): Promise<SendMessageResponse> {
+  const normalized = normalizeSendMessageRequest(request);
   const raw = await apiRequest<Record<string, unknown>>(
     BASE,
     `/chat/conversations/${conversationId}/messages`,
     {
       method: "POST",
       body: {
-        content: request.content,
-        document_path: request.documentPath ?? null,
-        folder_path: request.folderPath ?? null,
-        folder_plan: request.folderPlan ?? null,
-        folder_contents: request.folderContents ?? [],
-        chat_mode: request.chatMode ?? null,
-        selection: request.selection ?? null,
-        open_paths: request.openPaths ?? [],
-        active_section: request.activeSection ?? null,
-        document_outline: request.documentOutline ?? [],
+        content: normalized.content,
+        document_path: normalized.documentPath ?? null,
+        folder_path: normalized.folderPath ?? null,
+        folder_plan: normalized.folderPlan ?? null,
+        folder_contents: normalized.folderContents ?? [],
+        chat_mode: normalized.chatMode ?? null,
+        selection: normalized.selection ?? null,
+        open_paths: normalized.openPaths ?? [],
+        active_section: normalized.activeSection ?? null,
+        document_outline: normalized.documentOutline ?? [],
       },
     },
   );

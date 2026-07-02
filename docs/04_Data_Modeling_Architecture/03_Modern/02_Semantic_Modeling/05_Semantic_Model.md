@@ -1,92 +1,136 @@
 ---
 title: Semantic Model
-section: "05.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "05.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-07-01
 owner: architecture-team
-tags: []
+tags: [data-modeling, semantics, formal-model]
 canonical: true
 ---
+
 # Semantic Model
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 03.10 Semantic Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+Business semantic models express concepts in domain language; consumption layers expose entities for BI and APIs. A **formal semantic model** adds logical precision: classes, properties, constraints, and derivation rules that can be validated, versioned, and—when needed—serialized to RDF or other exchange formats. This is the **logical structure** of meaning, not the **physical graph** that stores it.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+This document defines formal semantic modeling. Graph storage, SPARQL, and triple-store operations belong in [Knowledge Graph Modeling](../03_Knowledge_Graph_Modeling/README.md).
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+A **semantic model** is a governed logical specification of classes (concepts), properties (attributes and relationships), constraints, and derivation rules that formalize business meaning—versioned, auditable, and optionally exportable to W3C RDF/OWL or SKOS without requiring graph deployment.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Scope
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+| In scope | Out of scope |
+| --- | --- |
+| Class, property, and constraint definitions | Triple-store selection and graph database ops |
+| Logical axioms and derivation rules | SPARQL query patterns and inference engines |
+| Versioning and change semantics | Ontology reasoner configuration |
+| SKOS/RDF serialization adjacency | Full ontology engineering lifecycle ([KG Ontology](../03_Knowledge_Graph_Modeling/01_Ontology.md)) |
+| Mapping to business semantic model and glossary | Industry ontology content (FIBO, etc.—see [Industry Reference Models](../04_Industry_Reference_Models/README.md)) |
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Core concepts
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+### Model elements
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+| Element | Description | Example |
+| --- | --- | --- |
+| **Class** | Formal concept with intensional definition | `Customer`, `InsurancePolicy` |
+| **Property** | Attribute or relationship on a class | `hasEffectiveDate`, `heldBy` |
+| **Constraint** | Rule limiting valid instances | `Policy.effectiveDate ≤ Policy.expirationDate` |
+| **Derivation rule** | Logical rule inferring new facts | `ActiveCustomer ≡ Customer ∧ hasTransactionWithin(90d)` |
+| **Enumeration** | Closed value set for a property | `PolicyStatus: {Active, Lapsed, Cancelled}` |
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+### Layering relative to adjacent artifacts
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+```mermaid
+flowchart TB
+  subgraph informal [Business-Readable]
+    Glossary[01 Business Glossary]
+    BSM[04 Business Semantic Model]
+  end
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+  subgraph formal [Formal Logical]
+    SM[05 Semantic Model]
+  end
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+  subgraph consume [Consumption]
+    SL[03 Semantic Layer]
+  end
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+  subgraph graph [Graph Deployment]
+    KG[03 Knowledge Graph Modeling]
+  end
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+  Glossary --> BSM
+  BSM --> SM
+  SM --> SL
+  SM -.->|optional export| KG
+```
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+### Boundary to Knowledge Graph Modeling
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+| Concern | Semantic Model (this document) | Knowledge Graph Modeling |
+| --- | --- | --- |
+| **Purpose** | Define logical meaning | Deploy and query meaning in graph form |
+| **Artifact** | Class/property/constraint spec | RDF/OWL files, triple stores, property graphs |
+| **Validation** | Logical consistency, constraint checks | Reasoning, graph algorithms, SPARQL |
+| **Consumers** | Modelers, integrators, catalog tools | Graph engineers, search, linked data apps |
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+Formal models **may be exported** to RDF/OWL/SKOS; graph sections document **how to store, query, and operate** those exports.
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+## Architecture pattern
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+### Class hierarchy example
+
+```
+Thing
+├── Party
+│   └── Customer
+│       ├── RetailCustomer
+│       └── CorporateCustomer
+└── Agreement
+    └── InsurancePolicy
+        ├── hasEffectiveDate (date)
+        ├── hasStatus (PolicyStatus)
+        └── heldBy → Customer (1..1)
+```
+
+### Constraint types
+
+| Type | Purpose | Example |
+| --- | --- | --- |
+| **Cardinality** | Limit property occurrences | Customer may hold 0..* policies |
+| **Domain/range** | Valid class for property ends | `heldBy` domain: Policy, range: Customer |
+| **Value constraint** | Restrict property values | Status must be in enumerated set |
+| **Temporal** | Time-bound validity | Definition effective from approval date |
+| **Cross-class** | Relate multiple classes | Lapsed policy cannot have open claims |
+
+## Modeling guidelines
+
+### Versioning
+
+- Semantic models are **versioned artifacts** (e.g., `sem-model-customer-v2.1`).
+- Breaking changes (class rename, constraint tightening) require governance review per [Semantic Governance](07_Semantic_Governance.md).
+- Maintain **deprecation mappings** from retired classes/properties to successors.
+
+### SKOS/RDF adjacency
+
+When exporting to W3C formats:
+
+- **SKOS** for concept schemes and term relationships (see [Semantic Interoperability](08_Semantic_Interoperability.md)).
+- **RDFS/OWL** for class hierarchies and formal constraints when graph deployment is planned.
+- Keep the **logical model canonical**; treat RDF as an export view, not the source of truth, unless the organization adopts graph-native authoring (then coordinate with KG section).
+
+### Single meaning principle
+
+Each class must trace to exactly one **glossary term** or explicitly document **context-specific subclasses** aligned with [Business Semantic Model](04_Business_Semantic_Model.md) bounded contexts.
+
+## Related sections
+
+- [Business Semantic Model](04_Business_Semantic_Model.md) — business-concept views and context maps
+- [Semantic Interoperability](08_Semantic_Interoperability.md) — cross-domain mappings and SKOS patterns
+- [Knowledge Graph Modeling](../03_Knowledge_Graph_Modeling/README.md) — RDF, ontology deployment, graph storage
+- [Semantic Standards](06_Semantic_Standards.md) — ISO/IEC 11179 registry alignment

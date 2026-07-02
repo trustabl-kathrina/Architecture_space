@@ -1,4 +1,8 @@
 import { mapExecutionStep, mapSendMessageResponse } from "@/features/ai/api/chatMappers";
+import {
+  normalizeRegenerateMessageRequest,
+  normalizeSendMessageRequest,
+} from "@/features/ai/lib/normalizeChatRequest";
 import { env } from "@/shared/config/env";
 import { ApiError } from "@/shared/api/client";
 import type { ChatStreamEvent, RegenerateMessageRequest, SendMessageRequest } from "@/shared/types/chat";
@@ -23,16 +27,21 @@ function mapStreamEvent(raw: Record<string, unknown>): ChatStreamEvent {
 function buildMessagePayload(
   request: SendMessageRequest | RegenerateMessageRequest,
 ): Record<string, unknown> {
+  const normalized =
+    "content" in request
+      ? normalizeSendMessageRequest(request)
+      : normalizeRegenerateMessageRequest(request);
+
   return {
-    document_path: request.documentPath ?? null,
-    folder_path: request.folderPath ?? null,
-    folder_plan: request.folderPlan ?? null,
-    folder_contents: request.folderContents ?? [],
-    chat_mode: request.chatMode ?? null,
-    selection: "selection" in request ? (request.selection ?? null) : null,
-    open_paths: request.openPaths ?? [],
-    active_section: request.activeSection ?? null,
-    document_outline: request.documentOutline ?? [],
+    document_path: normalized.documentPath ?? null,
+    folder_path: normalized.folderPath ?? null,
+    folder_plan: normalized.folderPlan ?? null,
+    folder_contents: normalized.folderContents ?? [],
+    chat_mode: normalized.chatMode ?? null,
+    selection: "selection" in normalized ? (normalized.selection ?? null) : null,
+    open_paths: normalized.openPaths ?? [],
+    active_section: normalized.activeSection ?? null,
+    document_outline: normalized.documentOutline ?? [],
   };
 }
 
@@ -43,7 +52,11 @@ async function consumeSseStream(
   if (!response.ok) {
     const text = await response.text();
     try {
-      const body = JSON.parse(text) as { code: string; message: string };
+      const body = JSON.parse(text) as {
+        code: string;
+        message: string;
+        details?: Record<string, unknown>;
+      };
       throw new ApiError(response.status, body);
     } catch (error) {
       if (error instanceof ApiError) {
@@ -117,14 +130,15 @@ export async function streamChatMessage(
   request: SendMessageRequest,
   onEvent: (event: ChatStreamEvent) => void,
 ): Promise<void> {
+  const normalized = normalizeSendMessageRequest(request);
   const response = await fetch(
     `${env.apiBaseUrl}/chat/conversations/${conversationId}/messages/stream`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
       body: JSON.stringify({
-        content: request.content,
-        ...buildMessagePayload(request),
+        content: normalized.content,
+        ...buildMessagePayload(normalized),
       }),
     },
   );
@@ -138,12 +152,13 @@ export async function streamRegenerateMessage(
   request: RegenerateMessageRequest,
   onEvent: (event: ChatStreamEvent) => void,
 ): Promise<void> {
+  const normalized = normalizeRegenerateMessageRequest(request);
   const response = await fetch(
     `${env.apiBaseUrl}/chat/conversations/${conversationId}/messages/${messageId}/regenerate/stream`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
-      body: JSON.stringify(buildMessagePayload(request)),
+      body: JSON.stringify(buildMessagePayload(normalized)),
     },
   );
 

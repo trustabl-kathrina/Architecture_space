@@ -190,7 +190,7 @@ class EditMessageRequest(BaseModel):
 class RegenerateMessageRequest(BaseModel):
     document_path: str | None = None
     folder_path: str | None = None
-    folder_plan: str | None = Field(default=None, max_length=16000)
+    folder_plan: str | None = Field(default=None, max_length=128000)
     folder_contents: list[str] = Field(default_factory=list)
     chat_mode: ChatMode | None = None
     selection: str | None = Field(default=None, max_length=4000)
@@ -208,7 +208,7 @@ class SendMessageRequest(BaseModel):
     content: str = Field(min_length=1, max_length=8000)
     document_path: str | None = None
     folder_path: str | None = None
-    folder_plan: str | None = Field(default=None, max_length=16000)
+    folder_plan: str | None = Field(default=None, max_length=128000)
     folder_contents: list[str] = Field(default_factory=list)
     chat_mode: ChatMode | None = None
     selection: str | None = Field(default=None, max_length=4000)
@@ -221,6 +221,7 @@ class SendMessageResponse(BaseModel):
     message: ChatMessageRecord
     change_plan: ChangePlan | None = None
     folder_plan_result: "FolderPlanResult | None" = None
+    folder_implement_result: "FolderImplementResult | None" = None
     user_message: ChatMessageRecord | None = None
 
 
@@ -259,6 +260,15 @@ class FolderPlanResult(BaseModel):
     target_structure: str = Field(min_length=1, description="ASCII folder tree for the section")
     reorganization: list[FolderReorganizationItem] = Field(default_factory=list)
     confidence: float = Field(ge=0.0, le=1.0, default=0.85)
+
+
+class FolderImplementResult(BaseModel):
+    summary: str = Field(min_length=1)
+    explanation: str = ""
+    applied_count: int = 0
+    skipped_count: int = 0
+    failed_count: int = 0
+    details: list[str] = Field(default_factory=list)
 
 
 class ChatStreamEventType(StrEnum):

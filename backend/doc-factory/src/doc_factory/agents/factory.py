@@ -16,7 +16,7 @@ from doc_factory.models.pipeline import (
     WriterAgentOutput,
 )
 from doc_factory.prompts.registry import load_prompt
-from doc_factory.tools.tavily_search import build_tavily_tool
+from doc_factory.tools.tavily_search import build_tavily_tools
 
 
 def _retry(settings: Settings) -> RetryConfig:
@@ -46,7 +46,7 @@ def build_research_agent(settings: Settings) -> LlmAgent:
         model=settings.gemini_model_flash,
         description="Researches topics via Tavily and synthesizes findings.",
         instruction=load_prompt("mvp/research.txt"),
-        tools=[build_tavily_tool()],
+        tools=build_tavily_tools(),
         output_key="research_output",
         output_schema=ResearchAgentOutput,
         retry_config=_retry(settings),

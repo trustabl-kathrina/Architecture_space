@@ -21,7 +21,7 @@ class SectionLineageEvent(BaseModel):
     id: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     chat_mode: ChatMode
-    event_type: Literal["folder_plan", "advisory", "change_plan", "user_message"]
+    event_type: Literal["folder_plan", "folder_implement", "advisory", "change_plan", "user_message"]
     agent: AgentName | None = None
     summary: str = Field(min_length=1)
     detail: str = ""

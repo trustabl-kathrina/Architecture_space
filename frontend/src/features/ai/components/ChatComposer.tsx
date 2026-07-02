@@ -111,6 +111,11 @@ export function ChatComposer({
           Plan mode will not write file changes — switch to Agent mode to update this document.
         </p>
       ) : null}
+      {activeTabKind === "folder" && chatMode === "plan" ? (
+        <p className="mt-1 text-center text-[11px] text-amber-400/90">
+          Plan mode designs structure only — switch to Agent mode and say &quot;implement the plan&quot; to create folders/files.
+        </p>
+      ) : null}
     </form>
   );
 }

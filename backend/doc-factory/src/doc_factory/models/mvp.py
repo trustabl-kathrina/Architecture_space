@@ -41,6 +41,10 @@ class SourceItem(BaseModel):
     url: str
     snippet: str
     query: str = ""
+    score: float | None = None
+    raw_content: str = ""
+    intent: str = ""
+    source_type: str = ""
 
 
 class ResearchAgentOutput(BaseModel):

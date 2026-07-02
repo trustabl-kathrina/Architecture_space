@@ -279,6 +279,9 @@ export function useChat(activeTab: WorkbenchTab | null) {
                 if (response.folderPlanResult) {
                   applyFolderPlanResult(response.folderPlanResult);
                 }
+                if (response.folderImplementResult) {
+                  void queryClient.invalidateQueries({ queryKey: workspaceKeys.all });
+                }
                 if (activeTab) {
                   void queryClient.invalidateQueries({
                     queryKey: chatKeys.sectionContext(activeTab.kind, activeTab.path),

@@ -7,6 +7,11 @@ import uuid
 from collections.abc import AsyncIterator, Callable
 from datetime import UTC, datetime
 
+from kew_api.ai.folder_implement_runner import (
+    _requests_folder_implement,
+    apply_folder_plan,
+    format_folder_implement_message,
+)
 from kew_api.ai.folder_plan_runner import (
     format_folder_plan_message,
     render_tree_text,
@@ -30,6 +35,7 @@ from kew_api.schemas.chat import (
     ChatStreamEvent,
     ChatStreamEventType,
     Conversation,
+    FolderImplementResult,
     FolderPlanResult,
     IntentResult,
     SendMessageResponse,
@@ -362,6 +368,21 @@ class ChatService:
                 )
 
             run_folder_plan = folder_plan_scope and intent.requires_folder_plan
+
+            effective_folder_plan = (folder_plan or "").strip()
+            if not effective_folder_plan and folder_path:
+                section_ctx = self._section_context.get("folder", folder_path or "")
+                if section_ctx and section_ctx.last_target_structure:
+                    effective_folder_plan = (
+                        f"# Target structure\n\n{section_ctx.last_target_structure.strip()}\n"
+                    )
+
+            run_folder_implement = (
+                folder_path is not None
+                and active_chat_mode == ChatMode.AGENT
+                and bool(effective_folder_plan)
+                and _requests_folder_implement(content)
+            )
             cross_mode_context = self._build_cross_mode_context(
                 conversation,
                 chat_mode=active_chat_mode,
@@ -385,18 +406,24 @@ class ChatService:
                 ),
             )
             respond_step = trail.set_respond_step(
-                agent=AgentName.PLANNER
+                agent=AgentName.EDITOR
+                if run_folder_implement
+                else AgentName.PLANNER
                 if intent.requires_change_plan or run_folder_plan
                 else AgentName.ADVISOR,
                 label=(
-                    "Multi-agent folder planning"
+                    "Implement planned folder structure"
+                    if run_folder_implement
+                    else "Multi-agent folder planning"
                     if run_folder_plan
                     else "Plan and draft document changes"
                     if intent.requires_change_plan
                     else "Draft advisory answer"
                 ),
                 detail=(
-                    "Research → analyze → expert → synthesize"
+                    "Sync disk to Planned structure — create missing files, archive extras"
+                    if run_folder_implement
+                    else "Research → analyze → expert → synthesize"
                     if run_folder_plan
                     else "Planner and editor will propose an approval-gated change plan"
                     if intent.requires_change_plan
@@ -413,10 +440,37 @@ class ChatService:
 
             change_plan: ChangePlan | None = None
             folder_plan_result: FolderPlanResult | None = None
+            folder_implement_result: FolderImplementResult | None = None
             plan_agent_inputs: FolderPlanAgentInputs | None = None
             assistant_content = ""
 
-            if run_folder_plan:
+            if run_folder_implement:
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.TRAIL_STEP,
+                    step=trail.start(STEP_RESPOND, detail="Applying folder plan on disk…"),
+                )
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.STATUS,
+                    message="Agent: implementing planned structure…",
+                )
+                folder_implement_result = apply_folder_plan(
+                    folder_path=folder_path or "",
+                    folder_plan=effective_folder_plan,
+                    workspace=self._workspace,
+                    settings=self._settings,
+                )
+                yield ChatStreamEvent(
+                    type=ChatStreamEventType.TRAIL_STEP,
+                    step=trail.complete(
+                        STEP_RESPOND,
+                        label="Folder plan implemented",
+                        detail=folder_implement_result.summary,
+                        target_path=folder_path,
+                    ),
+                )
+                assistant_content = format_folder_implement_message(folder_implement_result)
+
+            elif run_folder_plan:
                 queued_folder_events: list[ChatStreamEvent] = []
 
                 def queue_folder_event(event: ChatStreamEvent) -> None:
@@ -603,6 +657,7 @@ class ChatService:
                 chat_mode=active_chat_mode,
                 assistant_content=assistant_content,
                 folder_plan_result=folder_plan_result,
+                folder_implement_result=folder_implement_result,
                 change_plan=change_plan,
                 agent_inputs=plan_agent_inputs if run_folder_plan else None,
             )
@@ -611,6 +666,7 @@ class ChatService:
                 message=assistant,
                 change_plan=change_plan,
                 folder_plan_result=folder_plan_result,
+                folder_implement_result=folder_implement_result,
                 user_message=user_message,
             )
             yield ChatStreamEvent(type=ChatStreamEventType.DONE, response=response)
@@ -1044,6 +1100,7 @@ class ChatService:
         chat_mode: ChatMode | None,
         assistant_content: str,
         folder_plan_result: FolderPlanResult | None,
+        folder_implement_result: FolderImplementResult | None,
         change_plan: ChangePlan | None,
         agent_inputs: FolderPlanAgentInputs | None = None,
     ) -> None:
@@ -1052,6 +1109,18 @@ class ChatService:
         mode = chat_mode or conversation.chat_mode or ChatMode.PLAN
         scope_kind = conversation.scope_kind
         scope_path = conversation.scope_path
+
+        if folder_implement_result is not None:
+            self._section_context.append_event(
+                scope_kind=scope_kind,
+                scope_path=scope_path,
+                chat_mode=mode,
+                event_type="folder_implement",
+                agent=AgentName.EDITOR,
+                summary=folder_implement_result.summary,
+                detail=folder_implement_result.explanation[:2000],
+            )
+            return
 
         if folder_plan_result is not None:
             self._section_context.record_folder_plan(

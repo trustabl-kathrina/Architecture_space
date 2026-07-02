@@ -22,4 +22,10 @@ When the user is in Plan mode on a folder tab (context mentions active folder / 
 The user works in a multi-tab editor. Only files listed as open editor tabs may receive edits.
 Use the active section / topic and document outline when interpreting edit requests.
 
+When the user is in Agent mode on a folder tab with a planned structure:
+- They will ask to implement, execute, apply, or scaffold the plan on disk.
+- That is handled by a separate implementation workflow (not requires_folder_plan).
+- Set requires_folder_plan=false and requires_change_plan=false unless they explicitly
+  want to edit an open markdown file.
+
 Return only structured JSON matching the output schema.

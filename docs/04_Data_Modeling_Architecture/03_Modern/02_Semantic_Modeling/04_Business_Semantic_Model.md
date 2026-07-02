@@ -1,92 +1,132 @@
 ---
 title: Business Semantic Model
-section: "05.01"
-status: stub
-template: evaluation
-last_reviewed: 2026-06-18
+section: "05.03.02"
+status: complete
+template: concept
+last_reviewed: 2026-07-01
 owner: architecture-team
-tags: []
+tags: [data-modeling, semantics, business-model]
 canonical: true
 ---
+
 # Business Semantic Model
 
-## Problem Statement
-Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 03.10 Semantic Architecture.
+## Context
 
-## Business Use Cases
-- **Use Case 1**: Description of how this is applied in a business scenario.
-- **Use Case 2**: Description of how this is applied in a business scenario.
+A glossary defines *what terms mean*; a semantic layer defines *how data is consumed*. Between them sits a gap: **how business concepts relate to each other** in domain language—without formal ontology notation or physical schema detail. A **business semantic model** captures entity-relationship views, domain maps, and bounded contexts that business stakeholders and domain architects can read and validate.
 
-## Architecture Pattern
-Describe the primary architectural pattern(s) utilized. Provide diagrams or structural models where applicable.
+This document defines business-concept modeling from a **data modeling perspective**. Formal class/property structures are in [Semantic Model](05_Semantic_Model.md); RDF and graph deployment are in [Knowledge Graph Modeling](../03_Knowledge_Graph_Modeling/README.md).
 
-## Technology Options
-List the available open-source and commercial technology options for implementing this architecture.
+## Definition
 
-## Cloud Native Options
-Specific AWS, Azure, and Google Cloud native services that align with this architecture.
+A **business semantic model** is a governed, business-readable representation of concepts, their attributes, and relationships within a domain or bounded context—linked to glossary terms and downstream semantic models, but independent of physical storage or formal ontology syntax.
 
-## Cloud Native Matrix
-| Feature / Cloud | AWS | Azure | GCP |
-| --- | --- | --- | --- |
-| Managed Service | | | |
-| Scalability | | | |
-| Integration | | | |
+## Scope
 
-## Top 10 Vendor Options
-1. Vendor A
-2. Vendor B
-3. Vendor C
-4. Vendor D
-5. Vendor E
-6. Vendor F
-7. Vendor G
-8. Vendor H
-9. Vendor I
-10. Vendor J
+| In scope | Out of scope |
+| --- | --- |
+| Business-concept ER diagrams and domain maps | Formal ontology classes and axioms ([05](05_Semantic_Model.md)) |
+| Bounded context boundaries and context maps | RDF triples and graph storage ([KG section](../03_Knowledge_Graph_Modeling/README.md)) |
+| Concept-to-glossary linkage | Physical warehouse schema design |
+| TOGAF-style business information maps | Industry reference model content (cross-link to [Industry Reference Models](../04_Industry_Reference_Models/README.md)) |
+| Relationship to semantic layer entities | BI tool-specific modeling |
 
-## Comparison Matrix
-| Feature / Vendor | Option A | Option B | Option C |
-| --- | --- | --- | --- |
-| Feature 1 | | | |
-| Feature 2 | | | |
+## Core concepts
 
-## Benchmark Results
-Summarize any performance, latency, or throughput benchmarks available for the options.
+### Model components
 
-## POC Results
-Document findings from internal Proof of Concepts, including successful patterns and limitations.
+| Component | Description | Example |
+| --- | --- | --- |
+| **Business concept** | Named idea in the domain; maps to glossary term | Customer, Policy, Claim |
+| **Concept attribute** | Descriptive or identifying property of a concept | Policy Effective Date, Customer Segment |
+| **Relationship** | Business association between concepts | Customer *holds* Policy; Policy *generates* Claim |
+| **Bounded context** | Scope where a concept has one unambiguous meaning | Sales context vs. Finance context for "Customer" |
+| **Domain map** | Visual overview of contexts and their relationships | Context map across Sales, Billing, Claims |
 
-## Cost Comparison
-Evaluate the pricing models, Total Cost of Ownership (TCO), and FinOps considerations.
+### Concept-to-glossary linkage
 
-## Security Comparison
-Analyze compliance, encryption, IAM, and other security capabilities.
+Every concept in a business semantic model must reference a **glossary term ID** from [Business Glossary](01_Business_Glossary.md). The model adds **structural context** (relationships, cardinality, context boundaries); the glossary holds the **authoritative definition**.
 
-## Scalability Comparison
-Compare how each option handles data volume, user concurrency, and geographic distribution.
+| Glossary provides | Business semantic model adds |
+| --- | --- |
+| Preferred name and definition | Relationships to other concepts |
+| Synonyms and hierarchies | Cardinality and optionality |
+| Steward and status | Bounded context assignment |
+| Linked metrics | Concept groupings and domain boundaries |
 
-## Operational Complexity
-Assess the Day 2 operations, maintenance overhead, and managed service availability.
+### Bounded contexts
 
-## Implementation Effort
-Estimate the time, skill requirements, and resources needed to deploy.
+When the same word means different things in different domains, model them as **separate concepts in separate contexts** rather than forcing a single overloaded definition.
 
-## Enterprise Readiness
-Evaluate SLAs, support models, disaster recovery, and integration capabilities.
+```mermaid
+flowchart TB
+  subgraph sales [Sales Context]
+    SC[Sales Customer]
+  end
 
-## AI Readiness
-How well does this support or integrate with AI/ML workloads and data pipelines?
+  subgraph finance [Finance Context]
+    FC[Financial Customer]
+  end
 
-## Agentic Readiness
-Does this support autonomous agents, tool calling, and dynamic orchestration?
+  subgraph claims [Claims Context]
+    CC[Claimant]
+  end
 
-## Recommendation
-State the primary recommended approach or technology stack based on the above evaluations.
+  SC -.->|maps to| FC
+  SC -.->|may differ from| CC
+```
 
-## Best Option by Scenario
-- **Scenario A**: Option 1 (e.g., High throughput, low latency)
-- **Scenario B**: Option 2 (e.g., Cost-sensitive, batch processing)
+Context maps document **upstream/downstream** and **partnership** relationships between domains (aligned with domain-driven design context mapping).
 
-## ADR Reference
-Link to relevant Architecture Decision Records (ADRs) that formally document choices made in this domain.
+## Architecture pattern
+
+```mermaid
+flowchart LR
+  subgraph glossary [Business Glossary]
+    Terms[Term Definitions]
+  end
+
+  subgraph bsm [Business Semantic Model]
+    Concepts[Business Concepts]
+    Contexts[Bounded Contexts]
+    Maps[Domain and ER Maps]
+  end
+
+  subgraph downstream [Downstream Semantics]
+    SL[Semantic Layer]
+    SM[Semantic Model]
+    Metrics[Metrics Layer]
+  end
+
+  Terms --> Concepts
+  Concepts --> Maps
+  Maps --> SL
+  Concepts --> SM
+  Terms --> Metrics
+```
+
+## Modeling guidelines
+
+### ER diagram conventions
+
+- Use **business language** labels; avoid physical table or column names.
+- Show **cardinality** (1:1, 1:N, N:M) at the business level.
+- Distinguish **identifying** vs. **descriptive** attributes.
+- Mark concepts that span contexts with explicit context labels.
+
+### Domain map conventions
+
+- One map per **bounded context** or **subdomain**.
+- Show **context relationships**: shared kernel, customer-supplier, conformist, anti-corruption layer.
+- Link each context to its **glossary domain** and **steward**.
+
+### Alignment with TOGAF
+
+Business semantic models support TOGAF **Phase B (Business Architecture)** information maps: they describe business entities and relationships that inform data architecture without prescribing implementation.
+
+## Related sections
+
+- [Business Glossary](01_Business_Glossary.md) — authoritative term definitions
+- [Semantic Layer](03_Semantic_Layer.md) — logical consumption model derived from concepts
+- [Semantic Model](05_Semantic_Model.md) — formal class/property structure
+- [Industry Reference Models](../04_Industry_Reference_Models/README.md) — vertical reference alignment

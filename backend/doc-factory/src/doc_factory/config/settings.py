@@ -53,6 +53,10 @@ class Settings(BaseSettings):
 
     # Research
     tavily_max_results: int = 5
+    tavily_deep_max_results: int = 10
+    tavily_deep_max_queries: int = 8
+    tavily_deep_extract_urls: int = 3
+    tavily_snippet_max_chars: int = 4000
     research_cache_ttl_days: int = 7
     research_query_count: int = 10
 

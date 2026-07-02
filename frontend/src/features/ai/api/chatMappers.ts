@@ -4,6 +4,7 @@ import type {
   ChangePlanHunk,
   ChatMessage,
   Conversation,
+  FolderImplementResult,
   FolderPlanResult,
   FolderReorganizationItem,
   SectionChange,
@@ -121,6 +122,17 @@ export function mapFolderPlanResult(raw: Record<string, unknown>): FolderPlanRes
   };
 }
 
+export function mapFolderImplementResult(raw: Record<string, unknown>): FolderImplementResult {
+  return {
+    summary: String(raw.summary ?? ""),
+    explanation: String(raw.explanation ?? ""),
+    appliedCount: Number(raw.applied_count ?? 0),
+    skippedCount: Number(raw.skipped_count ?? 0),
+    failedCount: Number(raw.failed_count ?? 0),
+    details: Array.isArray(raw.details) ? raw.details.map((item) => String(item)) : [],
+  };
+}
+
 export function mapSendMessageResponse(raw: Record<string, unknown>): SendMessageResponse {
   return {
     message: mapChatMessage(raw.message as Record<string, unknown>),
@@ -129,6 +141,9 @@ export function mapSendMessageResponse(raw: Record<string, unknown>): SendMessag
       : null,
     folderPlanResult: raw.folder_plan_result
       ? mapFolderPlanResult(raw.folder_plan_result as Record<string, unknown>)
+      : null,
+    folderImplementResult: raw.folder_implement_result
+      ? mapFolderImplementResult(raw.folder_implement_result as Record<string, unknown>)
       : null,
     userMessage: raw.user_message
       ? mapChatMessage(raw.user_message as Record<string, unknown>)

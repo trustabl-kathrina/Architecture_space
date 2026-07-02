@@ -1,4 +1,33 @@
+import { ApiError } from "@/shared/api/client";
+
+function formatValidationError(error: ApiError): string | null {
+  if (error.code !== "validation_error") {
+    return null;
+  }
+  const rawErrors = error.details.errors;
+  if (!Array.isArray(rawErrors) || rawErrors.length === 0) {
+    return error.message;
+  }
+  const parts = rawErrors.map((entry) => {
+    const record = entry as { loc?: unknown[]; msg?: string };
+    const field = (record.loc ?? [])
+      .filter((part) => part !== "body")
+      .map(String)
+      .join(".");
+    const label = field || "request";
+    return `${label}: ${record.msg ?? "invalid value"}`;
+  });
+  return `Request validation failed — ${parts.join("; ")}`;
+}
+
 export function formatChatError(error: unknown): string {
+  if (error instanceof ApiError) {
+    const validation = formatValidationError(error);
+    if (validation) {
+      return validation;
+    }
+  }
+
   if (!(error instanceof Error)) {
     return "Something went wrong. Please try again.";
   }
