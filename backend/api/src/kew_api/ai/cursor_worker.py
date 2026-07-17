@@ -40,7 +40,10 @@ def execute_cursor_prompt(
         client.close()
 
     if result.status == "error":
+        detail = (result.result or "").strip()
         msg = f"Cursor agent run failed (run_id={result.id})"
+        if detail:
+            msg = f"{msg}: {detail[:500]}"
         raise RuntimeError(msg)
 
     return result.result

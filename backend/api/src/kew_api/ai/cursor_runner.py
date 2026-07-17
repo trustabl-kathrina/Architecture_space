@@ -28,6 +28,11 @@ _TRANSIENT_CURSOR_MARKERS = (
     "timeout",
     "rate limit",
     "agent busy",
+    "run failed",
+    "connection",
+    "connect call failed",
+    "broken pipe",
+    "reset by peer",
 )
 
 
@@ -38,11 +43,19 @@ def _is_transient_cursor_error(message: str) -> bool:
 
 def _cursor_failure_message(exc: Exception) -> str:
     message = str(exc)
-    if "internal error" in message.lower():
+    lowered = message.lower()
+    if "internal error" in lowered:
         return (
             "Cursor AI is temporarily unavailable (internal error). "
             "Verify CURSOR_API_KEY at https://cursor.com/dashboard/api-keys, "
             "retry in a moment, or set GEMINI_API_KEY for automatic fallback."
+        )
+    if "run failed" in lowered:
+        return (
+            f"Cursor AI could not complete the request ({message}). "
+            "The bridge was restarted automatically — please retry. "
+            "If this persists, verify CURSOR_API_KEY at "
+            "https://cursor.com/dashboard/api-keys or set GEMINI_API_KEY for fallback."
         )
     return message
 
@@ -67,14 +80,27 @@ async def _invoke_cursor_prompt(
     endpoint_url: str,
     endpoint_token: str,
 ) -> str:
-    """Run Cursor Agent.prompt with retries on transient bridge/API failures."""
+    """Run Cursor Agent.prompt with retries on transient bridge/API failures.
+
+    On the final retry the bridge daemon is restarted first: consecutive
+    "run failed" errors usually mean the daemon's Cursor connection went stale.
+    """
     loop = asyncio.get_running_loop()
     pool = get_process_pool()
     last_error: Exception | None = None
+    last_attempt = len(_CURSOR_RETRY_DELAYS_SEC) - 1
 
     for attempt, delay in enumerate(_CURSOR_RETRY_DELAYS_SEC):
         if delay:
             await asyncio.sleep(delay)
+        if attempt == last_attempt and last_error is not None:
+            try:
+                logger.warning("Restarting Cursor bridge daemon before final retry")
+                shutdown_bridge_daemon()
+                endpoint = await loop.run_in_executor(None, get_bridge_endpoint, workspace)
+                endpoint_url, endpoint_token = endpoint.url, endpoint.auth_token
+            except Exception as exc:
+                raise AiRunnerError(f"Cursor bridge restart failed: {exc}") from exc
         try:
             raw = await loop.run_in_executor(
                 pool,
@@ -88,7 +114,7 @@ async def _invoke_cursor_prompt(
             )
         except RuntimeError as exc:
             last_error = exc
-            if _is_transient_cursor_error(str(exc)) and attempt < len(_CURSOR_RETRY_DELAYS_SEC) - 1:
+            if _is_transient_cursor_error(str(exc)) and attempt < last_attempt:
                 logger.warning(
                     "Cursor prompt failed (attempt %s/%s), retrying: %s",
                     attempt + 1,
