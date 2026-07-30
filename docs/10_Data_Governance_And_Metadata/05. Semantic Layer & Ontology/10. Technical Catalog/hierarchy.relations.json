@@ -1,0 +1,101 @@
+{
+  "contract_id": "ctr-tech-hierarchy-v1",
+  "version": "1.0.0",
+  "status": "draft",
+  "kind": "technical_catalog_hierarchy",
+  "title": "Technical Catalog — Hierarchy And Relations Contract",
+  "doc": "01. Hierarchy And Relations.md",
+  "canonical_chain": ["Database", "Schema", "Table", "Column"],
+  "qualified_name_pattern": "{database}.{schema}.{table}.{column}",
+  "relations": [
+    {
+      "id": "rel-db-has-schema",
+      "from": "Database",
+      "predicate": "has",
+      "display_name": "has Schema",
+      "to": "Schema",
+      "public_id": "TechnologyAssetHasSchema",
+      "cardinality": { "min": 0, "max": null },
+      "normative": true,
+      "inverse": {
+        "from": "Schema",
+        "predicate": "belongs_to",
+        "display_name": "belongs to Database",
+        "to": "Database",
+        "cardinality": { "min": 1, "max": 1 }
+      }
+    },
+    {
+      "id": "rel-schema-contains-table",
+      "from": "Schema",
+      "predicate": "contains",
+      "display_name": "contains Table",
+      "to": "Table",
+      "public_id": "SchemaContainsTable",
+      "cardinality": { "min": 0, "max": null },
+      "normative": true,
+      "inverse": {
+        "from": "Table",
+        "predicate": "is_part_of",
+        "display_name": "is part of Schema",
+        "to": "Schema",
+        "cardinality": { "min": 1, "max": 1 }
+      }
+    },
+    {
+      "id": "rel-table-contains-column",
+      "from": "Table",
+      "predicate": "contains",
+      "display_name": "contains Column",
+      "to": "Column",
+      "public_id": "TableContainsColumn",
+      "cardinality": { "min": 1, "max": null },
+      "normative": true,
+      "inverse": {
+        "from": "Column",
+        "predicate": "is_part_of",
+        "display_name": "is part of Table",
+        "to": "Table",
+        "public_id": "ColumnIsPartOfTable",
+        "cardinality": { "min": 1, "max": 1 }
+      }
+    }
+  ],
+  "legacy_relations": [
+    {
+      "id": "rel-db-contains-table-legacy",
+      "from": "Database",
+      "predicate": "contains",
+      "display_name": "contains Table",
+      "to": "Table",
+      "public_id": "TableIsPartOfDatabase",
+      "normative": false,
+      "guidance": "Do not use as primary path. Prefer Database → Schema → Table."
+    }
+  ],
+  "rules": [
+    "Every Schema must belong to exactly one Database.",
+    "Every Table must belong to exactly one Schema.",
+    "Every Column must belong to exactly one Table.",
+    "Do not use Database → contains → Table as the primary path.",
+    "Control Plane represents mappings typically target Table (entity) and Column (property)."
+  ],
+  "asset_type_contracts": [
+    {
+      "contract_id": "ctr-tech-type-database",
+      "file": "Database/contract.json"
+    },
+    {
+      "contract_id": "ctr-tech-type-schema",
+      "file": "Schema/contract.json"
+    },
+    {
+      "contract_id": "ctr-tech-type-table",
+      "file": "Table/contract.json"
+    },
+    {
+      "contract_id": "ctr-tech-type-column",
+      "file": "Column/contract.json"
+    }
+  ]
+}

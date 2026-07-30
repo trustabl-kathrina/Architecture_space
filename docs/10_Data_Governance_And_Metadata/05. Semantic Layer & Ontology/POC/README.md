@@ -22,7 +22,8 @@ cd enterprise-governance-grid && npm install && npm run dev
 | [`examples/pitch-concepts.json`](./examples/pitch-concepts.json) | Concept cards for the site |
 | [`examples/customer-context-graph.json`](./examples/customer-context-graph.json) | Traversable KG |
 | [`examples/customer-contracts.json`](./examples/customer-contracts.json) | Node contracts |
-| [`examples/tmforum.json`](./examples/tmforum.json) | SID engine examples |
+| [`docs/contracts/technical/`](./docs/contracts/technical/) | Linkable technical asset contracts |
+| [`examples/technical-catalog-assets.json`](./examples/technical-catalog-assets.json) | Tech catalog inventory machine source |
 | [`enterprise-governance-grid/`](./enterprise-governance-grid/) | Vite + React site |
 
 ## Pitch path (on site)

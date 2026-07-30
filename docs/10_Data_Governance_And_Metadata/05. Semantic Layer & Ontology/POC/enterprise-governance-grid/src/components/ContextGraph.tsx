@@ -18,6 +18,7 @@ import '@xyflow/react/dist/style.css'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import graphData from '../data/customer-context-graph.json'
 import contractsData from '../data/customer-contracts.json'
+import techCatalog from '../data/technical-catalog-assets.json'
 import { Section } from './Section'
 
 type GraphNodeData = {
@@ -223,6 +224,33 @@ function ContractInspector({
       ? contractsData.contracts[node.contract_ref as keyof typeof contractsData.contracts]
       : null
 
+  const techAsset = useMemo(() => {
+    if (!node) return null
+    return (
+      techCatalog.assets.find(
+        (a) => a.graph_node === node.id || a.contract_id === node.contract_ref,
+      ) ?? null
+    )
+  }, [node])
+
+  const techLinks = useMemo(() => {
+    if (!techAsset?.links) return [] as { rel: string; id: string; label: string; graphNode?: string }[]
+    const out: { rel: string; id: string; label: string; graphNode?: string }[] = []
+    for (const [rel, val] of Object.entries(techAsset.links)) {
+      const items = Array.isArray(val) ? val : [val]
+      for (const id of items) {
+        const linked = techCatalog.assets.find((a) => a.id === id)
+        out.push({
+          rel,
+          id,
+          label: linked?.name ?? id,
+          graphNode: linked?.graph_node ?? undefined,
+        })
+      }
+    }
+    return out
+  }, [techAsset])
+
   const neighbors = useMemo(() => {
     if (!selectedId) return []
     return graphData.edges
@@ -254,6 +282,12 @@ function ContractInspector({
         <p className="eyebrow">{node.type} · {node.natco}</p>
         <h3 className="mt-2 font-display text-xl font-bold text-[var(--color-foam)]">{node.label}</h3>
         <p className="mt-1 text-sm text-[var(--color-mist)]">{node.subtitle}</p>
+        {techAsset ? (
+          <p className="mt-3 font-mono text-[10px] text-[var(--color-brass-bright)]">
+            {techAsset.contract_id} · {techAsset.id}
+            {techAsset.doc ? ` · docs/contracts/technical/${techAsset.doc}` : ''}
+          </p>
+        ) : null}
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 py-4">
@@ -274,6 +308,33 @@ function ContractInspector({
             </li>
           ))}
         </ul>
+
+        {techLinks.length > 0 ? (
+          <div className="mt-6">
+            <p className="eyebrow mb-3">Technical catalog links</p>
+            <ul className="space-y-2">
+              {techLinks.map((l) => (
+                <li key={`${l.rel}-${l.id}`}>
+                  {l.graphNode ? (
+                    <button
+                      type="button"
+                      onClick={() => onSelectNeighbor(l.graphNode!)}
+                      className="w-full border border-[var(--color-brass)]/30 bg-[var(--color-ink)] px-3 py-2 text-left hover:border-[var(--color-brass)]/60"
+                    >
+                      <span className="font-mono text-[10px] text-[var(--color-brass)]">{l.rel}</span>
+                      <span className="mt-1 block text-sm text-[var(--color-foam)]">{l.label}</span>
+                    </button>
+                  ) : (
+                    <div className="border border-[var(--color-line)] px-3 py-2">
+                      <span className="font-mono text-[10px] text-[var(--color-brass)]">{l.rel}</span>
+                      <span className="mt-1 block text-sm text-[var(--color-mist)]">{l.label}</span>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         {contract ? (
           <div className="mt-6">
