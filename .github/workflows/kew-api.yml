@@ -1,0 +1,26 @@
+name: KEW API CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      KEW_API_AI_MOCK_MODE: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install kew-api
+        run: pip install -e "backend/api[dev]"
+
+      - name: Run API tests
+        run: pytest backend/api/tests -q
