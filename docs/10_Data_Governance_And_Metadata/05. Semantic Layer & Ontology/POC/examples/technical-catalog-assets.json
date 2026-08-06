@@ -1,249 +1,294 @@
 {
   "meta": {
-    "title": "Technical Catalog — Customer Domain Asset Inventory",
+    "title": "Technical Catalog — Multi-NATCO Customer Sources + Curated Hub",
     "domain": "customer",
     "sid_version": "R20.0",
     "catalog_sor": "Collibra / Dataplex",
-    "control_plane_role": "Mapping Engine represents → global SID concepts",
+    "control_plane_role": "represents → local NATCO concept AND global SID Customer",
+    "natcos": [
+      "natco-de",
+      "natco-at",
+      "natco-hr",
+      "natco-hu",
+      "natco-pl",
+      "global"
+    ],
     "doc_root": "POC/docs/contracts/technical"
   },
   "assets": [
     {
-      "id": "asset-tbl-crm-customer",
-      "contract_id": "ctr-tech-crm-customer",
+      "id": "asset-tbl-de-customer",
+      "contract_id": "ctr-tech-de-table",
       "kind": "table",
-      "name": "crm.customer",
-      "qualified_name": "projects/de-lake/datasets/crm/tables/customer",
+      "name": "crm_de.public.kunde",
+      "qualified_name": "crm_de.public.kunde",
       "natco": "natco-de",
-      "source_system": "collibra",
-      "catalog_source_id": "col-asset-de-crm-customer-001",
-      "doc": "tables/crm.customer.md",
-      "graph_node": "tbl-crm-customer",
-      "represents": ["global/customer"],
+      "source_system": "crm-de",
+      "graph_node": "tbl-de-customer",
+      "represents_local": [
+        "natco-de/kunde"
+      ],
+      "represents": [
+        "global/Customer"
+      ],
       "links": {
-        "columns": ["asset-col-crm-party-id", "asset-col-crm-email", "asset-col-crm-status"],
-        "feeds": ["asset-pipe-c360", "asset-topic-cdc"],
-        "semantics": ["ctr-sem-customer"],
-        "mappings": ["map-tech-de-crm-customer-001"]
+        "columns": [
+          "asset-col-de-id"
+        ],
+        "feeds": [
+          "asset-pipe-c360"
+        ],
+        "semantics_local": [
+          "ctr-sem-de-entity"
+        ],
+        "semantics": [
+          "ctr-sem-customer"
+        ]
       }
     },
     {
-      "id": "asset-col-crm-party-id",
-      "contract_id": "ctr-tech-col-party-id",
+      "id": "asset-col-de-id",
+      "contract_id": "ctr-tech-de-col",
       "kind": "column",
-      "name": "crm.customer.party_id",
-      "qualified_name": "projects/de-lake/datasets/crm/tables/customer/columns/party_id",
+      "name": "crm_de.public.kunde.kundennummer",
+      "qualified_name": "crm_de.public.kunde.kundennummer",
       "natco": "natco-de",
-      "source_system": "collibra",
-      "parent_table": "asset-tbl-crm-customer",
-      "doc": "columns/crm.customer.party_id.md",
-      "graph_node": "col-src-party-id",
-      "represents": ["global/customer-identifier"],
+      "parent_table": "asset-tbl-de-customer",
+      "graph_node": "col-de-id",
+      "represents_local": [
+        "natco-de/kundennummer"
+      ],
+      "represents": [
+        "global/CustomerIdentification"
+      ],
       "links": {
-        "table": "asset-tbl-crm-customer",
-        "flowsTo": ["asset-col-c360-customer-id"],
-        "semantics": ["ctr-sem-customer-id"]
+        "table": "asset-tbl-de-customer",
+        "flowsTo": [
+          "asset-col-c360-customer-id"
+        ],
+        "semantics": [
+          "ctr-sem-customer-id"
+        ]
       }
     },
     {
-      "id": "asset-col-crm-email",
-      "contract_id": "ctr-tech-col-crm-email",
-      "kind": "column",
-      "name": "crm.customer.email",
-      "qualified_name": "projects/de-lake/datasets/crm/tables/customer/columns/email",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "parent_table": "asset-tbl-crm-customer",
-      "doc": "columns/crm.customer.email.md",
-      "graph_node": null,
-      "represents": [],
-      "classification": "PII",
-      "links": {
-        "table": "asset-tbl-crm-customer",
-        "classifiedAs": ["ctr-gov-class-pii"]
-      }
-    },
-    {
-      "id": "asset-col-crm-status",
-      "contract_id": "ctr-tech-col-crm-status",
-      "kind": "column",
-      "name": "crm.customer.status",
-      "qualified_name": "projects/de-lake/datasets/crm/tables/customer/columns/status",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "parent_table": "asset-tbl-crm-customer",
-      "doc": "columns/crm.customer.status.md",
-      "graph_node": null,
-      "represents": [],
-      "links": { "table": "asset-tbl-crm-customer" }
-    },
-    {
-      "id": "asset-tbl-billing-account",
-      "contract_id": "ctr-tech-billing-account",
+      "id": "asset-tbl-at-customer",
+      "contract_id": "ctr-tech-at-table",
       "kind": "table",
-      "name": "billing.account",
-      "qualified_name": "ord.billing.account",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "catalog_source_id": "col-asset-de-billing-account-001",
-      "doc": "tables/billing.account.md",
-      "graph_node": "tbl-billing-account",
-      "represents": ["global/customer-account"],
+      "name": "crm_at.dbo.Kunde",
+      "qualified_name": "crm_at.dbo.Kunde",
+      "natco": "natco-at",
+      "source_system": "crm-at",
+      "graph_node": "tbl-at-customer",
+      "represents_local": [
+        "natco-at/kunde"
+      ],
+      "represents": [
+        "global/Customer"
+      ],
       "links": {
-        "columns": ["asset-col-billing-account-id", "asset-col-billing-customer-ref", "asset-col-billing-cycle"],
-        "feeds": ["asset-pipe-c360"],
-        "semantics": ["ctr-sem-customer-account"]
+        "columns": [
+          "asset-col-at-id"
+        ],
+        "feeds": [
+          "asset-pipe-c360"
+        ],
+        "semantics_local": [
+          "ctr-sem-at-entity"
+        ],
+        "semantics": [
+          "ctr-sem-customer"
+        ]
       }
     },
     {
-      "id": "asset-col-billing-account-id",
-      "contract_id": "ctr-tech-col-billing-account-id",
+      "id": "asset-col-at-id",
+      "contract_id": "ctr-tech-at-col",
       "kind": "column",
-      "name": "billing.account.account_id",
-      "qualified_name": "ord.billing.account.account_id",
-      "natco": "natco-de",
-      "parent_table": "asset-tbl-billing-account",
-      "doc": "columns/billing.account.account_id.md",
-      "represents": ["global/customer-account"],
+      "name": "crm_at.dbo.Kunde.kunden_id",
+      "qualified_name": "crm_at.dbo.Kunde.kunden_id",
+      "natco": "natco-at",
+      "parent_table": "asset-tbl-at-customer",
+      "graph_node": "col-at-id",
+      "represents_local": [
+        "natco-at/kunden_id"
+      ],
+      "represents": [
+        "global/CustomerIdentification"
+      ],
       "links": {
-        "table": "asset-tbl-billing-account",
-        "flowsTo": ["asset-col-c360-account-id"]
+        "table": "asset-tbl-at-customer",
+        "flowsTo": [
+          "asset-col-c360-customer-id"
+        ],
+        "semantics": [
+          "ctr-sem-customer-id"
+        ]
       }
     },
     {
-      "id": "asset-col-billing-customer-ref",
-      "contract_id": "ctr-tech-col-billing-customer-ref",
+      "id": "asset-tbl-hr-customer",
+      "contract_id": "ctr-tech-hr-table",
+      "kind": "table",
+      "name": "crm_hr.public.kupac",
+      "qualified_name": "crm_hr.public.kupac",
+      "natco": "natco-hr",
+      "source_system": "crm-hr",
+      "graph_node": "tbl-hr-customer",
+      "represents_local": [
+        "natco-hr/kupac"
+      ],
+      "represents": [
+        "global/Customer"
+      ],
+      "links": {
+        "columns": [
+          "asset-col-hr-id"
+        ],
+        "feeds": [
+          "asset-pipe-c360"
+        ],
+        "semantics_local": [
+          "ctr-sem-hr-entity"
+        ],
+        "semantics": [
+          "ctr-sem-customer"
+        ]
+      }
+    },
+    {
+      "id": "asset-col-hr-id",
+      "contract_id": "ctr-tech-hr-col",
       "kind": "column",
-      "name": "billing.account.customer_ref",
-      "qualified_name": "ord.billing.account.customer_ref",
-      "natco": "natco-de",
-      "parent_table": "asset-tbl-billing-account",
-      "doc": "columns/billing.account.customer_ref.md",
-      "represents": ["global/customer"],
-      "links": { "table": "asset-tbl-billing-account" }
+      "name": "crm_hr.public.kupac.kupac_id",
+      "qualified_name": "crm_hr.public.kupac.kupac_id",
+      "natco": "natco-hr",
+      "parent_table": "asset-tbl-hr-customer",
+      "graph_node": "col-hr-id",
+      "represents_local": [
+        "natco-hr/kupac_id"
+      ],
+      "represents": [
+        "global/CustomerIdentification"
+      ],
+      "links": {
+        "table": "asset-tbl-hr-customer",
+        "flowsTo": [
+          "asset-col-c360-customer-id"
+        ],
+        "semantics": [
+          "ctr-sem-customer-id"
+        ]
+      }
     },
     {
-      "id": "asset-col-billing-cycle",
-      "contract_id": "ctr-tech-col-billing-cycle",
+      "id": "asset-tbl-hu-customer",
+      "contract_id": "ctr-tech-hu-table",
+      "kind": "table",
+      "name": "crm_hu.dbo.Ugyfel",
+      "qualified_name": "crm_hu.dbo.Ugyfel",
+      "natco": "natco-hu",
+      "source_system": "crm-hu",
+      "graph_node": "tbl-hu-customer",
+      "represents_local": [
+        "natco-hu/ugyfel"
+      ],
+      "represents": [
+        "global/Customer"
+      ],
+      "links": {
+        "columns": [
+          "asset-col-hu-id"
+        ],
+        "feeds": [
+          "asset-pipe-c360"
+        ],
+        "semantics_local": [
+          "ctr-sem-hu-entity"
+        ],
+        "semantics": [
+          "ctr-sem-customer"
+        ]
+      }
+    },
+    {
+      "id": "asset-col-hu-id",
+      "contract_id": "ctr-tech-hu-col",
       "kind": "column",
-      "name": "billing.account.billing_cycle",
-      "qualified_name": "ord.billing.account.billing_cycle",
-      "natco": "natco-de",
-      "parent_table": "asset-tbl-billing-account",
-      "doc": "columns/billing.account.billing_cycle.md",
-      "represents": [],
-      "links": { "table": "asset-tbl-billing-account" }
-    },
-    {
-      "id": "asset-tbl-cust-customer",
-      "contract_id": "ctr-tech-cust-customer",
-      "kind": "table",
-      "name": "cust.customer",
-      "qualified_name": "cust.customer",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "catalog_source_id": "col-asset-de-cust-customer-001",
-      "mapping_id": "map-tech-de-cust-table-001",
-      "doc": "tables/cust.customer.md",
-      "graph_node": null,
-      "represents": ["global/customer"],
-      "grain": "One row per customer_id",
+      "name": "crm_hu.dbo.Ugyfel.ugyfel_azonosito",
+      "qualified_name": "crm_hu.dbo.Ugyfel.ugyfel_azonosito",
+      "natco": "natco-hu",
+      "parent_table": "asset-tbl-hu-customer",
+      "graph_node": "col-hu-id",
+      "represents_local": [
+        "natco-hu/ugyfel_azonosito"
+      ],
+      "represents": [
+        "global/CustomerIdentification"
+      ],
       "links": {
-        "columns": ["asset-col-cust-customer-id"],
-        "semantics": ["ctr-sem-customer"],
-        "related_alias": "asset-tbl-crm-customer"
+        "table": "asset-tbl-hu-customer",
+        "flowsTo": [
+          "asset-col-c360-customer-id"
+        ],
+        "semantics": [
+          "ctr-sem-customer-id"
+        ]
       }
     },
     {
-      "id": "asset-col-cust-customer-id",
-      "contract_id": "ctr-tech-col-cust-customer-id",
+      "id": "asset-tbl-pl-customer",
+      "contract_id": "ctr-tech-pl-table",
+      "kind": "table",
+      "name": "crm_pl.public.klient",
+      "qualified_name": "crm_pl.public.klient",
+      "natco": "natco-pl",
+      "source_system": "crm-pl",
+      "graph_node": "tbl-pl-customer",
+      "represents_local": [
+        "natco-pl/klient"
+      ],
+      "represents": [
+        "global/Customer"
+      ],
+      "links": {
+        "columns": [
+          "asset-col-pl-id"
+        ],
+        "feeds": [
+          "asset-pipe-c360"
+        ],
+        "semantics_local": [
+          "ctr-sem-pl-entity"
+        ],
+        "semantics": [
+          "ctr-sem-customer"
+        ]
+      }
+    },
+    {
+      "id": "asset-col-pl-id",
+      "contract_id": "ctr-tech-pl-col",
       "kind": "column",
-      "name": "cust.customer.customer_id",
-      "qualified_name": "cust.customer.customer_id",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "catalog_source_id": "col-asset-de-cust-customer-id-001",
-      "mapping_id": "map-tech-de-cust-id-001",
-      "parent_table": "asset-tbl-cust-customer",
-      "doc": "columns/cust.customer.customer_id.md",
-      "represents": ["global/customer"],
+      "name": "crm_pl.public.klient.id_klienta",
+      "qualified_name": "crm_pl.public.klient.id_klienta",
+      "natco": "natco-pl",
+      "parent_table": "asset-tbl-pl-customer",
+      "graph_node": "col-pl-id",
+      "represents_local": [
+        "natco-pl/id_klienta"
+      ],
+      "represents": [
+        "global/CustomerIdentification"
+      ],
       "links": {
-        "table": "asset-tbl-cust-customer",
-        "semantics": ["ctr-sem-customer", "ctr-sem-customer-id"]
-      }
-    },
-    {
-      "id": "asset-tbl-cust-account",
-      "contract_id": "ctr-tech-cust-account",
-      "kind": "table",
-      "name": "cust.customer_account",
-      "qualified_name": "cust.customer_account",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "catalog_source_id": "col-asset-de-acct-001",
-      "mapping_id": "map-tech-de-acct-table-001",
-      "doc": "tables/cust.customer_account.md",
-      "represents": ["global/customer-account"],
-      "links": {
-        "semantics": ["ctr-sem-customer-account"],
-        "related_alias": "asset-tbl-billing-account"
-      }
-    },
-    {
-      "id": "asset-tbl-prod-subscription",
-      "contract_id": "ctr-tech-prod-subscription",
-      "kind": "table",
-      "name": "prod.subscription",
-      "qualified_name": "projects/de-lake/datasets/prod/tables/subscription",
-      "natco": "natco-de",
-      "source_system": "dataplex",
-      "catalog_source_id": "dpx-entry-de-prod-subscription-001",
-      "mapping_id": "map-tech-de-prod-table-001",
-      "doc": "tables/prod.subscription.md",
-      "represents": ["global/product"],
-      "links": { "semantics": ["ctr-sem-product"] }
-    },
-    {
-      "id": "asset-tbl-svc-cfs",
-      "contract_id": "ctr-tech-svc-cfs",
-      "kind": "table",
-      "name": "svc.cfs_instance",
-      "qualified_name": "projects/de-lake/datasets/svc/tables/cfs_instance",
-      "natco": "natco-de",
-      "source_system": "dataplex",
-      "catalog_source_id": "dpx-entry-de-svc-cfs-001",
-      "mapping_id": "map-tech-de-cfs-table-001",
-      "doc": "tables/svc.cfs_instance.md",
-      "represents": ["global/customer-facing-service"],
-      "links": { "semantics": ["ctr-sem-cfs"] }
-    },
-    {
-      "id": "asset-tbl-ord-product-order",
-      "contract_id": "ctr-tech-ord-product-order",
-      "kind": "table",
-      "name": "ord.product_order",
-      "qualified_name": "ord.product_order",
-      "natco": "natco-de",
-      "source_system": "collibra",
-      "catalog_source_id": "col-asset-de-order-001",
-      "mapping_id": "map-tech-de-order-table-001",
-      "doc": "tables/ord.product_order.md",
-      "represents": ["global/product-order"],
-      "links": { "semantics": ["ctr-sem-product-order"] }
-    },
-    {
-      "id": "asset-topic-cdc",
-      "contract_id": "ctr-tech-topic-cdc",
-      "kind": "topic",
-      "name": "customer.cdc.v1",
-      "qualified_name": "kafka://de/customer.cdc.v1",
-      "natco": "natco-de",
-      "source_system": "kafka",
-      "doc": "topics/customer.cdc.v1.md",
-      "graph_node": "topic-customer-cdc",
-      "links": {
-        "feeds": ["asset-pipe-c360"],
-        "key_column": "asset-col-crm-party-id"
+        "table": "asset-tbl-pl-customer",
+        "flowsTo": [
+          "asset-col-c360-customer-id"
+        ],
+        "semantics": [
+          "ctr-sem-customer-id"
+        ]
       }
     },
     {
@@ -251,29 +296,17 @@
       "contract_id": "ctr-tech-pipe-c360",
       "kind": "pipeline",
       "name": "c360_customer_build",
-      "qualified_name": "jobs/entropy/c360_customer_build",
       "natco": "global",
-      "source_system": "spark-dbt",
-      "doc": "pipelines/c360_customer_build.md",
       "graph_node": "pipe-c360-build",
       "links": {
-        "inputs": ["asset-tbl-crm-customer", "asset-tbl-billing-account", "asset-topic-cdc"],
-        "output": "asset-tbl-c360",
-        "lineage_events": ["asset-ol-8841"],
-        "ownedBy": ["ctr-org-data-eng"]
-      }
-    },
-    {
-      "id": "asset-ol-8841",
-      "contract_id": "ctr-tech-ol-8841",
-      "kind": "openlineage_event",
-      "name": "OpenLineage run-8841",
-      "qualified_name": "openlineage:entropy.c360/run-8841",
-      "natco": "global",
-      "doc": "lineage/openlineage-run-8841.md",
-      "graph_node": "ol-c360-run-8841",
-      "links": {
-        "updatesLineageFor": ["asset-pipe-c360"]
+        "inputs": [
+          "asset-tbl-de-customer",
+          "asset-tbl-at-customer",
+          "asset-tbl-hr-customer",
+          "asset-tbl-hu-customer",
+          "asset-tbl-pl-customer"
+        ],
+        "output": "asset-tbl-c360"
       }
     },
     {
@@ -281,28 +314,22 @@
       "contract_id": "ctr-tech-c360-table",
       "kind": "table",
       "name": "dp.customer_360",
-      "display_name": "Customer 360 table",
-      "qualified_name": "projects/global-lake/datasets/dp/tables/customer_360",
+      "qualified_name": "dp.curated.customer_360",
       "natco": "global",
-      "source_system": "dataplex",
-      "doc": "tables/dp.customer_360.md",
       "graph_node": "tbl-c360",
-      "represents": ["global/customer"],
-      "grain": "one row per customer_id",
+      "represents": [
+        "global/Customer"
+      ],
       "links": {
         "columns": [
-          "asset-col-c360-customer-id",
-          "asset-col-c360-account-id",
-          "asset-col-c360-status",
-          "asset-col-c360-natco",
-          "asset-col-c360-valid-from"
+          "asset-col-c360-customer-id"
         ],
-        "producedBy": ["asset-pipe-c360"],
-        "partOf": ["ctr-prod-global-c360"],
-        "validatedBy": ["asset-test-c360-pk"],
-        "contract": ["ctr-gov-odcs-c360"],
-        "ownedBy": ["ctr-org-data-eng"],
-        "semantics": ["ctr-sem-customer"]
+        "semantics": [
+          "ctr-sem-customer"
+        ],
+        "product": [
+          "ctr-prod-global-c360"
+        ]
       }
     },
     {
@@ -310,82 +337,17 @@
       "contract_id": "ctr-tech-col-customer-id",
       "kind": "column",
       "name": "dp.customer_360.customer_id",
-      "qualified_name": "projects/global-lake/datasets/dp/tables/customer_360/columns/customer_id",
       "natco": "global",
       "parent_table": "asset-tbl-c360",
-      "doc": "columns/dp.customer_360.customer_id.md",
       "graph_node": "col-customer-id",
-      "represents": ["global/customer-identifier"],
-      "classification": "PII",
-      "primary_key": true,
+      "represents": [
+        "global/CustomerIdentification"
+      ],
       "links": {
         "table": "asset-tbl-c360",
-        "flowsFrom": ["asset-col-crm-party-id"],
-        "classifiedAs": ["ctr-gov-class-pii"],
-        "semantics": ["ctr-sem-customer-id"]
-      }
-    },
-    {
-      "id": "asset-col-c360-account-id",
-      "contract_id": "ctr-tech-col-account-id",
-      "kind": "column",
-      "name": "dp.customer_360.account_id",
-      "qualified_name": "projects/global-lake/datasets/dp/tables/customer_360/columns/account_id",
-      "natco": "global",
-      "parent_table": "asset-tbl-c360",
-      "doc": "columns/dp.customer_360.account_id.md",
-      "graph_node": "col-account-id",
-      "represents": ["global/customer-account"],
-      "links": {
-        "table": "asset-tbl-c360",
-        "flowsFrom": ["asset-col-billing-account-id"],
-        "semantics": ["ctr-sem-customer-account"]
-      }
-    },
-    {
-      "id": "asset-col-c360-status",
-      "contract_id": "ctr-tech-col-c360-status",
-      "kind": "column",
-      "name": "dp.customer_360.status",
-      "qualified_name": "projects/global-lake/datasets/dp/tables/customer_360/columns/status",
-      "natco": "global",
-      "parent_table": "asset-tbl-c360",
-      "doc": "columns/dp.customer_360.status.md",
-      "links": { "table": "asset-tbl-c360" }
-    },
-    {
-      "id": "asset-col-c360-natco",
-      "contract_id": "ctr-tech-col-c360-natco",
-      "kind": "column",
-      "name": "dp.customer_360.natco_code",
-      "qualified_name": "projects/global-lake/datasets/dp/tables/customer_360/columns/natco_code",
-      "natco": "global",
-      "parent_table": "asset-tbl-c360",
-      "doc": "columns/dp.customer_360.natco_code.md",
-      "links": { "table": "asset-tbl-c360" }
-    },
-    {
-      "id": "asset-col-c360-valid-from",
-      "contract_id": "ctr-tech-col-c360-valid-from",
-      "kind": "column",
-      "name": "dp.customer_360.valid_from",
-      "qualified_name": "projects/global-lake/datasets/dp/tables/customer_360/columns/valid_from",
-      "natco": "global",
-      "parent_table": "asset-tbl-c360",
-      "doc": "columns/dp.customer_360.valid_from.md",
-      "links": { "table": "asset-tbl-c360" }
-    },
-    {
-      "id": "asset-test-c360-pk",
-      "contract_id": "ctr-tech-test-pk",
-      "kind": "test_case",
-      "name": "test_c360_pk_unique",
-      "qualified_name": "dq/test_c360_pk_unique",
-      "natco": "global",
-      "doc": "tests/test_c360_pk_unique.md",
-      "graph_node": "test-c360-pk",
-      "links": {
-        "validates": ["asset-tbl-c360", "asset-col-c360-customer-id"]
+        "semantics": [
+          "ctr-sem-customer-id"
+        ]
       }
     }
   ]

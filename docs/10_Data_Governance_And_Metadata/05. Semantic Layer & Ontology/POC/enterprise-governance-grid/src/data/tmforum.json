@@ -8,7 +8,15 @@
       "01. Foundation/10. TM Forum SID Pilot Slice.md",
       "01. Foundation/12. Canonical Entity Inventory.md",
       "01. Foundation/20. Pilot Content Pack.md"
-    ]
+    ],
+    "cee_natcos": [
+      "natco-de",
+      "natco-at",
+      "natco-hr",
+      "natco-hu",
+      "natco-pl"
+    ],
+    "global_customer_uri": "https://semantics.example/ns/global/Customer"
   },
   "architectureFlow": [
     {
@@ -147,24 +155,132 @@
     }
   ],
   "ontologyEdges": [
-    { "from": "party", "predicate": "plays", "to": "party-role" },
-    { "from": "customer", "predicate": "specializes", "to": "party-role" },
-    { "from": "customer", "predicate": "owns", "to": "customer-account" },
-    { "from": "customer", "predicate": "obtains", "to": "product" },
-    { "from": "product", "predicate": "basedOn", "to": "product-offering" },
-    { "from": "product-offering", "predicate": "specifiedBy", "to": "product-specification" },
-    { "from": "product", "predicate": "realizedAs", "to": "customer-facing-service" },
-    { "from": "product-order", "predicate": "orders", "to": "product" },
-    { "from": "agreement", "predicate": "covers", "to": "customer" }
+    {
+      "from": "party",
+      "predicate": "plays",
+      "to": "party-role"
+    },
+    {
+      "from": "customer",
+      "predicate": "specializes",
+      "to": "party-role"
+    },
+    {
+      "from": "customer",
+      "predicate": "owns",
+      "to": "customer-account"
+    },
+    {
+      "from": "customer",
+      "predicate": "obtains",
+      "to": "product"
+    },
+    {
+      "from": "product",
+      "predicate": "basedOn",
+      "to": "product-offering"
+    },
+    {
+      "from": "product-offering",
+      "predicate": "specifiedBy",
+      "to": "product-specification"
+    },
+    {
+      "from": "product",
+      "predicate": "realizedAs",
+      "to": "customer-facing-service"
+    },
+    {
+      "from": "product-order",
+      "predicate": "orders",
+      "to": "product"
+    },
+    {
+      "from": "agreement",
+      "predicate": "covers",
+      "to": "customer"
+    }
   ],
   "federation": [
     {
-      "from": "natco-de/kunden",
-      "label_from": "Kunden",
+      "from": "natco-de/kunde",
+      "label_from": "Kunde",
       "predicate": "sameAs",
-      "to": "global/customer",
+      "to": "global/Customer",
       "label_to": "Customer",
-      "note": "DE label synonym — same SID Customer meaning"
+      "note": "Kunde (natco-de) federates to TM Forum SID Customer"
+    },
+    {
+      "from": "natco-de/kundennummer",
+      "label_from": "Kundennummer",
+      "predicate": "sameAs",
+      "to": "global/CustomerIdentification",
+      "label_to": "Customer Identification",
+      "note": "Kundennummer federates to SID CustomerIdentification"
+    },
+    {
+      "from": "natco-at/kunde",
+      "label_from": "Kunde",
+      "predicate": "sameAs",
+      "to": "global/Customer",
+      "label_to": "Customer",
+      "note": "Kunde (natco-at) federates to TM Forum SID Customer"
+    },
+    {
+      "from": "natco-at/kunden_id",
+      "label_from": "Kunden-ID",
+      "predicate": "sameAs",
+      "to": "global/CustomerIdentification",
+      "label_to": "Customer Identification",
+      "note": "Kunden-ID federates to SID CustomerIdentification"
+    },
+    {
+      "from": "natco-hr/kupac",
+      "label_from": "Kupac",
+      "predicate": "sameAs",
+      "to": "global/Customer",
+      "label_to": "Customer",
+      "note": "Kupac (natco-hr) federates to TM Forum SID Customer"
+    },
+    {
+      "from": "natco-hr/kupac_id",
+      "label_from": "ID kupca",
+      "predicate": "sameAs",
+      "to": "global/CustomerIdentification",
+      "label_to": "Customer Identification",
+      "note": "ID kupca federates to SID CustomerIdentification"
+    },
+    {
+      "from": "natco-hu/ugyfel",
+      "label_from": "Ügyfél",
+      "predicate": "sameAs",
+      "to": "global/Customer",
+      "label_to": "Customer",
+      "note": "Ügyfél (natco-hu) federates to TM Forum SID Customer"
+    },
+    {
+      "from": "natco-hu/ugyfel_azonosito",
+      "label_from": "Ügyfél azonosító",
+      "predicate": "sameAs",
+      "to": "global/CustomerIdentification",
+      "label_to": "Customer Identification",
+      "note": "Ügyfél azonosító federates to SID CustomerIdentification"
+    },
+    {
+      "from": "natco-pl/klient",
+      "label_from": "Klient",
+      "predicate": "sameAs",
+      "to": "global/Customer",
+      "label_to": "Customer",
+      "note": "Klient (natco-pl) federates to TM Forum SID Customer"
+    },
+    {
+      "from": "natco-pl/id_klienta",
+      "label_from": "ID klienta",
+      "predicate": "sameAs",
+      "to": "global/CustomerIdentification",
+      "label_to": "Customer Identification",
+      "note": "ID klienta federates to SID CustomerIdentification"
     },
     {
       "from": "natco-de/kundenkonto",
@@ -172,7 +288,7 @@
       "predicate": "extends",
       "to": "global/customer-account",
       "label_to": "Customer Account",
-      "note": "Adds DE billing-cycle attributes; core SID meaning retained"
+      "note": "DE billing-cycle attributes; core SID meaning retained"
     },
     {
       "from": "natco-de/abonement",
@@ -181,167 +297,290 @@
       "to": "global/product",
       "label_to": "Product",
       "note": "Active subscription instance only"
-    },
-    {
-      "from": "natco-de/tarifoption",
-      "label_from": "Tarifoption",
-      "predicate": "implements",
-      "to": "global/product-offering",
-      "label_to": "Product Offering",
-      "note": "Local packaging of SID ProductOffering"
-    },
-    {
-      "from": "natco-de/anschluss-dienst",
-      "label_from": "Anschluss-Dienst",
-      "predicate": "implements",
-      "to": "global/customer-facing-service",
-      "label_to": "Customer Facing Service",
-      "note": "Operational CFS for connectivity"
     }
   ],
   "businessMappings": [
     {
-      "source": "Collibra · Kunde",
+      "source": "Collibra · Kunde (natco-de)",
       "predicate": "mapsTo",
-      "target": "global/customer",
-      "sid": "Customer"
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-de"
+    },
+    {
+      "source": "Collibra · Kunde (natco-at)",
+      "predicate": "mapsTo",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-at"
+    },
+    {
+      "source": "Collibra · Kupac (natco-hr)",
+      "predicate": "mapsTo",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-hr"
+    },
+    {
+      "source": "Collibra · Ügyfél (natco-hu)",
+      "predicate": "mapsTo",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-hu"
+    },
+    {
+      "source": "Collibra · Klient (natco-pl)",
+      "predicate": "mapsTo",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-pl"
     },
     {
       "source": "Collibra · Kundenkonto",
       "predicate": "mapsTo",
       "target": "global/customer-account",
       "sid": "CustomerAccount"
-    },
-    {
-      "source": "Collibra · Produkt",
-      "predicate": "mapsTo",
-      "target": "global/product",
-      "sid": "Product"
-    },
-    {
-      "source": "Collibra · Angebot",
-      "predicate": "mapsTo",
-      "target": "global/product-offering",
-      "sid": "ProductOffering"
-    },
-    {
-      "source": "Collibra · Dienst",
-      "predicate": "mapsTo",
-      "target": "global/customer-facing-service",
-      "sid": "CustomerFacingService"
-    },
-    {
-      "source": "Collibra · Auftrag",
-      "predicate": "mapsTo",
-      "target": "global/product-order",
-      "sid": "ProductOrder"
     }
   ],
   "technicalMappings": [
     {
-      "source": "crm.customer (table)",
+      "source": "crm_de.public.kunde (table)",
       "predicate": "represents",
-      "target": "global/customer",
-      "sid": "Customer"
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-de",
+      "also_represents_local": "natco-de/kunde"
     },
     {
-      "source": "crm.customer.customer_id (column)",
+      "source": "crm_de.public.kunde.kundennummer (column)",
       "predicate": "represents",
-      "target": "global/customer",
-      "sid": "Customer"
+      "target": "global/CustomerIdentification",
+      "sid": "CustomerIdentification",
+      "natco": "natco-de",
+      "also_represents_local": "natco-de/kundennummer"
     },
     {
-      "source": "billing.account (table)",
+      "source": "crm_at.dbo.Kunde (table)",
       "predicate": "represents",
-      "target": "global/customer-account",
-      "sid": "CustomerAccount"
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-at",
+      "also_represents_local": "natco-at/kunde"
     },
     {
-      "source": "prod.product_instance (table)",
+      "source": "crm_at.dbo.Kunde.kunden_id (column)",
       "predicate": "represents",
-      "target": "global/product",
-      "sid": "Product"
+      "target": "global/CustomerIdentification",
+      "sid": "CustomerIdentification",
+      "natco": "natco-at",
+      "also_represents_local": "natco-at/kunden_id"
     },
     {
-      "source": "svc.cfs_instance (Dataplex)",
+      "source": "crm_hr.public.kupac (table)",
       "predicate": "represents",
-      "target": "global/customer-facing-service",
-      "sid": "CustomerFacingService"
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-hr",
+      "also_represents_local": "natco-hr/kupac"
     },
     {
-      "source": "ord.product_order (table)",
+      "source": "crm_hr.public.kupac.kupac_id (column)",
       "predicate": "represents",
-      "target": "global/product-order",
-      "sid": "ProductOrder"
+      "target": "global/CustomerIdentification",
+      "sid": "CustomerIdentification",
+      "natco": "natco-hr",
+      "also_represents_local": "natco-hr/kupac_id"
+    },
+    {
+      "source": "crm_hu.dbo.Ugyfel (table)",
+      "predicate": "represents",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-hu",
+      "also_represents_local": "natco-hu/ugyfel"
+    },
+    {
+      "source": "crm_hu.dbo.Ugyfel.ugyfel_azonosito (column)",
+      "predicate": "represents",
+      "target": "global/CustomerIdentification",
+      "sid": "CustomerIdentification",
+      "natco": "natco-hu",
+      "also_represents_local": "natco-hu/ugyfel_azonosito"
+    },
+    {
+      "source": "crm_pl.public.klient (table)",
+      "predicate": "represents",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "natco-pl",
+      "also_represents_local": "natco-pl/klient"
+    },
+    {
+      "source": "crm_pl.public.klient.id_klienta (column)",
+      "predicate": "represents",
+      "target": "global/CustomerIdentification",
+      "sid": "CustomerIdentification",
+      "natco": "natco-pl",
+      "also_represents_local": "natco-pl/id_klienta"
+    },
+    {
+      "source": "dp.curated.customer_360 (table)",
+      "predicate": "represents",
+      "target": "global/Customer",
+      "sid": "Customer",
+      "natco": "global"
     }
   ],
   "productBindings": [
     {
       "product": "global-customer-360",
       "layer": "global",
-      "implements": ["global/customer", "global/customer-account"],
-      "note": "Marketplace product binds only to global SID concepts"
-    },
-    {
-      "product": "natco-de-kunden-360",
-      "layer": "natco",
-      "implements": ["global/customer", "global/customer-account"],
-      "optional": ["natco-de/kunden"],
-      "note": "Dual-bind: global SID required + NATCO optional"
+      "implements": [
+        "global/Customer"
+      ],
+      "consumes": [
+        "crm_de.public.kunde",
+        "crm_at.dbo.Kunde",
+        "crm_hr.public.kupac",
+        "crm_hu.dbo.Ugyfel",
+        "crm_pl.public.klient"
+      ],
+      "note": "Enterprise product binds to SID Customer; reads all CEE NATCO sources"
     }
   ],
   "graphWalk": [
-    { "from": "Party", "edge": "plays", "to": "PartyRole" },
-    { "from": "Customer", "edge": "specializes", "to": "PartyRole" },
-    { "from": "Customer", "edge": "owns", "to": "CustomerAccount" },
-    { "from": "Customer", "edge": "obtains", "to": "Product" },
-    { "from": "Product", "edge": "basedOn", "to": "ProductOffering" },
-    { "from": "ProductOffering", "edge": "specifiedBy", "to": "ProductSpecification" },
-    { "from": "Product", "edge": "realizedAs", "to": "CustomerFacingService" },
-    { "from": "Kunden", "edge": "sameAs", "to": "Customer" },
-    { "from": "crm.customer", "edge": "represents", "to": "Customer" },
-    { "from": "global-customer-360", "edge": "implements", "to": "Customer" }
+    {
+      "from": "Party",
+      "edge": "plays",
+      "to": "PartyRole"
+    },
+    {
+      "from": "Customer",
+      "edge": "specializes",
+      "to": "PartyRole"
+    },
+    {
+      "from": "Kunde",
+      "edge": "sameAs",
+      "to": "Customer",
+      "natco": "natco-de"
+    },
+    {
+      "from": "crm_de.public.kunde",
+      "edge": "represents",
+      "to": "Customer",
+      "natco": "natco-de"
+    },
+    {
+      "from": "Kunde",
+      "edge": "sameAs",
+      "to": "Customer",
+      "natco": "natco-at"
+    },
+    {
+      "from": "crm_at.dbo.Kunde",
+      "edge": "represents",
+      "to": "Customer",
+      "natco": "natco-at"
+    },
+    {
+      "from": "Kupac",
+      "edge": "sameAs",
+      "to": "Customer",
+      "natco": "natco-hr"
+    },
+    {
+      "from": "crm_hr.public.kupac",
+      "edge": "represents",
+      "to": "Customer",
+      "natco": "natco-hr"
+    },
+    {
+      "from": "Ügyfél",
+      "edge": "sameAs",
+      "to": "Customer",
+      "natco": "natco-hu"
+    },
+    {
+      "from": "crm_hu.dbo.Ugyfel",
+      "edge": "represents",
+      "to": "Customer",
+      "natco": "natco-hu"
+    },
+    {
+      "from": "Klient",
+      "edge": "sameAs",
+      "to": "Customer",
+      "natco": "natco-pl"
+    },
+    {
+      "from": "crm_pl.public.klient",
+      "edge": "represents",
+      "to": "Customer",
+      "natco": "natco-pl"
+    },
+    {
+      "from": "global-customer-360",
+      "edge": "implements",
+      "to": "Customer"
+    }
   ],
   "governanceExample": {
     "concept": "global/customer",
     "sid": "Customer · Customer Party Roles ABE",
     "steps": [
-      { "state": "draft", "actor": "Data Architecture", "action": "Import from SID into import-tmforum; promote stub to global" },
-      { "state": "review", "actor": "Global Customer steward", "action": "Submit for COE approval with SID annotations" },
-      { "state": "approved", "actor": "Global Semantic Council", "action": "Approve — valid target for maps and product binds" },
-      { "state": "deprecated", "actor": "COE", "action": "Only with replaced_by + NATCO notification SLA" }
+      {
+        "state": "draft",
+        "actor": "Data Architecture",
+        "action": "Import from SID into import-tmforum; promote stub to global"
+      },
+      {
+        "state": "review",
+        "actor": "Global Customer steward",
+        "action": "Submit for COE approval with SID annotations"
+      },
+      {
+        "state": "approved",
+        "actor": "Global Semantic Council",
+        "action": "Approve — valid target for maps and product binds"
+      },
+      {
+        "state": "deprecated",
+        "actor": "COE",
+        "action": "Only with replaced_by + NATCO notification SLA"
+      }
     ]
   },
   "apiExamples": [
     {
       "api": "Semantic API",
-      "call": "GET /concepts/global/customer",
-      "result": "SID Customer definition, URI, status=approved, synonyms"
+      "call": "GET /concepts/global/Customer",
+      "result": "SID Customer definition, URI, status=approved"
     },
     {
       "api": "Semantic API",
       "call": "POST /resolve { term: 'Kunde', natco: 'de' }",
-      "result": "→ natco-de/kunden —sameAs→ global/customer"
+      "result": "→ natco-de/kunde —sameAs→ global/Customer"
+    },
+    {
+      "api": "Semantic API",
+      "call": "POST /resolve { term: 'Kupac', natco: 'hr' }",
+      "result": "→ natco-hr/kupac —sameAs→ global/Customer"
+    },
+    {
+      "api": "Semantic API",
+      "call": "POST /resolve { term: 'Ügyfél', natco: 'hu' }",
+      "result": "→ natco-hu/ugyfel —sameAs→ global/Customer"
     },
     {
       "api": "Graph API",
-      "call": "GET /graph/neighbors/global/customer?depth=2",
-      "result": "owns Account · obtains Product · realizedAs CFS"
+      "call": "GET /graph/neighbors/global/Customer?depth=2",
+      "result": "Federated NATCO concepts + CRM tables + Customer 360 product"
     },
     {
       "api": "Search API",
-      "call": "GET /search?q=ProductOffering&ns=global",
-      "result": "SID Product Offering + mapped Collibra 'Angebot'"
-    },
-    {
-      "api": "MCP Server",
-      "call": "tool: semantic.lookup('customer-facing-service')",
-      "result": "Certified URI + CFS definition for agent context"
-    },
-    {
-      "api": "Ossie export",
-      "call": "GET /ossie/global/versions/1.0.0",
-      "result": "Package: Tier A SID concepts + ontology edges"
+      "call": "GET /search?q=Customer&ns=global",
+      "result": "SID Customer + all NATCO sameAs aliases"
     }
   ],
   "engineExamples": {
@@ -351,7 +590,7 @@
     },
     "namespace": {
       "title": "Namespace Registry",
-      "example": "global (TM Forum seed) · import-tmforum (staging) · natco-de (federated)."
+      "example": "global (TM Forum SID) · natco-de · natco-at · natco-hr · natco-hu · natco-pl (each ALIGNS_TO global)."
     },
     "ontology": {
       "title": "Ontology & Taxonomy",
@@ -363,11 +602,11 @@
     },
     "mapping": {
       "title": "Mapping Engine",
-      "example": "Collibra 'Kunde' mapsTo global/customer; crm.customer represents global/customer."
+      "example": "Collibra terms mapTo global/Customer; each NATCO CRM table represents local + global concepts."
     },
     "federation": {
       "title": "Federation Engine",
-      "example": "natco-de/kunden sameAs global/customer for cross-NATCO reporting."
+      "example": "kunde / kupac / ugyfel / klient sameAs global/Customer for cross-NATCO Customer 360."
     },
     "governance": {
       "title": "Governance Engine",

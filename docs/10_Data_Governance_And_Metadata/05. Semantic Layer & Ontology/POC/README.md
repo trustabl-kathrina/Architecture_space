@@ -20,10 +20,12 @@ cd enterprise-governance-grid && npm install && npm run dev
 | [`docs/13. Client Pitch Guide.md`](./docs/13.%20Client%20Pitch%20Guide.md) | Presenter script |
 | [`docs/14. Concept Explainers.md`](./docs/14.%20Concept%20Explainers.md) | Plain-language concepts |
 | [`examples/pitch-concepts.json`](./examples/pitch-concepts.json) | Concept cards for the site |
-| [`examples/customer-context-graph.json`](./examples/customer-context-graph.json) | Traversable KG |
+| [`examples/multi-natco-customer-assets.json`](./examples/multi-natco-customer-assets.json) | Global + DE/AT/HR/HU/PL full asset inventory |
+| [`examples/customer-context-graph.json`](./examples/customer-context-graph.json) | Traversable KG (all NATCOs → global) |
 | [`examples/customer-contracts.json`](./examples/customer-contracts.json) | Node contracts |
 | [`docs/contracts/technical/`](./docs/contracts/technical/) | Linkable technical asset contracts |
-| [`examples/technical-catalog-assets.json`](./examples/technical-catalog-assets.json) | Tech catalog inventory machine source |
+| [`examples/technical-catalog-assets.json`](./examples/technical-catalog-assets.json) | Tech catalog inventory (5 NATCO sources + hub) |
+| [`neo4j-contracts-kg/`](./neo4j-contracts-kg/) | Neo4j KG POC for [`10. Contracts`](../10.%20Contracts/) (Customer 360 seed) |
 | [`enterprise-governance-grid/`](./enterprise-governance-grid/) | Vite + React site |
 
 ## Pitch path (on site)
