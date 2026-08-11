@@ -38,9 +38,10 @@ export function Ownership() {
   return (
     <Section
       id="ownership"
-      eyebrow="03 · Who owns what"
+      compact
+      eyebrow="Ownership"
       title="Four clear boundaries"
-      lead="Clients do not need a forty-row matrix in the first conversation — just who owns meaning, catalogs, products, and exchange."
+      lead="Who owns meaning, catalogs, products, and exchange — without a forty-row RACI in the first conversation."
     >
       <div className="grid gap-4 sm:grid-cols-2">
         {boxes.map((b, i) => (

@@ -1,14 +1,14 @@
 ---
-title: Data Lake Framework
-section: "02.05"
+title: Lakehouse Framework
+section: "02.05.03.01"
 status: stub
 template: evaluation
-last_reviewed: 2026-06-18
+last_reviewed: 2026-08-06
 owner: architecture-team
-tags: []
+tags: [lakehouse, storage, fundamentals]
 canonical: true
 ---
-# Data Lake Framework
+# Lakehouse Framework
 
 ## Problem Statement
 Outline the core business or technical problem that this architecture, pattern, or strategy addresses within the context of 10.06 Data Lake Architecture.

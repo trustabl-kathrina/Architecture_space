@@ -16,7 +16,19 @@ docker compose up -d
 | Bolt | `bolt://localhost:7687` |
 | User / password | `neo4j` / `contracts-kg` |
 
-Then open Neo4j Browser and paste **VIEW A** from [`cypher/show-e2e-customer-360.cypher`](cypher/show-e2e-customer-360.cypher) to see the full Customer 360 graph.
+Then open Neo4j Browser and paste **VIEW G1** from [`cypher/show-e2e-customer-360.cypher`](cypher/show-e2e-customer-360.cypher) to see the full Customer 360 graph.
+
+### Demo UI (live Cypher)
+
+The Enterprise Governance Grid **Semantics** tab calls the same curated views via a thin API:
+
+```bash
+cd ../enterprise-governance-grid && npm run dev
+# → http://127.0.0.1:5173/demo/customer360/semantics
+# API: http://127.0.0.1:8787/api/kg/views/alignment
+```
+
+Views: `global-hub` · `alignment` · `natco-stack?natco=natco-de` · `product-path`.
 
 ## Contents
 

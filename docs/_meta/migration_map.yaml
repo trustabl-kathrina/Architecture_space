@@ -8850,147 +8850,147 @@ items:
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Curated_Zone_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Curated_Zone_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/02_Zone_Architecture/03_Curated_Zone/01_Curated_Zone_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Data_Lake_Anti_Patterns.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Data_Lake_Anti_Patterns.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/03_Anti_Patterns/01_Data_Lake_Anti_Patterns.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Data_Lake_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Data_Lake_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/01_Overview/01_Lakehouse_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Governance.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Lake_Governance.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/01_Governance/01_Lake_Governance.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Metadata_Model.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Lake_Metadata_Model.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/03_Metadata/02_Lake_Metadata_Model.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Optimization.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Lake_Optimization.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/06_Operations/01_Optimization/01_Lake_Optimization.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Lake_Security.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Lake_Security.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/02_Security/01_Lake_Security.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Raw_Zone_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Raw_Zone_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/02_Zone_Architecture/01_Raw_Zone/01_Raw_Zone_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.06_Data_Lake_Architecture/Trusted_Zone_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Trusted_Zone_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/02_Zone_Architecture/02_Trusted_Zone/01_Trusted_Zone_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Data_Mart_Consolidation.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Data_Mart_Consolidation.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/04_Consolidation/01_Data_Mart_Consolidation.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Hybrid_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Hybrid_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/02_Strategy/02_Hybrid_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Legacy_Warehouse_Assessment.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Legacy_Warehouse_Assessment.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/01_Assessment/01_Legacy_Warehouse_Assessment.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Migration_Roadmap.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Migration_Roadmap.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/03_Migration/02_Migration_Roadmap.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Modernization_Case_Studies.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Modernization_Case_Studies.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/06_Case_Studies/01_Modernization_Case_Studies.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_Decommissioning.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Warehouse_Decommissioning.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/05_Decommissioning/01_Warehouse_Decommissioning.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_Migration_Strategy.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Warehouse_Migration_Strategy.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/03_Migration/01_Warehouse_Migration_Strategy.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_Modernization_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Warehouse_Modernization_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/02_Strategy/02_Warehouse_Modernization_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.07_Data_Warehouse_Modernization/Warehouse_To_Lakehouse.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Warehouse_To_Lakehouse.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/07_Warehouse_Modernization/02_Strategy/01_Warehouse_To_Lakehouse.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Apache_Hudi.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Apache_Hudi.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/04_Open_Table_Formats/02_Formats/02_Apache_Hudi.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Apache_Iceberg.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Apache_Iceberg.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/04_Open_Table_Formats/02_Formats/01_Apache_Iceberg.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Delta_Lake.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Delta_Lake.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/04_Open_Table_Formats/02_Formats/03_Delta_Lake.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Format_Comparison_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Format_Comparison_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/04_Open_Table_Formats/01_Selection/01_Format_Comparison_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Format_Selection_Guidelines.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Format_Selection_Guidelines.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/04_Open_Table_Formats/01_Selection/02_Format_Selection_Guidelines.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Interoperability_Framework.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Interoperability_Framework.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/04_Open_Table_Formats/03_Interoperability/01_Interoperability_Framework.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Metadata_Management.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Metadata_Management.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/03_Metadata/01_Metadata_Management.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Open_Table_Format_Strategy.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Open_Table_Format_Strategy.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/02_Strategy/01_Open_Table_Format_Strategy.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.08_Open_Table_Formats/Table_Governance.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Table_Governance.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/01_Governance/03_Table_Governance.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Archival_Strategy.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Archival_Strategy.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/03_Object_Storage/02_Lifecycle/03_Archival_Strategy.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Data_Retention.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Data_Retention.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/03_Object_Storage/02_Lifecycle/02_Data_Retention.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Object_Storage_Architecture.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Object_Storage_Architecture.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/03_Object_Storage/01_Foundations/01_Object_Storage_Architecture.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Benchmarking.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Storage_Benchmarking.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/03_Object_Storage/03_Performance/02_Storage_Benchmarking.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Governance.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Storage_Governance.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/01_Governance/02_Storage_Governance.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Optimization.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Storage_Optimization.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/03_Object_Storage/03_Performance/01_Storage_Optimization.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Reference_Model.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Storage_Reference_Model.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/01_Overview/02_Storage_Reference_Model.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Security.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Storage_Security.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/05_Governance_And_Security/02_Security/02_Storage_Security.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.09_Storage_Architecture/Storage_Tiering.md"
-    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Storage_Tiering.md"
+    new_path: "docs/02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/03_Object_Storage/02_Lifecycle/01_Storage_Tiering.md"
     status: stub
     migration_action: planned_stub
   - old_path: "Enterprise Transformation/10_Lakehouse_And_Modern_Data_Platforms/08.10.10_Compute_Architecture/Compute_Benchmarking.md"

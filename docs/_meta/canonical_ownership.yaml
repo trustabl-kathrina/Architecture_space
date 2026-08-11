@@ -31,7 +31,7 @@ canonical_topics:
   Zero_Trust_Architecture.md: "14_Security_And_Privacy_Architecture/14.06_Zero_Trust/Zero_Trust_Architecture.md"
   Privacy_Engineering.md: "14_Security_And_Privacy_Architecture/14.09_Privacy_Engineering/Privacy_Engineering.md"
   Data_Mesh_Principles.md: "01_Data_Architecture/01.02_Data_Architecture_Patterns/Data_Mesh_Principles.md"
-  Lakehouse_Architecture.md: "02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Lakehouse_Architecture.md"
+  Lakehouse_Architecture.md: "02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/01_Overview/01_Lakehouse_Framework.md"
   Streaming_Architecture.md: "02_Data_Engineering_Architecture/01_Data_Ingestion_Architecture/02_Streaming/01_Fundamentals/Streaming_Architecture.md"
   Real_Time_Analytics_Architecture.md: "08_Analytics_Architecture/10_Real_Time_Analytics_Architecture/05_Streaming_Analytics/Real_Time_Analytics_Architecture.md"
 

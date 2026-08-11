@@ -4,7 +4,7 @@ import { Section } from './Section'
 const pains = [
   {
     title: 'Same word, different meaning',
-    body: 'Kunde, Müşteri, and Customer look related — but catalogs, reports, and products disagree on the definition.',
+    body: 'Kunde, Kupac, Ügyfél, Klient, and Customer look related — but catalogs, reports, and products disagree on the definition.',
   },
   {
     title: 'Products without certified meaning',
@@ -20,7 +20,8 @@ export function Problem() {
   return (
     <Section
       id="problem"
-      eyebrow="01 · The problem"
+      compact
+      eyebrow="The problem"
       title="Meaning is fragmented across the enterprise"
       lead="NATCO labels, catalog prose, technical assets, and data products each tell a different story — so governance, Marketplace, and AI cannot share one truth."
     >

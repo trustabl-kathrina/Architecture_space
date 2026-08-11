@@ -10,7 +10,8 @@ export function Governance() {
   return (
     <Section
       id="governance"
-      eyebrow="08 · Governance engine"
+      compact
+      eyebrow="Policy"
       title="Lifecycle that protects SID meaning"
       lead="TM Forum Customer (and Tier A) moves draft → review → approved → deprecated. Only approved targets feed active maps and hard product gates."
     >

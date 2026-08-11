@@ -41,5 +41,5 @@ flowchart LR
 ## Related
 
 - [CDC Overview](../../01_Fundamentals/04_CDC_Architecture/01_CDC_Overview.md)
-- [Lakehouse Architecture](../../../02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/Lakehouse_Architecture.md)
+- [Lakehouse Framework](../../../02_Data_Engineering_Architecture/05_Data_Storage_Architecture/03_Lakehouse/01_Fundamentals/01_Overview/01_Lakehouse_Framework.md)
 - [Real-Time Analytics Architecture](../../../08_Analytics_Architecture/10_Real_Time_Analytics_Architecture/05_Streaming_Analytics/Real_Time_Analytics_Architecture.md)

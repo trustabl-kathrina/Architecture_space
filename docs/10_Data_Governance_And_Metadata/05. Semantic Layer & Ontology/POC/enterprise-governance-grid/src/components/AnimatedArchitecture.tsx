@@ -111,8 +111,8 @@ function FlowPanel({
           Click any component
         </p>
         <p className="mt-3 leading-relaxed">
-          Brass nodes are <span className="text-[var(--color-brass-bright)]">depends on</span>.
-          Teal/signal nodes are <span className="text-[var(--color-signal)]">what next</span>.
+          Amber highlights show <span className="text-[var(--color-brass-bright)]">depends on</span>.
+          Accent highlights show <span className="text-[var(--color-signal)]">what next</span>.
           Follow the flow through the control plane.
         </p>
       </div>
@@ -304,9 +304,10 @@ export function AnimatedArchitecture() {
   return (
     <Section
       id="architecture"
-      eyebrow="05 · How it works"
-      title="Interactive architecture"
-      lead="Click a component to see what it depends on (upstream) and what flows next (downstream). Follow the path through meaning."
+      compact
+      eyebrow="Architecture"
+      title="Interactive control plane"
+      lead="Click a component to see what it depends on (upstream) and what flows next (downstream)."
     >
       <div className="mb-4 flex flex-wrap items-center gap-4 text-[11px] text-[var(--color-mist)]">
         <span className="flex items-center gap-1.5">

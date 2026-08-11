@@ -3,20 +3,21 @@
 // Tip: Browser only draws edges for returned PATHs / relationships (bare nodes look disconnected).
 
 // ============================================================
-// VIEW G1 — GLOBAL hub only (TM Forum SID)
-// Namespace · Customer · CustomerIdentification · product · curated table
+// VIEW G1 — GLOBAL hub: concepts · product · dual contracts · platform stack · columns
 // ============================================================
 MATCH pNs = (g:Namespace {slug: 'global'})-[:CONTAINS_CONCEPT]->(cCust:Concept {conceptId: 'Customer'})
-MATCH pId = (g)-[:CONTAINS_CONCEPT]->(cId:Concept {conceptId: 'CustomerIdentification'})
+MATCH pProps = (g)-[:CONTAINS_CONCEPT]->(cProp:Concept)
+WHERE cProp.kind = 'shared_property'
 OPTIONAL MATCH pTerm = (term:BusinessTerm {id: 'term-global-Customer'})-[:MAPS_TO]->(cCust)
 OPTIONAL MATCH pEnt = (entity:DataEntity {id: 'entity-customer'})-[:MAPS_TO]->(cCust)
-OPTIONAL MATCH pAttr = (attr:DataAttribute {id: 'attr-customer-id'})-[:MAPS_TO]->(cId)
 OPTIONAL MATCH pProd = (prod:DataProduct {id: 'dp-customer-360'})-[:IMPLEMENTS]->(cCust)
-OPTIONAL MATCH pOut = (prod)-[:EXPOSES]->(out:OutputPort)-[:BACKED_BY]->(tblDp:Table {id: 'table-dp-customer-360'})
-OPTIONAL MATCH pCol = (tblDp)-[:CONTAINS_COLUMN]->(colDp:Column {id: 'col-dp-customer-id'})-[:REPRESENTS]->(cId)
-OPTIONAL MATCH pTbl = (tblDp)-[:REPRESENTS]->(cCust)
-OPTIONAL MATCH pContract = (out)-[:GOVERNED_BY]->(:DataContract)-[:CONTAINS_FIELD]->(field:ContractField)-[:IMPLEMENTS]->(cId)
-RETURN pNs, pId, pTerm, pEnt, pAttr, pProd, pOut, pCol, pTbl, pContract;
+OPTIONAL MATCH pOut = (prod)-[:EXPOSES]->(out:OutputPort)-[:GOVERNED_BY]->(dc:DataContract)-[:GOVERNS]->(tblDp:Table {id: 'table-dp-customer-360'})
+OPTIONAL MATCH pBack = (out)-[:BACKED_BY]->(tblDp)
+OPTIONAL MATCH pPlat = (sysDp:System {id: 'sys-dp-platform'})-[:HAS_DATABASE]->(:Database)
+  -[:HAS_SCHEMA]->(:Schema)-[:CONTAINS_TABLE]->(tblDp)
+OPTIONAL MATCH pCols = (tblDp)-[:CONTAINS_COLUMN]->(colDp:Column)-[:REPRESENTS]->(cProp)
+OPTIONAL MATCH pField = (dc)-[:CONTAINS_FIELD]->(field:ContractField)-[:MAPS_TO_COLUMN]->(colDp)
+RETURN pNs, pProps, pTerm, pEnt, pProd, pOut, pBack, pPlat, pCols, pField;
 
 // ============================================================
 // VIEW G2 — ALIGNMENT: Global ↔ all NATCOs (graph)
@@ -41,28 +42,28 @@ WHERE (tbl IS NULL OR tbl.natco = ns.slug)
 RETURN pAlign, pFedEnt, pFedId, pGlobalEnt, pGlobalId, pTerm, pTermG, pTbl, pTblG, pCol, pColG, pProd, pConsume;
 
 // ============================================================
-// VIEW G3 — ALIGNMENT matrix (table): NATCO asset → Global SID
+// VIEW G3 — ALIGNMENT matrix + graph (NATCO asset → Global SID)
 // ============================================================
-MATCH (ns:Namespace {kind: 'natco'})-[:ALIGNS_TO]->(g:Namespace {slug: 'global'})
-MATCH (ns)-[:CONTAINS_CONCEPT]->(ent:Concept {kind: 'entity'})-[:FEDERATES]->(cCust:Concept {conceptId: 'Customer'})
-MATCH (ns)-[:CONTAINS_CONCEPT]->(idn:Concept {kind: 'shared_property'})-[:FEDERATES]->(cId:Concept {conceptId: 'CustomerIdentification'})
-OPTIONAL MATCH (term:BusinessTerm)-[:EXPRESSED_AS]->(ent)
-OPTIONAL MATCH (tbl:Table {natco: ns.slug})-[:REPRESENTS]->(ent)
-OPTIONAL MATCH (col:Column {natco: ns.slug})-[:REPRESENTS]->(idn)
-OPTIONAL MATCH (prod:DataProduct {id: 'dp-customer-360'})-[:CONSUMES]->(inp:InputPort)-[:READS_FROM]->(tbl)
-RETURN ns.displayName AS `NATCO`,
+MATCH pAlign = (ns:Namespace {kind: 'natco'})-[:ALIGNS_TO]->(g:Namespace {slug: 'global'})
+MATCH pFedEnt = (ns)-[:CONTAINS_CONCEPT]->(ent:Concept {kind: 'entity'})-[:FEDERATES]->(cCust:Concept {conceptId: 'Customer'})
+MATCH pFedId = (ns)-[:CONTAINS_CONCEPT]->(idn:Concept {kind: 'shared_property'})-[:FEDERATES]->(cId:Concept {conceptId: 'CustomerIdentification'})
+OPTIONAL MATCH pTerm = (term:BusinessTerm)-[:EXPRESSED_AS]->(ent)
+OPTIONAL MATCH pTermG = (term)-[:MAPS_TO]->(cCust)
+OPTIONAL MATCH pTbl = (tbl:Table {natco: ns.slug})-[:REPRESENTS]->(ent)
+OPTIONAL MATCH pTblG = (tbl)-[:REPRESENTS]->(cCust)
+OPTIONAL MATCH pCol = (col:Column {natco: ns.slug})-[:REPRESENTS]->(idn)
+OPTIONAL MATCH pColG = (col)-[:REPRESENTS]->(cId)
+OPTIONAL MATCH pConsume = (prod:DataProduct {id: 'dp-customer-360'})-[:CONSUMES]->(inp:InputPort)-[:READS_FROM]->(tbl)
+RETURN pAlign, pFedEnt, pFedId, pTerm, pTermG, pTbl, pTblG, pCol, pColG, pConsume,
+       ns.displayName AS `NATCO`,
        ns.slug AS `NATCO namespace`,
        g.slug AS `Global namespace`,
-       'ALIGNS_TO' AS `NS link`,
        ent.preferredLabel AS `NATCO concept`,
        cCust.preferredLabel AS `Global concept (SID)`,
-       'FEDERATES sameAs' AS `Concept link`,
        idn.preferredLabel AS `NATCO id concept`,
        cId.preferredLabel AS `Global id (SID)`,
        term.name AS `Glossary`,
-       'MAPS_TO' AS `Glossary link`,
        tbl.fullyQualifiedName AS `NATCO table`,
-       'REPRESENTS' AS `Table link`,
        col.name AS `NATCO column`,
        inp.name AS `Product input`,
        prod.name AS `Global product`
@@ -100,16 +101,18 @@ RETURN pAlign, pFedEnt, pFedId, pGlobalEnt, pGlobalId,
 
 // ============================================================
 // VIEW G5 — Alignment checklist (all NATCOs must be true)
+// Graph paths + boolean matrix columns
 // ============================================================
 MATCH (ns:Namespace {kind: 'natco'})
-OPTIONAL MATCH (ns)-[:ALIGNS_TO]->(g:Namespace {slug: 'global'})
-OPTIONAL MATCH (ns)-[:CONTAINS_CONCEPT]->(ent:Concept {kind: 'entity'})-[:FEDERATES]->(cCust:Concept {conceptId: 'Customer'})
-OPTIONAL MATCH (ns)-[:CONTAINS_CONCEPT]->(idn:Concept {kind: 'shared_property'})-[:FEDERATES]->(cId:Concept {conceptId: 'CustomerIdentification'})
-OPTIONAL MATCH (term:BusinessTerm {id: 'term-' + ns.slug + '-customer'})-[:MAPS_TO]->(cCust)
-OPTIONAL MATCH (tbl:Table {natco: ns.slug})-[:REPRESENTS]->(cCust)
-OPTIONAL MATCH (col:Column {natco: ns.slug})-[:REPRESENTS]->(cId)
-OPTIONAL MATCH (prod:DataProduct {id: 'dp-customer-360'})-[:CONSUMES]->(:InputPort)-[:READS_FROM]->(tbl)
-RETURN ns.displayName AS natco,
+OPTIONAL MATCH pAlign = (ns)-[:ALIGNS_TO]->(g:Namespace {slug: 'global'})
+OPTIONAL MATCH pFedEnt = (ns)-[:CONTAINS_CONCEPT]->(ent:Concept {kind: 'entity'})-[:FEDERATES]->(cCust:Concept {conceptId: 'Customer'})
+OPTIONAL MATCH pFedId = (ns)-[:CONTAINS_CONCEPT]->(idn:Concept {kind: 'shared_property'})-[:FEDERATES]->(cId:Concept {conceptId: 'CustomerIdentification'})
+OPTIONAL MATCH pTerm = (term:BusinessTerm {id: 'term-' + ns.slug + '-customer'})-[:MAPS_TO]->(cCust)
+OPTIONAL MATCH pTbl = (tbl:Table {natco: ns.slug})-[:REPRESENTS]->(cCust)
+OPTIONAL MATCH pCol = (col:Column {natco: ns.slug})-[:REPRESENTS]->(cId)
+OPTIONAL MATCH pConsume = (prod:DataProduct {id: 'dp-customer-360'})-[:CONSUMES]->(:InputPort)-[:READS_FROM]->(tbl)
+RETURN pAlign, pFedEnt, pFedId, pTerm, pTbl, pCol, pConsume,
+       ns.displayName AS natco,
        g IS NOT NULL AS alignsToGlobal,
        cCust IS NOT NULL AS conceptFederatesCustomer,
        cId IS NOT NULL AS idFederatesCustomerId,

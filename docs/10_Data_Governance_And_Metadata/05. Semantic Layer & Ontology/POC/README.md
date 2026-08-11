@@ -1,33 +1,48 @@
 # Enterprise Governance Grid — POC
 
-Client **pitch showcase** for the Semantic Control Plane (Semantic Layer & Ontology).
+Entropy-style **marketing site + demo tenant**: landing page for trust messaging; **Try 1-Click Demo** opens a separate workspace where all Customer 360 / NATCO details live.
 
-## How to pitch with this site
-
-1. Open the site in **Pitch** mode (default).
-2. Follow [`docs/13. Client Pitch Guide.md`](./docs/13.%20Client%20Pitch%20Guide.md) (~12 min).
-3. Demo clicks: Architecture (Mapping Engine) → Context Graph (Customer 360).
-4. Flip to **Explore** only if architects want engines, APIs, roadmap depth.
+## Run
 
 ```bash
-cd enterprise-governance-grid && npm install && npm run dev
+# 1) Neo4j Contracts KG (optional but recommended for Semantics)
+cd neo4j-contracts-kg && docker compose up -d && ./scripts/load.sh
+
+# 2) Site + KG API (Vite proxies /api/kg → :8787)
+cd ../enterprise-governance-grid && npm install && npm run dev
 ```
+
+| URL | Role |
+| --- | --- |
+| `/` | Marketing landing |
+| `/demo/customer360/marketplace` | Demo tenant · Marketplace |
+| `/demo/customer360/contracts` | Global & NATCO contract folders |
+| `/demo/customer360/semantics` | **Live Neo4j KG** (Cypher views) + fallback JSON |
+| `/demo/customer360/studio` | Architecture & concepts |
+| `/demo/customer360/governance` | Ownership · policies · outcomes |
+| `/demo/customer360/guided` | Guided tour bar |
+
+### Semantics · Neo4j Cypher workbench
+
+| Piece | Detail |
+| --- | --- |
+| API | `GET /api/kg/queries`, `POST /api/kg/queries/run`, `POST /api/kg/run` |
+| Catalog source | Parses `neo4j-contracts-kg/cypher/show-e2e-*.cypher` + `06-queries-demo.cypher` (19 queries) |
+| UI | Saved Cypher sidebar · editor · Graph/Table · Neo4j property inspector |
+| Maintain | Edit those `.cypher` files — API reloads catalog on server restart |
+
+## How to pitch
+
+1. Open the marketing page — brand + “Trust turns data into value”.
+2. Click **Try 1-Click Demo** → marketplace.
+3. Open **Semantics** — prefer Neo4j live; switch Germany / Croatia / Product path chips.
+4. Contracts: Global (TM Forum) / each NATCO → Semantics · Business · Technical · Data Products.
 
 ## Contents
 
 | Path | Role |
 | --- | --- |
-| [`docs/13. Client Pitch Guide.md`](./docs/13.%20Client%20Pitch%20Guide.md) | Presenter script |
-| [`docs/14. Concept Explainers.md`](./docs/14.%20Concept%20Explainers.md) | Plain-language concepts |
-| [`examples/pitch-concepts.json`](./examples/pitch-concepts.json) | Concept cards for the site |
-| [`examples/multi-natco-customer-assets.json`](./examples/multi-natco-customer-assets.json) | Global + DE/AT/HR/HU/PL full asset inventory |
-| [`examples/customer-context-graph.json`](./examples/customer-context-graph.json) | Traversable KG (all NATCOs → global) |
-| [`examples/customer-contracts.json`](./examples/customer-contracts.json) | Node contracts |
-| [`docs/contracts/technical/`](./docs/contracts/technical/) | Linkable technical asset contracts |
-| [`examples/technical-catalog-assets.json`](./examples/technical-catalog-assets.json) | Tech catalog inventory (5 NATCO sources + hub) |
-| [`neo4j-contracts-kg/`](./neo4j-contracts-kg/) | Neo4j KG POC for [`10. Contracts`](../10.%20Contracts/) (Customer 360 seed) |
-| [`enterprise-governance-grid/`](./enterprise-governance-grid/) | Vite + React site |
-
-## Pitch path (on site)
-
-Problem → Idea → Ownership → Concepts → Architecture → Context Graph → Outcomes / ask
+| [`docs/15. Neo4j Contracts Knowledge Graph.md`](./docs/15.%20Neo4j%20Contracts%20Knowledge%20Graph.md) | Neo4j KG setup |
+| [`neo4j-contracts-kg/`](./neo4j-contracts-kg/) | Docker Neo4j + Cypher seed |
+| [`enterprise-governance-grid/`](./enterprise-governance-grid/) | Vite + React + KG API |
+| [`examples/`](./examples/) | Pitch JSON (static fallback) |

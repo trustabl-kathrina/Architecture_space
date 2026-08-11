@@ -9,13 +9,15 @@ const pitchNav = [
   { id: 'ownership', label: 'Ownership' },
   { id: 'concepts', label: 'Concepts' },
   { id: 'architecture', label: 'How it works' },
-  { id: 'context-graph', label: 'Live proof' },
+  { id: 'contracts', label: 'Contracts' },
+  { id: 'context-graph', label: 'KG' },
   { id: 'outcomes', label: 'Ask' },
 ] as const
 
 const exploreNav = [
   { id: 'problem', label: 'Problem' },
   { id: 'architecture', label: 'Architecture' },
+  { id: 'contracts', label: 'Contracts' },
   { id: 'context-graph', label: 'Graph' },
   { id: 'engines', label: 'Engines' },
   { id: 'federation', label: 'Federation' },
@@ -26,7 +28,7 @@ const exploreNav = [
 ] as const
 
 export function Nav() {
-  const { mode } = usePitchMode()
+  const { mode, startDemo, demoActive } = usePitchMode()
   const [scrolled, setScrolled] = useState(false)
   const items = mode === 'pitch' ? pitchNav : exploreNav
 
@@ -69,6 +71,15 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-3">
+          {!demoActive ? (
+            <button
+              type="button"
+              onClick={startDemo}
+              className="hidden border border-[var(--color-teal)]/50 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[var(--color-teal)] sm:inline-flex"
+            >
+              Demo
+            </button>
+          ) : null}
           <PitchModeToggle />
         </div>
       </div>

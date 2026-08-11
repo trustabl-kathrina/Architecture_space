@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { usePitchMode } from '../pitch/PitchContext'
 
 export function Hero() {
-  const { setMode } = usePitchMode()
+  const { setMode, startDemo } = usePitchMode()
 
   return (
     <section
@@ -50,18 +50,25 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.65 }}
         >
-          <a
-            href="#problem"
-            className="inline-flex items-center gap-2 bg-[var(--color-teal)] px-5 py-3 text-sm font-semibold tracking-wide text-[var(--color-ink)] no-underline transition-transform hover:translate-y-[-1px]"
+          <button
+            type="button"
+            onClick={startDemo}
+            className="inline-flex items-center gap-2 bg-[var(--color-teal)] px-5 py-3 text-sm font-semibold tracking-wide text-[var(--color-ink)] transition-transform hover:translate-y-[-1px]"
           >
-            Start the pitch
-            <span aria-hidden>↓</span>
+            1-click guided demo
+            <span aria-hidden>→</span>
+          </button>
+          <a
+            href="#contracts"
+            className="inline-flex items-center gap-2 border border-[var(--color-line-strong)] px-5 py-3 text-sm font-medium text-[var(--color-foam)] no-underline transition-colors hover:border-[var(--color-brass)] hover:text-[var(--color-brass-bright)]"
+          >
+            Browse contracts
           </a>
           <a
             href="#context-graph"
-            className="inline-flex items-center gap-2 border border-[var(--color-line-strong)] px-5 py-3 text-sm font-medium text-[var(--color-foam)] no-underline transition-colors hover:border-[var(--color-brass)] hover:text-[var(--color-brass-bright)]"
+            className="inline-flex items-center gap-2 border border-[var(--color-line-strong)] px-5 py-3 text-sm font-medium text-[var(--color-foam)] no-underline transition-colors hover:border-[var(--color-teal)]/60"
           >
-            Open live proof
+            Open KG
           </a>
           <button
             type="button"

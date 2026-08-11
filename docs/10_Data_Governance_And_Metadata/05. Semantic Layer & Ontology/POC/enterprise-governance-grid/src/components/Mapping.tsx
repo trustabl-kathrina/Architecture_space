@@ -81,8 +81,8 @@ export function Mapping() {
                     {u}
                   </li>
                 ))}
-                {'optional' in p && p.optional
-                  ? p.optional.map((u) => (
+                {'optional' in p && Array.isArray(p.optional)
+                  ? (p.optional as string[]).map((u) => (
                       <li key={u} className="font-mono text-sm text-[var(--color-mist)]">
                         optional · {u}
                       </li>

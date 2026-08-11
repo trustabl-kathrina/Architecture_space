@@ -20,7 +20,8 @@ export function BigIdea() {
   return (
     <Section
       id="idea"
-      eyebrow="02 · The big idea"
+      compact
+      eyebrow="Core idea"
       title="Enterprise Governance Grid"
       lead="Centrally governed meaning, federated catalog ownership, Marketplace enrichment, and open interchange — without asking NATCOs to give up their catalogs."
     >

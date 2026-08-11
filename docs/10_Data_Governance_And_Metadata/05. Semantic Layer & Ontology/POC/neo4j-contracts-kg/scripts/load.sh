@@ -29,6 +29,7 @@ run_file() {
 
 run_file "$ROOT/cypher/00-constraints.cypher"
 run_file "$ROOT/cypher/e2e-customer-360.cypher"
+run_file "$ROOT/cypher/e2e-marketplace-families.cypher"
 
 echo "==> Done. Open http://localhost:7474  (neo4j / contracts-kg)"
 echo "    Show E2E: paste VIEW A/C from cypher/show-e2e-customer-360.cypher"
